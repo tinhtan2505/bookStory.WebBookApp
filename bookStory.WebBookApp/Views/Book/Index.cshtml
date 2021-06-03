@@ -1,0 +1,114 @@
+﻿@model HomeViewModel
+@using bookStory.ViewModels.Catalog.Books;
+@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer _loc;
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration;
+@{
+    var culture = CultureInfo.CurrentCulture.Name;
+}
+
+@{
+    ViewData["Title"] = "Danh sách Sách";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+}
+@section Scripts{
+    <script>
+        setTimeout(function () {
+            $('#msgAlert').fadeOut('slow');
+        }, 2000);
+    </script>
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <div class="text-pageheader">
+                <div class="subtext-image"
+                     data-scrollreveal="enter bottom over 1.7s after 0.1s">
+                    SÁCH
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+      </div>
+    </header>
+
+<!-- CONTENT =============================-->
+<section class="item content">
+    <div class="container toparea">
+        <div class="underlined-title">
+            <div class="editContent">
+                <h1 class="text-center latestitems">Danh sách Sách</h1>
+            </div>
+            <div class="wow-hr type_short">
+                <span class="wow-hr-h">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                </span>
+            </div>
+        </div>
+        @*<ul>
+                @foreach (var item in Model.LatestProducts)
+                {
+                    var url = $"/{culture}/{_loc["bookUrl"]}/{item.Id}";
+                    <li class="col-md-3">
+                        <div class="thumbnail">
+                            <a href="@url"><img src="@(Configuration["BaseAddress"] + item.ThumbnailImage)" alt="@item.Title" /></a>
+                            <div class="caption">
+                                <h5>@item.Title</h5>
+                                <p>
+                                    @item.FileName
+                                </p>
+
+                                <h4 style="text-align:center">
+                                    <a class="btn" href="@url">
+                                        <i class="icon-zoom-in"></i>
+                                    </a> <a class="btn" href="#"><localize>Add to</localize> <i class="icon-shopping-cart"></i></a>
+                                    <a class="btn btn-primary" href="#">@item.Author</a>
+                                </h4>
+                            </div>
+                        </div>
+                    </li>
+                }
+            </ul>*@
+        <div class="row">
+            @foreach (var item in Model.LatestProducts)
+            {
+                var url = $"/{culture}/{_loc["bookUrl"]}/{item.Id}";
+
+                <div class="col-md-4">
+                    <div class="productbox">
+                        <div class="fadeshop">
+                            <div class="captionshop text-center" style="display: none">
+                                <h3>@item.FileName</h3>
+                                <h5 style="text-align: right; margin-right: 1rem">
+                                    @item.Author
+                                </h5>
+                                <p>
+                                    @item.Title
+                                </p>
+                                <p style="height: 20%">
+                                    <a href="#" class="learn-more detailslearn">
+                                        Xem Bản dịch
+                                    </a>
+                                    <a href="#" class="learn-more detailslearn">
+                                        Yêu cầu dự án
+                                    </a>
+                                </p>
+                            </div>
+                            <span class="maxproduct">
+                                <a href="@url"><img src="@(Configuration["BaseAddress"] + item.ThumbnailImage)" alt="@item.Title" /></a>
+                            </span>
+                        </div>
+                        <div class="product-details">
+
+                            <h1>@Html.ActionLink(@item.FileName, "Detail", new { id = item.Id })</h1>
+                            @*<h1>@item.FileName</h1>*@
+                        </div>
+                    </div>
+                </div>
+
+            }
+        </div>
+</section>

@@ -1,0 +1,329 @@
+﻿@model HomeViewModel
+@using bookStory.ViewModels.Catalog.Books;
+@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer _loc;
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration;
+@{
+    var culture = CultureInfo.CurrentCulture.Name;
+}
+@{
+    ViewData["Title"] = "Trang chủ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <div class="text-homeimage">
+                <div class="maintext-image" data-scrollreveal="enter top over 1.5s after 0.1s">
+                    Trang Web Dịch sách hàng đầu
+                </div>
+                <div class="subtext-image" data-scrollreveal="enter bottom over 1.7s after 0.3s">
+                    Thân thiện - Miễn phí
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        </div>
+    </header>
+
+<!-- STEPS =============================-->
+<div class="item content">
+    <div class="container toparea">
+        <div class="row text-center">
+            <div class="col-md-4">
+                <div class="col editContent">
+                    <span class="numberstep"><i class="fa fa-shopping-cart"></i></span>
+                    <h3 class="numbertext">BookTranslation.com</h3>
+                    <p>
+                        Được thành lập vào năm 1997, công ty dịch thuật của chúng tôi cung cấp các dịch vụ ngôn ngữ toàn diện cho thị trường toàn cầu. Chúng tôi phục vụ các công ty trong các lĩnh vực khác nhau của nền kinh tế nhưng đặc biệt chú trọng đến việc chuyển tải các văn bản kỹ thuật, y tế, dược phẩm, pháp lý, thương mại và kinh tế từ tiếng Anh sang tất cả các ngôn ngữ chính và một số ngôn ngữ lạ, cũng như từ những ngôn ngữ đó sang tiếng Anh
+                    </p>
+                </div>
+                <!-- /.col-md-4 -->
+            </div>
+            <!-- /.col-md-4 col -->
+            <div class="col-md-4 editContent">
+                <div class="col">
+                    <span class="numberstep"><i class="fa fa-gift"></i></span>
+                    <h3 class="numbertext">Lời nhận xét</h3>
+                    <div style="text-align: left;">
+                        <p>
+                            Dear Mr. Harcz:
+                        </p>
+                        <p>
+                            There is no need to ask. Your agency has a great reputation and I am really glad
+                            to co-operate with you. Vicky has already told me the very best.
+                        </p>
+                        <p>
+                            Thank you very much.
+                        </p>
+                        <p>
+                            Best regards,
+                            Anastasia
+                        </p>
+                        <p class="text-center">
+                            <a href="#">- Xem tất cả -</a>
+                        </p>
+                    </div>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.col-md-4 col -->
+            <div class="col-md-4 editContent">
+                <div class="col">
+                    <span class="numberstep"><i class="fa fa-download"></i></span>
+                    <h3 class="numbertext">Khách hàng của chúng tôi</h3>
+                    <p style="text-align: left;">
+                        Chúng tôi đã cung cấp các dịch vụ dịch thuật thường xuyên cho các khách hàng có trụ sở tại các quốc gia sau:
+                    </p>
+                    <div class="row text-left">
+                        <div class="col-md-6">
+                            <img src="/images/icon_qg/united_states-32.png" alt="">
+                            <span>Hoa Kỳ</span>
+                        </div>
+                        <div class="col-md-6">
+                            <img src="/images/icon_qg/australia-32.png" alt="">
+                            <span>Úc</span>
+                        </div>
+                    </div>
+                    <div class="row text-left">
+                        <div class="col-md-6">
+                            <img src="/images/icon_qg/austria-32.png" alt="">
+                            <span>Áo</span>
+                        </div>
+                        <div class="col-md-6">
+                            <img src="/images/icon_qg/belgium-32.png" alt="">
+                            <span>Bỉ</span>
+                        </div>
+                    </div>
+                    <div class="row text-left">
+                        <div class="col-md-6">
+                            <img src="/images/icon_qg/canada-32.png" alt="">
+                            <span>Canada</span>
+                        </div>
+                        <div class="col-md-6">
+                            <img src="/images/icon_qg/norway-32.png" alt="">
+                            <span>Na Uy</span>
+                        </div>
+                    </div>
+                    <div class="row text-left">
+                        <div class="col-md-6">
+                            <img src="/images/icon_qg/france-32.png" alt="">
+                            <span>Pháp</span>
+                        </div>
+                        <div class="col-md-6">
+                            <img src="/images/icon_qg/germany-32.png" alt="">
+                            <span>Đức</span>
+                        </div>
+                    </div>
+                    <div class="row text-left">
+                        <div class="col-md-6">
+                            <img src="/images/icon_qg/hungary-32.png" alt="">
+                            <span>Hungary</span>
+                        </div>
+                        <div class="col-md-6">
+                            <img src="/images/icon_qg/italy-32.png" alt="">
+                            <span>Ý</span>
+                        </div>
+                    </div>
+                    <div class="row text-left">
+                        <div class="col-md-6">
+                            <img src="/images/icon_qg/united_kingdom-32.png" alt="">
+                            <span>Anh</span>
+                        </div>
+                        <div class="col-md-6">
+                            <img src="/images/icon_qg/malta-32.png" alt="">
+                            <span>Malta</span>
+                        </div>
+                    </div>
+
+                    <div class="row text-left">
+                        <div class="col-md-6">
+                            <img src="/images/icon_qg/netherlands-32.png" alt="">
+                            <span>Hà Lan</span>
+                        </div>
+                        <div class="col-md-6"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- LATEST ITEMS =============================-->
+<section class="item content">
+    <div class="container">
+        <div class="underlined-title">
+            <div class="editContent">
+                <h1 class="text-center latestitems">Bản dịch mới nhất</h1>
+            </div>
+            <div class="wow-hr type_short">
+                <span class="wow-hr-h">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="productbox">
+                    <div class="fadeshop">
+                        <div class="captionshop text-center" style="display: none;">
+                            <h3>Item Name</h3>
+                            <p>
+                                This is a short excerpt to generally describe what the item is about.
+                            </p>
+                            <p>
+                                <a href="#" class="learn-more detailslearn"> Xem Bản dịch</a>
+                                <a href="#" class="learn-more detailslearn"></i> Yêu cầu dự án</a>
+                            </p>
+                        </div>
+                        <span class="maxproduct"><img src="images/product1-1.jpg" alt=""></span>
+                    </div>
+                    <div class="product-details">
+                        <a href="#">
+                            <h1>Công nghệ phần mềm</h1>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- /.productbox -->
+            <div class="col-md-4">
+                <div class="productbox">
+                    <div class="fadeshop">
+                        <div class="captionshop text-center" style="display: none;">
+                            <h3>Item Name</h3>
+                            <p>
+                                This is a short excerpt to generally describe what the item is about.
+                            </p>
+                            <p>
+                                <a href="#" class="learn-more detailslearn"> Xem Bản dịch</a>
+                                <a href="#" class="learn-more detailslearn"></i> Yêu cầu dự án</a>
+                            </p>
+                        </div>
+                        <span class="maxproduct"><img src="images/product2.jpg" alt=""></span>
+                    </div>
+                    <div class="product-details">
+                        <a href="#">
+                            <h1>Thương mại điện tử</h1>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- /.productbox -->
+            <div class="col-md-4">
+                <div class="productbox">
+                    <div class="fadeshop">
+                        <div class="captionshop text-center" style="display: none;">
+                            <h3>Item Name</h3>
+                            <p>
+                                This is a short excerpt to generally describe what the item is about.
+                            </p>
+                            <p>
+                                <a href="#" class="learn-more detailslearn"> Xem Bản dịch</a>
+                                <a href="#" class="learn-more detailslearn"></i> Yêu cầu dự án</a>
+                            </p>
+                        </div>
+                        <span class="maxproduct"><img src="images/product2-3.jpg" alt=""></span>
+                    </div>
+                    <div class="product-details">
+                        <a href="#">
+                            <h1>Hệ quản trị CSDL</h1>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- BUTTON =============================-->
+<div class="item content">
+    <div class="container text-center">
+        <a href="shop.html" class="homebrowseitems">
+            Tất cả bản dịch
+            <div class="homebrowseitemsicon">
+                <i class="fa fa-star fa-spin"></i>
+            </div>
+        </a>
+    </div>
+</div>
+<br />
+
+<!-- AREA =============================-->
+<div class="item content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <i class="fa fa-microphone infoareaicon"></i>
+                <div class="infoareawrap">
+                    <h1 class="text-center subtitle">CÂU HỎI CHUNG</h1>
+                    <p>
+                        Bạn muốn dịch một cuốn sách nhưng không chắc liệu nó có tất cả các tính năng bạn cần hay không? Bạn gặp sự cố khi hoàn tất thanh toán? Hay chỉ muốn nói xin chào? Gửi cho chúng tôi tin nhắn của bạn và chúng tôi sẽ trả lời càng sớm càng tốt!
+                    </p>
+                    <p class="text-center">
+                        <a href="#">- Get in Touch -</a>
+                    </p>
+                </div>
+            </div>
+            <!-- /.col-md-4 col -->
+            <div class="col-md-4">
+                <i class="fa fa-comments infoareaicon"></i>
+                <div class="infoareawrap">
+                    <h1 class="text-center subtitle">Tại sao chọn chúng tôi</h1>
+                    <p>
+                        <ul>
+                            <li style="margin-left: 2rem; list-style: circle;">Tài liệu tham khảo quốc tế</li>
+                            <li style="margin-left: 2rem; list-style: circle;">Tài liệu tham khảo toàn diện bằng một số ngôn ngữ và lĩnh vực</li>
+                            <li style="margin-left: 2rem; list-style: circle;">Khách hàng hài lòng trên toàn cầu</li>
+                            <li style="margin-left: 2rem; list-style: circle;">Khách hàng lâu năm trên toàn thế giới</li>
+                            <li style="margin-left: 2rem; list-style: circle;">QUẢN LÝ DỰ ÁN toàn diện</li>
+                        </ul>
+                    </p>
+                    <p class="text-center">
+                        <a href="#">- Select Theme -</a>
+                    </p>
+                </div>
+            </div>
+            <!-- /.col-md-4 col -->
+            <div class="col-md-4">
+                <i class="fa fa-bullhorn infoareaicon"></i>
+                <div class="infoareawrap">
+                    <h1 class="text-center subtitle">Thông tin thêm</h1>
+                    <div>
+                        <ul>
+                            <li style="margin-left: 2rem; list-style: circle;"><a>Yêu cầu</a></li>
+                            <li style="margin-left: 2rem; list-style: circle;"><a>Ngôn ngữ và quốc gia</a></li>
+                            <li style="margin-left: 2rem; list-style: circle;"><a>Ngôn ngữ nổi bật</a></li>
+                            <li style="margin-left: 2rem; list-style: circle;"><a>Những gì chúng tôi dịch</a></li>
+                            <li style="margin-left: 2rem; list-style: circle;"><a>Các điều khoản và điều kiện</a></li>
+                            <li style="margin-left: 2rem; list-style: circle;"><a>Giấy Tiến cử người ủy thác</a></li>
+                            <li style="margin-left: 2rem; list-style: circle;"><a>Liên kết hữu ích</a></li>
+                        </ul>
+                    </div>
+                    <p class="text-center">
+                        <a href="#">- Get in Touch -</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- TESTIMONIAL =============================-->
+<div class="item content">
+    <div class="container">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="slide-text">
+                <div>
+                    <h2><span class="uppercase">Đánh giá tuyệt vời</span></h2>
+                    <img src="http://wowthemes.net/demo/salique/salique-boxed/images/temp/avatar2.png" alt="Awesome Support">
+                    <p>
+                        Sự hỗ trợ ... Tôi chỉ có thể nói rằng nó tuyệt vời. Bạn tạo ra một sản phẩm và bạn giúp đỡ mọi người theo bất kỳ cách nào bạn có thể ngay cả khi điều đó có nghĩa là bạn phải đăng nhập vào trang tổng quan của họ để giải quyết bất kỳ vấn đề nào mà khách hàng có thể gặp phải. Đơn giản là nổi bật!
+                    </p>
+                    <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

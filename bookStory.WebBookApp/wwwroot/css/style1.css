@@ -1,0 +1,1557 @@
+._3dCarouselGallery {
+  width: 78%;
+  margin: auto;
+  margin-top: 100px;
+}
+
+body,
+html {
+  width: 100%;
+  height: 100%;
+  background-image: url(images/bgnoise_lg.jpg);
+}
+
+div#carousel {
+  perspective: 1200px;
+  background: white;
+  padding-top: 10%;
+  font-size: 0;
+  margin-bottom: 3rem;
+  overflow: hidden;
+}
+/* Thuộc tính góc nhìn phối cảnh perspective: 1200px; (https://www.w3schools.com/cssref/css3_pr_perspective.asp) */
+figure#spinner {
+  transform-style: preserve-3d;
+  height: 300px;
+  transform-origin: 50% 50% -500px;
+  transition: 1s;
+}
+/* Sử dụng hai thuộc tính quan trọng transform-style: preserve-3d (https://www.w3schools.com/cssref/css3_pr_transform-style.asp); và transform-origin: 50% 50% -500px; (https://www.w3schools.com/cssref/css3_pr_transform-origin.asp) để tạo hiệu ứng 3D */
+figure#spinner img {
+  width: 40%;
+  max-width: 425px;
+  position: absolute;
+  left: 30%;
+  transform-origin: 50% 50% -500px;
+  outline: 1px solid transparent;
+}
+figure#spinner img:nth-child(1) {
+  transform: rotateY(0deg);
+}
+figure#spinner img:nth-child(2) {
+  transform: rotateY(-45deg);
+}
+figure#spinner img:nth-child(3) {
+  transform: rotateY(-90deg);
+}
+figure#spinner img:nth-child(4) {
+  transform: rotateY(-135deg);
+}
+figure#spinner img:nth-child(5) {
+  transform: rotateY(-180deg);
+}
+figure#spinner img:nth-child(6) {
+  transform: rotateY(-225deg);
+}
+figure#spinner img:nth-child(7) {
+  transform: rotateY(-270deg);
+}
+figure#spinner img:nth-child(8) {
+  transform: rotateY(-315deg);
+}
+div#carousel ~ span {
+  color: black;
+  margin: 5%;
+  display: inline-block;
+  text-decoration: none;
+  font-size: 2rem;
+  transition: 0.6s color;
+  position: relative;
+  margin-top: -6rem;
+  border-bottom: none;
+  line-height: 0;
+}
+div#carousel ~ span:hover {
+  color: #888;
+  cursor: pointer;
+}
+
+/* -------------------------End Xử lý khối carousel -------------------------- */
+
+p {
+  color: #fff;
+  font-family: Avenir Next, Helvetica Neue, Helvetica, Tahoma, sans-serif;
+  font-size: 1em;
+  font-weight: 700;
+}
+p span {
+  display: inline-block;
+  position: relative;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-perspective: 500;
+  perspective: 500;
+  -webkit-font-smoothing: antialiased;
+}
+/* -> CHo thuộc tính vào thằng cha để tạo hiệu ứng 3D , để nhìn theo góc nhìn 3D */
+p span::before,
+p span::after {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: -1px;
+  -webkit-transform-origin: left top;
+  transform-origin: left top;
+  transition: all ease-out 0.3s;
+  content: attr(
+    data-text
+  ); /* -> Lấy giá trị data-text để áp dụng (content) hình dạng hiển thị cho before và after */
+}
+p span::before {
+  z-index: 1;
+  color: rgba(0, 0, 0, 0.2);
+  -webkit-transform: scale(1.1, 1) skew(0deg, 20deg);
+  transform: scale(1.1, 1) skew(0deg, 20deg);
+}
+p span::after {
+  z-index: 2;
+  color: #684da3;
+  text-shadow: -1px 0 1px #684da3, 1px 0 1px rgba(0, 0, 0, 0.8);
+  -webkit-transform: rotateY(-40deg);
+  transform: rotateY(-40deg);
+}
+p span:hover::before {
+  -webkit-transform: scale(1.1, 1) skew(0deg, 5deg);
+  transform: scale(1.1, 1) skew(0deg, 5deg);
+}
+p span:hover::after {
+  -webkit-transform: rotateY(-10deg);
+  transform: rotateY(-10deg);
+}
+
+/* Tạo thêm hai hình ảnh after và before để làm hiệu ứng khi hover vào (Ý tưởng chia mỗi chứ thành 3 layer để làm hiệu ứng) */
+p span + span {
+  margin-left: 0.3em;
+}
+/* Đây là một kĩ thuật mới >Chỉ những phần tử thứ 2 trong list các phần tử ngang nhau mới được áp dụng thuộc tính này  */
+@media (min-width: 20em) {
+  p {
+    font-size: 2em;
+  }
+  p span::before,
+  p span::after {
+    display: block;
+  }
+}
+@media (min-width: 30em) {
+  p {
+    font-size: 3em;
+  }
+}
+@media (min-width: 40em) {
+  p {
+    font-size: 5em;
+  }
+}
+@media (min-width: 60em) {
+  p {
+    font-size: 8em;
+  }
+}
+
+/* Áp dụng responsive cho các màn hình khác nhau , với cỡ màn hình quá nhỏ (<20em) thì sẽ không hiển thị hiệu ứng với after và before với display : none */
+
+.hieuungchucodepen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #684da3;
+  width: 78%;
+  margin: auto;
+  margin-top: 30px;
+  margin-bottom: 50px;
+}
+
+/* Cho thuộc tính vào phần tử cha để áp dụng căn (chính giữa) > áp dụng với phần tử con  */
+
+/* ---------------------------- End text CodePen --------------------------- */
+
+/* Icon 1 */
+
+#nav-icon1,
+#nav-icon2,
+#nav-icon3,
+#nav-icon4 {
+  width: 60px;
+  height: 45px;
+  position: relative;
+  margin: 50px auto;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: 0.5s ease-in-out;
+  -moz-transition: 0.5s ease-in-out;
+  -o-transition: 0.5s ease-in-out;
+  transition: 0.5s ease-in-out;
+  cursor: pointer;
+}
+
+#nav-icon1 span,
+#nav-icon3 span,
+#nav-icon4 span {
+  display: block;
+  position: absolute;
+  height: 9px;
+  width: 100%;
+  background: #d3531a;
+  border-radius: 9px;
+  opacity: 1;
+  left: 0;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: 0.25s ease-in-out;
+  -moz-transition: 0.25s ease-in-out;
+  -o-transition: 0.25s ease-in-out;
+  transition: 0.25s ease-in-out;
+}
+
+#nav-icon1 span:nth-child(1) {
+  top: 0px;
+}
+
+#nav-icon1 span:nth-child(2) {
+  top: 18px;
+}
+
+#nav-icon1 span:nth-child(3) {
+  top: 36px;
+}
+
+#nav-icon1.open span:nth-child(1) {
+  top: 18px;
+  -webkit-transform: rotate(135deg);
+  -moz-transform: rotate(135deg);
+  -o-transform: rotate(135deg);
+  transform: rotate(135deg);
+}
+
+#nav-icon1.open span:nth-child(2) {
+  opacity: 0;
+  left: -60px;
+}
+
+#nav-icon1.open span:nth-child(3) {
+  top: 18px;
+  -webkit-transform: rotate(-135deg);
+  -moz-transform: rotate(-135deg);
+  -o-transform: rotate(-135deg);
+  transform: rotate(-135deg);
+}
+
+/* Icon 2 */
+
+#nav-icon2 {
+}
+
+#nav-icon2 span {
+  display: block;
+  position: absolute;
+  height: 9px;
+  width: 50%;
+  background: #d3531a;
+  opacity: 1;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: 0.25s ease-in-out;
+  -moz-transition: 0.25s ease-in-out;
+  -o-transition: 0.25s ease-in-out;
+  transition: 0.25s ease-in-out;
+}
+
+#nav-icon2 span:nth-child(even) {
+  left: 50%;
+  border-radius: 0 9px 9px 0;
+}
+
+/*CHỉ style cho những thằng con ở vị trí chẵn*/
+
+#nav-icon2 span:nth-child(odd) {
+  left: 0px;
+  border-radius: 9px 0 0 9px;
+  /* Thuộc tính tạo viền cho các góc , muốn góc nào bo thì cho giá trị vào góc đấy(trên > phải > trái > dưới ) */
+}
+
+/* Chỉ style cho những thằng con ở vị trí lẻ */
+
+#nav-icon2 span:nth-child(1),
+#nav-icon2 span:nth-child(2) {
+  top: 0px;
+}
+
+#nav-icon2 span:nth-child(3),
+#nav-icon2 span:nth-child(4) {
+  top: 18px;
+}
+
+#nav-icon2 span:nth-child(5),
+#nav-icon2 span:nth-child(6) {
+  top: 36px;
+}
+
+#nav-icon2.open span:nth-child(1),
+#nav-icon2.open span:nth-child(6) {
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+#nav-icon2.open span:nth-child(2),
+#nav-icon2.open span:nth-child(5) {
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+#nav-icon2.open span:nth-child(1) {
+  left: 5px;
+  top: 7px;
+}
+
+#nav-icon2.open span:nth-child(2) {
+  left: calc(
+    50% - 5px
+  ); /* Function calc() CSS dùng để tính giá trị của phần tử  */
+  top: 7px;
+}
+
+#nav-icon2.open span:nth-child(3) {
+  left: -50%;
+  opacity: 0;
+}
+
+#nav-icon2.open span:nth-child(4) {
+  left: 100%;
+  opacity: 0;
+}
+
+#nav-icon2.open span:nth-child(5) {
+  left: 5px;
+  top: 29px;
+}
+
+#nav-icon2.open span:nth-child(6) {
+  left: calc(50% - 5px);
+  top: 29px;
+}
+
+/* Icon 3 */
+
+#nav-icon3 span:nth-child(1) {
+  top: 0px;
+}
+
+#nav-icon3 span:nth-child(2),
+#nav-icon3 span:nth-child(3) {
+  top: 18px;
+}
+
+#nav-icon3 span:nth-child(4) {
+  top: 36px;
+}
+
+#nav-icon3.open span:nth-child(1) {
+  top: 18px;
+  width: 0%;
+  left: 50%;
+}
+
+#nav-icon3.open span:nth-child(2) {
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+#nav-icon3.open span:nth-child(3) {
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+#nav-icon3.open span:nth-child(4) {
+  top: 18px;
+  width: 0%;
+  left: 50%;
+}
+
+/* Icon 4 */
+
+#nav-icon4 {
+}
+
+#nav-icon4 span:nth-child(1) {
+  top: 0px;
+  -webkit-transform-origin: left center;
+  -moz-transform-origin: left center;
+  -o-transform-origin: left center;
+  transform-origin: left center;
+}
+
+#nav-icon4 span:nth-child(2) {
+  top: 18px;
+  -webkit-transform-origin: left center;
+  -moz-transform-origin: left center;
+  -o-transform-origin: left center;
+  transform-origin: left center;
+}
+
+#nav-icon4 span:nth-child(3) {
+  top: 36px;
+  -webkit-transform-origin: left center;
+  -moz-transform-origin: left center;
+  -o-transform-origin: left center;
+  transform-origin: left center;
+}
+
+#nav-icon4.open span:nth-child(1) {
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+  top: -3px;
+  left: 8px;
+}
+
+#nav-icon4.open span:nth-child(2) {
+  width: 0%;
+  opacity: 0;
+}
+
+#nav-icon4.open span:nth-child(3) {
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  top: 39px;
+  left: 8px;
+}
+
+/*----------------------- End hieuung icon close -------------------------*/
+
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,100,900);
+
+/*Inport font chữ trong file CSS */
+
+.button_hover_effects {
+  box-sizing: inherit;
+  transition-property: all;
+  transition-duration: 0.6s;
+  transition-timing-function: ease;
+  background: #e1332d;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  box-sizing: border-box;
+  height: 500px;
+  width: 100%;
+  margin-bottom: 100px;
+  position: relative;
+}
+
+.button_hover_effects .buttons {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center; /* Thuộc tính nhằm căn giữa khối trong khung chứa */
+  text-align: center;
+  width: 100%;
+}
+
+/*----------------------*/
+
+.button_hover_effects h1 {
+  color: #fff;
+  font-size: 1.25em;
+  font-weight: 900;
+  margin: 0 0 2em;
+}
+@media (min-width: 450px) {
+  .button_hover_effects h1 {
+    font-size: 1.75em;
+  }
+}
+@media (min-width: 760px) {
+  .button_hover_effects h1 {
+    font-size: 3.25em;
+  }
+}
+@media (min-width: 900px) {
+  .button_hover_effects h1 {
+    font-size: 5.25em;
+    margin: 0 0 1em;
+  }
+}
+
+/* Xử lý thẻ h1 trong tất cả các màn hình khác nhau  */
+
+.button_hover_effects .container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1em;
+  text-align: center; /* Thuộc tính căn giữa các mục cho các phần tử div linh hoạt */
+}
+@media (min-width: 600px) {
+  .button_hover_effects .container {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+/*---------------- Xử lý phần container ---------------------------*/
+
+.button_hover_effects p {
+  color: #fff;
+  font-size: 12px;
+}
+@media (min-width: 600px) {
+  .button_hover_effects p {
+    left: 50%;
+    position: absolute;
+    -webkit-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+    top: 90%;
+  }
+}
+
+.button_hover_effects p a {
+  background: rgba(255, 255, 255, 0);
+  border-bottom: 1px solid;
+  color: #fff;
+  line-height: 1.4;
+  padding: 0.25em;
+  text-decoration: none;
+}
+.button_hover_effects p a:hover {
+  background: white;
+  color: #e1332d;
+}
+
+/*--------------- Xử lý phần p-follow --------------------------- */
+
+.button_hover_effects .btn {
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 45px;
+  margin: 0 0 2em;
+  max-width: 160px;
+  position: relative;
+  text-decoration: none;
+  text-transform: uppercase;
+  width: 100%;
+  padding: 0;
+}
+@media (min-width: 600px) {
+  .button_hover_effects .btn {
+    margin: 0 1em 2em;
+  }
+}
+.button_hover_effects .btn:hover {
+  text-decoration: none;
+}
+
+/*------------ Style chung cho tất cả các button > .btn ---------------------------*/
+
+.button_hover_effects .btn-1 {
+  background: #e02c26;
+  font-weight: 100;
+}
+.button_hover_effects .btn-1 svg {
+  height: 45px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+.button_hover_effects .btn-1 rect {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 2;
+  stroke-dasharray: 422, 0;
+  transition-delay: none;
+}
+
+.button_hover_effects .btn-1:hover {
+  background: rgba(225, 51, 45, 0);
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+.button_hover_effects .btn-1:hover rect {
+  stroke-width: 5;
+  stroke-dasharray: 15, 310;
+  stroke-dashoffset: 48;
+  transition: all 1.35s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/*-------------------  CSS hover button-1  --------------------------- */
+
+.button_hover_effects .btn-2 {
+  letter-spacing: 0; /* Thuộc tính tăng giảm khoảng cách giữa các chữ cái  */
+}
+
+.button_hover_effects .btn-2:hover,
+.button_hover_effects .btn-2:active {
+  letter-spacing: 5px;
+}
+
+.button_hover_effects .btn-2:after,
+.button_hover_effects .btn-2:before {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border: 1px solid rgba(255, 255, 255, 0);
+  bottom: 0px;
+  content: " ";
+  display: block;
+  margin: 0 auto;
+  position: relative;
+  transition: all 280ms ease-in-out;
+  width: 0;
+}
+
+.button_hover_effects .btn-2:hover:after,
+.button_hover_effects .btn-2:hover:before {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-color: #fff;
+  transition: width 350ms ease-in-out;
+  width: 70%;
+}
+
+.button_hover_effects .btn-2:hover:before {
+  bottom: auto;
+  top: 0;
+  width: 70%;
+}
+
+/*-----------------------------  CSS hover button-2 ------------------------*/
+
+.button_hover_effects .btn-3 {
+  background: #e3403a;
+  border: 1px solid #da251f;
+  box-shadow: 0px 2px 0 #d6251f, 2px 4px 6px #e02a24;
+  font-weight: 900;
+  letter-spacing: 1px;
+  transition: all 150ms linear;
+}
+
+.button_hover_effects .btn-3:hover {
+  background: #e02c26;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 1px 1px 2px rgba(255, 255, 255, 0.2);
+  color: #ec817d;
+  text-decoration: none;
+  text-shadow: -1px -1px 0 #c2211c;
+  transition: all 250ms linear;
+}
+
+/*-> ----Sử dụng kết hợp các thuộc tính CSS cơ bản để tạo hiệu ứng đẹp ---*/
+
+/*------------------------ Css hover button-3 --------------------------*/
+
+.button_hover_effects .btn-4 {
+  border: 1px solid;
+  overflow: hidden;
+  position: relative;
+}
+.button_hover_effects .btn-4 span {
+  z-index: 20;
+}
+.button_hover_effects .btn-4:after {
+  background: #fff;
+  content: "";
+  height: 155px;
+  left: -75px;
+  opacity: 0.2;
+  position: absolute;
+  top: -50px;
+  -webkit-transform: rotate(35deg);
+  transform: rotate(35deg);
+  transition: all 550ms cubic-bezier(0.19, 1, 0.22, 1);
+  width: 50px;
+  z-index: 10;
+}
+
+.button_hover_effects .btn-4:hover:after {
+  left: 120%;
+  transition: all 550ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/*----------  CSS hover - button 4 ----------------------*/
+
+.button_hover_effects .btn-5 {
+  border: 0 solid;
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0);
+  /*Combo 2 thuộc tính tạo viền bên trong*/
+
+  outline: 1px solid;
+  outline-color: rgba(255, 255, 255, 0.5);
+  outline-offset: 0px;
+  /*combo 3 thuộc tính tạo vùng viền bên ngoài , nhưng cho ẩn đi */
+
+  text-shadow: none;
+  transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.button_hover_effects .btn-5:hover {
+  border: 1px solid;
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5),
+    0 0 20px rgba(255, 255, 255, 0.2);
+  /*Combo 2 thuộc tính Tạo viền bên trong của nút*/
+
+  outline-color: rgba(255, 255, 255, 0);
+  outline-offset: 15px;
+  /*combo 2 thuộc tính để tạo viền bên ngoài ẩn đi */
+
+  text-shadow: 1px 1px 2px #427388;
+}
+
+/*--------------   CSS hover - button 5 -------------------------------*/
+
+/*-------------------------  End hiệu ứng button-hover   ------------------ */
+
+.background {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  object-fit: cover; /* Thuoc tinh giup giu dung ti le khung nhin , neu khong dung thi tu dong cat va can chinh sao cho giu dung ti le img va video */
+  height: 100%;
+  width: 100%;
+}
+
+.form-btn,
+.form-btn-cancel,
+.form-btn-error {
+  background: transparent;
+  font-size: 1rem;
+  color: #fff;
+  cursor: pointer;
+  border: 1px solid transparent;
+  padding: 5px 24px;
+  margin-top: 2.25rem;
+  position: relative;
+  z-index: 0;
+  transition: transform 0.28s ease;
+  will-change: transform; /* https://css-tricks.com/almanac/properties/w/will-change/ */
+}
+
+.form-btn::before,
+.form-btn::after,
+.form-btn-cancel::before,
+.form-btn-cancel::after,
+.form-btn-error::before,
+.form-btn-error::after {
+  position: absolute;
+  content: "";
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  bottom: -1px;
+}
+
+.form-btn::before,
+.form-btn-cancel::before,
+.form-btn-error::before {
+  background: #337ab7;
+  z-index: -2;
+}
+
+.form-btn::after,
+.form-btn-cancel::after,
+.form-btn-error::after {
+  background: #000;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.28s ease;
+  will-change: opacity;
+}
+
+.form-btn:focus,
+.form-btn-cancel:focus,
+.form-btn-error:focus {
+  outline: none;
+}
+
+.form-btn:focus::after,
+.form-btn:hover::after,
+.form-btn-cancel:focus::after,
+.form-btn-cancel:hover::after,
+.form-btn-error:focus::after,
+.form-btn-error:hover::after {
+  opacity: 0.3;
+}
+
+.form-btn:active,
+.form-btn-cancel:active,
+.form-btn-error:active {
+  transform: translateY(1px);
+}
+
+.form-btn-error::before {
+  background: #d9534f;
+}
+
+.form-btn-cancel {
+  transition: color 0.28s ease, transform 0.28s ease;
+  color: #b52b27;
+  border-color: currentColor;
+  will-change: color, transform;
+}
+
+.form-btn-cancel.-nooutline {
+  border-color: transparent;
+}
+
+.form-btn-cancel::before {
+  background: #b52b27;
+  opacity: 0;
+  transition: opacity 0.28s ease;
+  will-change: opacity;
+}
+
+.form-btn-cancel::after {
+  display: none;
+}
+
+.form-btn-cancel:focus,
+.form-btn-cancel:hover {
+  color: #fff;
+}
+
+.form-btn-cancel:focus::before,
+.form-btn-cancel:hover::before {
+  opacity: 1;
+}
+
+.form-btn-block {
+  display: block;
+  width: 100%;
+  padding: 5px;
+}
+
+.form-checkbox,
+.form-radio {
+  position: relative;
+  margin-top: 2.25rem;
+  margin-bottom: 2.25rem;
+  text-align: left;
+}
+
+.form-checkbox-inline .form-checkbox-label,
+.form-radio-inline .form-radio-label {
+  display: inline-block;
+  margin-right: 1rem;
+}
+
+.form-checkbox-legend,
+.form-radio-legend {
+  margin: 0 0 0.125rem 0;
+  font-weight: 500;
+  font-size: 1rem;
+  color: #333;
+}
+
+.form-checkbox-label,
+.form-radio-label {
+  position: relative;
+  cursor: pointer;
+  padding-left: 1.5rem;
+  text-align: left;
+  color: #333;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.form-checkbox-label:hover i,
+.form-radio-label:hover i {
+  color: #337ab7;
+}
+
+.form-checkbox-label span,
+.form-radio-label span {
+  display: block;
+}
+
+.form-checkbox-label input,
+.form-radio-label input {
+  width: auto;
+  opacity: 0.0001;
+  position: absolute;
+  left: 0.25rem;
+  top: 0.25rem;
+  margin: 0;
+  padding: 0;
+}
+
+.form-checkbox-button {
+  position: absolute;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  display: block;
+  color: #999;
+  left: 0;
+  top: 0.25rem;
+  width: 1rem;
+  height: 1rem;
+  z-index: 0;
+  border: 0.125rem solid currentColor;
+  border-radius: 0.0625rem;
+  transition: color 0.28s ease;
+  will-change: color;
+}
+
+.form-checkbox-button::before,
+.form-checkbox-button::after {
+  position: absolute;
+  height: 0;
+  width: 0.2rem;
+  background-color: #337ab7;
+  display: block;
+  transform-origin: left top;
+  border-radius: 0.25rem;
+  content: "";
+  transition: opacity 0.28s ease, height 0s linear 0.28s;
+  opacity: 0;
+  will-change: opacity, height;
+}
+
+.form-checkbox-button::before {
+  top: 0.65rem;
+  left: 0.38rem;
+  transform: rotate(-135deg);
+  box-shadow: 0 0 0 0.0625rem #fff;
+}
+
+.form-checkbox-button::after {
+  top: 0.3rem;
+  left: 0;
+  transform: rotate(-45deg);
+}
+
+.form-checkbox-field:checked ~ .form-checkbox-button {
+  color: #337ab7;
+}
+
+.form-checkbox-field:checked ~ .form-checkbox-button::after,
+.form-checkbox-field:checked ~ .form-checkbox-button::before {
+  opacity: 1;
+  transition: height 0.28s ease;
+}
+
+.form-checkbox-field:checked ~ .form-checkbox-button::after {
+  height: 0.5rem;
+}
+
+.form-checkbox-field:checked ~ .form-checkbox-button::before {
+  height: 1.2rem;
+  transition-delay: 0.28s;
+}
+
+.form-radio-button {
+  position: absolute;
+  left: 0;
+  cursor: pointer;
+  display: block;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  color: #999;
+}
+
+.form-radio-button::before,
+.form-radio-button::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 0.25rem;
+  width: 1rem;
+  height: 1rem;
+  transition: transform 0.28s ease, color 0.28s ease;
+  border-radius: 50%;
+  border: 0.125rem solid currentColor;
+  will-change: transform, color;
+}
+
+.form-radio-button::after {
+  transform: scale(0);
+  background-color: #337ab7;
+  border-color: #337ab7;
+}
+
+.form-radio-field:checked ~ .form-radio-button::after {
+  transform: scale(0.5);
+}
+
+/*:checked : KHi checked vào button , ~ : Phần tử ngang cấp với phần tử chỉ định */
+
+.form-radio-field:checked ~ .form-radio-button::before {
+  color: #337ab7;
+}
+
+.form-has-error .form-checkbox-button,
+.form-has-error .form-radio-button {
+  color: #d9534f;
+}
+
+.form-card {
+  border-radius: 2px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.56s cubic-bezier(0.25, 0.8, 0.25, 1);
+  max-width: 500px;
+  padding: 0;
+  margin: 50px auto;
+}
+
+.form-card:hover,
+.form-card:focus {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.form-card:focus-within {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.form-actions {
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 2.25rem;
+}
+
+.form-actions .form-btn-cancel {
+  -ms-flex-order: -1;
+  order: -1; /* thuộc tính đặt thứ tự các phần tử trong flex */
+}
+
+.form-actions::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background: #999;
+  opacity: 0.3;
+}
+
+.form-actions > * {
+  /* Style cho tất cả các thằng con trực tiếp của nó */
+  -ms-flex: 1;
+  flex: 1; /* đặt chiều rộng bằng nhau cho các phần tử */
+  margin-top: 0;
+}
+
+.form-fieldset {
+  padding: 30px;
+  border: 0;
+}
+
+.form-fieldset + .form-fieldset {
+  margin-top: 15px;
+}
+
+/* + : Mô tả các class liền kề sau nó*/
+
+.form-legend {
+  padding: 1em 0 0;
+  margin: 0 0 -0.5em;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.form-legend + p {
+  margin-top: 1rem;
+}
+
+.form-element {
+  position: relative;
+  margin-top: 2.25rem;
+  margin-bottom: 2.25rem;
+}
+
+.form-element-hint {
+  font-weight: 400;
+  font-size: 0.6875rem;
+  color: #a6a6a6;
+  display: block;
+}
+
+.form-element-bar {
+  position: relative;
+  height: 1px;
+  background: #999;
+  display: block;
+}
+
+.form-element-bar::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #337ab7;
+  height: 2px;
+  display: block;
+  transform: rotateY(90deg);
+  transition: transform 0.28s ease;
+  will-change: transform;
+}
+
+.form-element-label {
+  position: absolute;
+  top: 0.75rem;
+  line-height: 1.5rem;
+  pointer-events: none; /* Thuộc tính phản ứng với hiệu ứng con trỏ di chuột */
+  padding-left: 0.125rem;
+  z-index: 1;
+  font-size: 1rem;
+  font-weight: normal;
+  white-space: nowrap;
+  overflow: hidden; /* Thuộc tính chỉ định khi nội dung tràn hộp chứa */
+  text-overflow: ellipsis; /* Thuộc tính chỉ định khi bị tràn text */
+  margin: 0;
+  color: #a6a6a6;
+  transform: translateY(-50%);
+  transform-origin: left center;
+  transition: transform 0.28s ease, color 0.28s linear, opacity 0.28s linear;
+  will-change: transform, color, opacity;
+}
+
+.form-element-field {
+  outline: none;
+  height: 1.5rem;
+  display: block;
+  background: none;
+  padding: 0.125rem 0.125rem 0.0625rem;
+  font-size: 1rem;
+  border: 0 solid transparent;
+  line-height: 1.5;
+  width: 100%;
+  color: #333;
+  box-shadow: none;
+  opacity: 0.001;
+  transition: opacity 0.28s ease;
+  will-change: opacity;
+}
+
+.form-element-field:-ms-input-placeholder {
+  color: #a6a6a6;
+  transform: scale(0.9);
+  transform-origin: left top;
+}
+
+.form-element-field::placeholder {
+  color: #a6a6a6;
+  transform: scale(0.9);
+  transform-origin: left top;
+}
+
+/*-> Style cho thuộc tính placeholder cho cac trinh duyet khac nhau */
+
+.form-element-field:focus ~ .form-element-bar::after {
+  transform: rotateY(0deg);
+}
+
+.form-element-field:focus ~ .form-element-label {
+  color: #337ab7;
+}
+
+.form-element-field.-hasvalue,
+.form-element-field:focus {
+  opacity: 1;
+}
+
+.form-element-field.-hasvalue ~ .form-element-label,
+.form-element-field:focus ~ .form-element-label {
+  transform: translateY(-100%) translateY(-0.5em) translateY(-2px) scale(0.9);
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.form-has-error .form-element-label.form-element-label,
+.form-has-error .form-element-hint {
+  color: #d9534f;
+}
+
+.form-has-error .form-element-bar,
+.form-has-error .form-element-bar::after {
+  background: #d9534f;
+}
+
+.form-is-success .form-element-label.form-element-label,
+.form-is-success .form-element-hint {
+  color: #259337;
+}
+
+.form-is-success .form-element-bar::after {
+  background: #259337;
+}
+
+input.form-element-field:not(:placeholder-shown),
+textarea.form-element-field:not(:placeholder-shown) {
+  opacity: 1;
+}
+
+input.form-element-field:not(:placeholder-shown) ~ .form-element-label,
+textarea.form-element-field:not(:placeholder-shown) ~ .form-element-label {
+  transform: translateY(-100%) translateY(-0.5em) translateY(-2px) scale(0.9);
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+textarea.form-element-field {
+  height: auto;
+  min-height: 3rem;
+}
+
+select.form-element-field {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.form-select-placeholder {
+  color: #a6a6a6;
+  display: none;
+}
+
+.form-select .form-element-bar::before {
+  content: "";
+  position: absolute;
+  height: 0.5em;
+  width: 0.5em;
+  border-bottom: 1px solid #999;
+  border-right: 1px solid #999;
+  display: block;
+  right: 0.5em;
+  bottom: 0;
+  transition: transform 0.28s ease;
+  transform: translateY(-100%) rotateX(0deg) rotate(45deg);
+  will-change: transform;
+}
+
+.form-select select:focus ~ .form-element-bar::before {
+  transform: translateY(-50%) rotateX(180deg) rotate(45deg);
+}
+
+.form-element-field[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.form-element-field[type="number"]::-webkit-outer-spin-button,
+.form-element-field[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.form-effect {
+  margin: 40px auto;
+  /*background-image: linear-gradient(to top, #a3bded 0%, #6991c7 100%);*/
+  margin-bottom: 100px;
+  position: relative;
+  padding: 50px 0px;
+}
+
+/*-------------  End form-effect  ---------------------------*/
+
+div#jellyMenu {
+  position: relative;
+  margin-bottom: 200px;
+  width: 100%;
+  height: 85%;
+  transform: translateY(100px);
+  background-color: #d8d8d8;
+}
+
+div#jellyMenu .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+div#jellyMenu .blobs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  filter: url(#goo); /* Xác định hiệu ứng hình ảnh (độ mờ ,..) */
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+div#jellyMenu .box {
+  height: 100px;
+  width: 550px;
+  background: #ececec;
+  box-shadow: 0px 5px 20px 5px rgba(0, 0, 0, 0.075);
+  clip-path: url(#cut); /* Tạo vùng xác định của phần tử được hiển thị */
+  border-radius: 5px;
+  z-index: -1;
+}
+
+div#jellyMenu svg {
+  height: 0;
+  width: 0;
+}
+
+div#jellyMenu .circle-styles {
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  transform: translate(0, -48px);
+  background: hsl(337, 70%, 58%);
+  clip-path: circle(42px at center);
+}
+
+div#jellyMenu .circle-styles:nth-child(1) span {
+  width: 35px;
+  height: 5px;
+  background: rgb(255, 255, 255);
+  position: absolute;
+  border-radius: 15px;
+}
+div#jellyMenu .circle-styles:nth-child(1) span:nth-child(2) {
+  transform: rotate(90deg);
+}
+div#jellyMenu .circle-styles:nth-child(1) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+div#jellyMenu .first {
+  transition: transform 0.5s 100ms ease-out;
+  background: hsl(307, 70%, 58%);
+}
+
+div#jellyMenu .second {
+  transition: transform 0.5s 300ms ease-out;
+  background: hsl(277, 70%, 58%);
+}
+div#jellyMenu .last {
+  transition: transform 0.5s 500ms ease-out;
+  background: hsl(247, 70%, 58%);
+}
+div#jellyMenu .first.show {
+  transform: translate(-100px, -120px);
+}
+div#jellyMenu .second.show {
+  transform: translate(0px, -150px);
+}
+div#jellyMenu .last.show {
+  transform: translate(100px, -120px);
+}
+div#jellyMenu .cross {
+  transform-origin: center center;
+  transition: all 0.5s ease-in-out;
+}
+div#jellyMenu .bg {
+  transition: all 0.4s ease-in-out;
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  border-radius: 100%;
+  transform: scale(0);
+  background: hsla(0, 0%, 100%, 0.459);
+}
+div#jellyMenu .bg.show {
+  transform: scale(0.7);
+  opacity: 0;
+}
+
+div#jellyMenu .cross.show {
+  transform: rotate(45deg);
+}
+
+div#jellyMenu .main-circle {
+  z-index: 2;
+}
+
+div#jellyMenu .icons {
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+div#jellyMenu .icons svg {
+  width: 45px;
+  height: 45px;
+  margin: 30px;
+  fill: hsl(0, 0%, 52%);
+  transition: fill 0.5s ease-out;
+}
+div#jellyMenu .icons svg.colorchange {
+  fill: hsla(0, 0%, 67%, 0.534);
+}
+div#jellyMenu .circles svg {
+  transition: fill 0.3s ease-out;
+  fill: hsl(0, 0%, 92%);
+}
+div#jellyMenu .circles:hover svg {
+  fill: hsl(0, 0%, 100%);
+}
+div#jellyMenu .main-icons {
+  fill: rgb(255, 255, 255);
+  width: 50px;
+  height: 50px;
+}
+
+div#jellyMenu .center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+div#jellyMenu .move-left {
+  transform: translate(-20px, 0px);
+}
+div#jellyMenu .move-right {
+  transform: translate(20px, 0px);
+}
+
+/*-----------------------  End jellyMenu  ----------------------*/
+
+#SVGLoadingIcons {
+  padding: 1em;
+  background: #2b3134;
+  color: #777;
+  text-align: center;
+  font-family: "Gill sans", sans-serif;
+  width: 100%;
+  margin: 0 auto;
+  margin-bottom: 100px;
+}
+#SVGLoadingIcons h1 {
+  margin: 1em 0;
+  border-bottom: 1px dashed;
+  padding-bottom: 1em;
+  font-weight: lighter;
+}
+#SVGLoadingIcons p {
+  font-style: italic;
+}
+#SVGLoadingIcons .loader {
+  margin: 0 0 2em;
+  height: 100px;
+  width: 20%;
+  text-align: center;
+  padding: 1em;
+  margin: 0 auto 1em;
+  display: inline-block;
+  vertical-align: top; /* Dọc căn chỉnh hình ảnh */
+}
+
+/*
+  Set the color of the icon
+*/
+#SVGLoadingIcons svg path,
+#SVGLoadingIcons svg rect {
+  fill: #ff6700;
+}
+
+/*------------------------  End SVGLoadingIcons  ------------------*/
+
+#ButtonHoverEffect {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #333;
+  margin-bottom: 100px;
+}
+
+#ButtonHoverEffect nav ul {
+  padding: 0;
+  list-style-type: none;
+  transform: translateX(0.65em);
+}
+
+#ButtonHoverEffect nav li {
+  width: 8em;
+  height: 2em;
+  font-size: 25px;
+  color: orange;
+  box-sizing: border-box;
+  border-left: 0.08em solid;
+  position: relative;
+  margin-top: 0.8em;
+  cursor: pointer;
+}
+
+#ButtonHoverEffect nav li::before,
+#ButtonHoverEffect nav li::after {
+  content: "";
+  position: absolute;
+  width: inherit;
+  border-left: 0.08em solid;
+  z-index: -1;
+}
+
+#ButtonHoverEffect nav li::before {
+  height: 80%;
+  top: 10%;
+  left: -0.3em;
+  filter: brightness(0.8);
+}
+
+#ButtonHoverEffect nav li::after {
+  height: 60%;
+  top: 20%;
+  left: -0.55em;
+  filter: brightness(0.6);
+}
+
+#ButtonHoverEffect nav li:hover span {
+  transform: translateX(0.15em);
+}
+
+#ButtonHoverEffect nav li span {
+  position: relative;
+  height: 120%;
+  top: -10%;
+  box-sizing: border-box;
+  border: 0.08em solid;
+  background-color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: sans-serif;
+  text-transform: capitalize;
+  transform: translateX(-0.65em);
+  transition: 0.3s;
+}
+
+/*-------------------------  End ButtonHoverEffect ------------------*/
+
+* {
+  margin: 0;
+  padding: 0;
+}

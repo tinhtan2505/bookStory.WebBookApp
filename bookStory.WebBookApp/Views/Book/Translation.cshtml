@@ -1,0 +1,194 @@
+﻿@model ParagraphDetailViewModel
+@{
+    ViewData["Title"] = "Translation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var culture = CultureInfo.CurrentCulture;
+}
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration;
+@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer _loc;
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <div class="text-pageheader">
+                <div class="subtext-image"
+                     data-scrollreveal="enter bottom over 1.7s after 0.1s">
+                    BẢN DỊCH
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
+    </header>
+
+<!-- CONTENT =============================-->
+<section class="item content">
+    <div class="container toparea">
+        <div class="underlined-title">
+            <div class="editContent">
+                <h1 class="text-center latestitems">@Html.DisplayFor(model => model.Book.FileName)</h1>
+            </div>
+            <div class="wow-hr type_short">
+                <span class="wow-hr-h">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                </span>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row border-top border-success rounded m-5">
+                <div class="
+                col-md-10
+                border-left border-bottom border-success
+                rounded-left
+                text-dark
+                pl-1
+              ">
+                    <div class="container">
+                        <span>@Html.DisplayFor(model => model.Paragraph.Order)</span>
+                    </div>
+                </div>
+                <div class="
+                col-md-2
+                border-right border-bottom border-success
+                rounded-right
+                text-dark
+              ">
+                    <button type="button"
+                            class="btn btn-outline-primary float-right mt-2 mb-2 w-100">
+                        Báo cáo
+                    </button>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-10 pt-3">
+                            <form>
+                                <div class="form-group">
+                                    <textarea class="form-control"
+                                              id="exampleFormControlTextarea1"
+                                              rows="3"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary mb-1">
+                                    Thêm bản dịch
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @for (int i = 0; i < Model.ListTranslations.Items.Count; i++)
+        {
+            var item = Model.ListTranslations.Items[i];
+            <div class="row border-top border-primary rounded m-5">
+                <div class="
+                col-md-10
+                border-left border-bottom border-primary
+                rounded-left
+                text-dark
+                pl-1
+              ">
+                    <div class="container-fluid justify-content-left p-0">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="card p-1">
+                                    <div class="d-flex align-items-center">
+                                        <div class="image">
+                                            <img src="/images/product1.jpg"
+                                                 class="rounded"
+                                                 width="80"
+                                                 height="80" />
+                                        </div>
+                                        <div class="ml-3 w-100">
+                                            <h5 class="mb-0 mt-0">@item.FirstName @item.LastName</h5>
+                                            <span></span>
+                                            <div class="
+                              button
+                              mt-2
+                              d-flex
+                              flex-row
+                              align-items-center
+                            ">
+                                                <button class="btn btn-sm btn-outline-primary w-25">
+                                                    Chat
+                                                </button>
+                                                <button class="btn btn-sm btn-primary w-25 ml-2">
+                                                    Follow
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <span class="mt-2">@item.Text</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="
+                col-md-2
+                border-right border-bottom border-primary
+                rounded-right
+                text-dark
+              ">
+                    <button type="button"
+                            class="btn btn-outline-primary float-right mt-2">
+                        Sửa
+                    </button>
+                </div>
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-md-2"></div>
+                        <div class="col-md-10 pt-3">
+                            @foreach (var com in Model.ListComments)
+                            {
+                                if (item.Id == com.IdTranslation)
+                                {
+                                    <span class="text-success">@com.FirstName @com.LastName: </span>
+                                    <span class="text-dark ml-1">@com.Message</span>
+                                    <span class="text-danger timecomment ml-2">@com.DateComment</span>
+
+                                    @*<span>@com.Message</span>*@
+                                    <hr class="mt-0 bg-info" />
+                                }
+                            }
+                            <form asp-action="CreateComment" enctype="multipart/form-data" method="post">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input asp-for="UserName" value=@User.Identity.Name class="form-control" />
+                                <input asp-for="IdTranslation" value=@item.Id class="form-control" />
+                                @*<div class="form-group">
+                                        <label asp-for="UserId" class="control-label"></label>
+                                        <input asp-for="UserId" value="C0106B17-C63B-4849-89C7-08D91D4888D0" class="form-control" />
+                                        <span asp-validation-for="UserId" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="IdTranslation" class="control-label"></label>
+                                        <input asp-for="IdTranslation" value="16" class="form-control" />
+                                        <span asp-validation-for="IdTranslation" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Message" class="control-label"></label>
+                                        <input asp-for="Message" class="form-control" />
+                                        <span asp-validation-for="Message" class="text-danger"></span>
+                                    </div>*@
+                                <div class="form-group">
+                                    <label class="text-primary"
+                                           for="exampleFormControlTextarea1">Thêm bình luận</label>
+                                    <textarea asp-for="Message" class="form-control"
+                                              id="exampleFormControlTextarea1"
+                                              rows="3"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary mb-1">Gửi</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
