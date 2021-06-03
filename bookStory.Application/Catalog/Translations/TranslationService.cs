@@ -36,7 +36,7 @@ namespace bookStory.Application.Catalog.Translations
             {
                 Id = x.Id,
                 UserId = x.UserId,
-                IdProject = x.IdProject,
+                //IdProject = x.IdProject,
                 IdParagraph = x.IdParagraph,
                 Text = x.Text,
                 Rating = x.Rating,
@@ -50,7 +50,7 @@ namespace bookStory.Application.Catalog.Translations
             var item = new Translation()
             {
                 UserId = request.UserId,
-                IdProject = request.IdProject,
+                //IdProject = request.IdProject,
                 IdParagraph = request.IdParagraph,
                 Text = request.Text,
                 Rating = request.Rating,
@@ -100,7 +100,7 @@ namespace bookStory.Application.Catalog.Translations
                 {
                     Id = x.t.Id,
                     UserId = x.t.UserId,
-                    IdProject = x.t.IdProject,
+                    //IdProject = x.t.IdProject,
                     IdParagraph = x.t.IdParagraph,
                     Text = x.t.Text,
                     Rating = x.t.Rating,
@@ -139,7 +139,7 @@ namespace bookStory.Application.Catalog.Translations
             {
                 Id = item.Id,
                 UserId = item.UserId,
-                IdProject = item.IdProject,
+                //IdProject = item.IdProject,
                 IdParagraph = item.IdParagraph,
                 Text = item.Text,
                 Rating = item.Rating,
@@ -155,7 +155,7 @@ namespace bookStory.Application.Catalog.Translations
             if (item == null) throw new BookException($"Cannot find a product with id: {request.Id}");
 
             item.UserId = request.UserId;
-            item.IdProject = request.IdProject;
+            //item.IdProject = request.IdProject;
             item.IdParagraph = request.IdParagraph;
             item.Text = request.Text;
             item.Rating = request.Rating;

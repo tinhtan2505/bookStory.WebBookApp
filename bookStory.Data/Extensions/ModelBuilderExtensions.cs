@@ -69,8 +69,6 @@ namespace bookStory.Data.Extensions
                new Translation()
                {
                    Id = 1,
-                   //IdUser = 2,
-                   IdProject = 2,
                    IdParagraph = 3,
                    Text = "Text2",
                    Rating = "ok",
@@ -79,8 +77,6 @@ namespace bookStory.Data.Extensions
                new Translation()
                {
                    Id = 2,
-                   //IdUser = 2,
-                   IdProject = 2,
                    IdParagraph = 3,
                    Text = "Text3",
                    Rating = "yes",
@@ -89,8 +85,6 @@ namespace bookStory.Data.Extensions
                new Translation()
                {
                    Id = 3,
-                   //IdUser = 2,
-                   IdProject = 2,
                    IdParagraph = 3,
                    Text = "Text4",
                    Rating = "no",
