@@ -152,8 +152,6 @@
                                     <span class="text-success">@com.FirstName @com.LastName: </span>
                                     <span class="text-dark ml-1">@com.Message</span>
                                     <span class="text-danger timecomment ml-2">@com.DateComment</span>
-
-                                    @*<span>@com.Message</span>*@
                                     <hr class="mt-0 bg-info" />
                                 }
                             }
@@ -161,21 +159,6 @@
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <input asp-for="UserName" value=@User.Identity.Name class="form-control" />
                                 <input asp-for="IdTranslation" value=@item.Id class="form-control" />
-                                @*<div class="form-group">
-                                        <label asp-for="UserId" class="control-label"></label>
-                                        <input asp-for="UserId" value="C0106B17-C63B-4849-89C7-08D91D4888D0" class="form-control" />
-                                        <span asp-validation-for="UserId" class="text-danger"></span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label asp-for="IdTranslation" class="control-label"></label>
-                                        <input asp-for="IdTranslation" value="16" class="form-control" />
-                                        <span asp-validation-for="IdTranslation" class="text-danger"></span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label asp-for="Message" class="control-label"></label>
-                                        <input asp-for="Message" class="form-control" />
-                                        <span asp-validation-for="Message" class="text-danger"></span>
-                                    </div>*@
                                 <div class="form-group">
                                     <label class="text-primary"
                                            for="exampleFormControlTextarea1">Thêm bình luận</label>
