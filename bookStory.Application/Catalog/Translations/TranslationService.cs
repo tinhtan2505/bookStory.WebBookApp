@@ -139,7 +139,6 @@ namespace bookStory.Application.Catalog.Translations
             {
                 Id = item.Id,
                 UserId = item.UserId,
-                //IdProject = item.IdProject,
                 IdParagraph = item.IdParagraph,
                 Text = item.Text,
                 Rating = item.Rating,

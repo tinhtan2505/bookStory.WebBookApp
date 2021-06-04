@@ -20,7 +20,6 @@ namespace bookStory.Data.Entities
         public Book Book { get; set; }
         public Language Language { get; set; }
         public AppUser AppUser { get; set; }
-        public List<Translation> Translations { get; set; }
         //public object DateTime { get; set; }
     }
 }

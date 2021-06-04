@@ -153,7 +153,7 @@
                 text-dark
               ">
               @{
-                        var sb = "suabandich"+@item.Id.ToString();
+                    var sb = "suabandich"+@item.Id.ToString();
               }
                     <button class="btn btn-outline-primary float-right mt-2" type="button" data-toggle="collapse" data-target="#@sb" aria-expanded="false" aria-controls=@sb>Sửa</button>
                 </div>
@@ -194,8 +194,29 @@
                                     <span class="text-success">@com.FirstName @com.LastName: </span>
                                     <span class="text-dark ml-1">@com.Message</span>
                                     <span class="text-danger timecomment ml-2">@com.DateComment</span>
-                                    <a class="text-primary text-right">Sửa</a>
+                                    <a class="text-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Sửa</a>
                                     <hr class="mt-0 bg-info" />
+                                    @*<div class="row">
+                                          <div class="col">
+                                          </div>
+                                          <div class="col">
+                                            <div class="collapse multi-collapse" id="multiCollapseExample1">
+                                              <form asp-action="" enctype="multipart/form-data" method="post">
+                                                            <div class="form-group">
+                                                              <textarea
+                                                                asp-for="Message" 
+                                                                class="form-control"
+                                                                id="exampleFormControlTextarea1"
+                                                                rows="3"
+                                                              ></textarea>
+                                                            </div>
+                                                            <button type="submit" class="btn btn-primary mb-1">
+                                                              Sửa
+                                                            </button>
+                                                          </form>
+                                            </div>
+                                          </div>
+                                        </div>*@
                                 }
                             }
                             <form asp-action="CreateComment" enctype="multipart/form-data" method="post">
