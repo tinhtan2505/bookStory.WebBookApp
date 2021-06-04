@@ -118,7 +118,7 @@ namespace bookStory.WebBookApp.Controllers
             {
                 UserId = user.ResultObj.Id,
                 IdTranslation = request.IdTranslation,
-                Message = request.Message
+                Message = request.MessageCreate
             };
             if (!ModelState.IsValid)
                 return View(request);
@@ -131,6 +131,32 @@ namespace bookStory.WebBookApp.Controllers
             }
 
             ModelState.AddModelError("", "Thêm mới thất bại");
+            return View(request);
+        }
+
+        [HttpPost]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> EditComment([FromForm] ParagraphDetailViewModel request)
+        {
+            var user = await _userApiClient.GetUsersName(request.UserName);
+            CommentUpdateRequest create = new CommentUpdateRequest()
+            {
+                Id = request.IdComment,
+                UserId = user.ResultObj.Id,
+                IdTranslation = request.IdTranslation,
+                Message = request.Message
+            };
+            if (!ModelState.IsValid)
+                return View(request);
+            var tran = await _translationApiClient.GetById(request.IdTranslation);
+            var result = await _commentApiClient.UpdateComment(create);
+            if (result)
+            {
+                TempData["result"] = "Cập nhật thành công";
+                return RedirectToAction("Translation", "Book", new { id = tran.IdParagraph });
+            }
+
+            ModelState.AddModelError("", "Cập nhật thất bại");
             return View(request);
         }
 

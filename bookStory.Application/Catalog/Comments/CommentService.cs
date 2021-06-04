@@ -125,7 +125,7 @@ namespace bookStory.Application.Catalog.Comments
             item.UserId = request.UserId;
             item.IdTranslation = request.IdTranslation;
             item.Message = request.Message;
-            item.DateComment = request.DateComment;
+            item.DateComment = DateTime.Now;
 
             return await _context.SaveChangesAsync();
         }

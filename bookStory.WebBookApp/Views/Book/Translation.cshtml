@@ -154,6 +154,7 @@
               ">
               @{
                     var sb = "suabandich"+@item.Id.ToString();
+                        @Model.Text = @item.Text;
               }
                     <button class="btn btn-outline-primary float-right mt-2" type="button" data-toggle="collapse" data-target="#@sb" aria-expanded="false" aria-controls=@sb>Sửa</button>
                 </div>
@@ -169,7 +170,7 @@
                                 <div class="collapse multi-collapse" id=@sb>
                                   <form asp-action="EditTranslation" enctype="multipart/form-data" method="post">
                                         <input type="hidden" asp-for="IdTranslation" value=@item.Id />
-                                        <input type="hidden" asp-for="UserName" value=@User.Identity.Name class="form-control" />
+                                        <input type="" asp-for="UserName" value=@User.Identity.Name class="form-control" />
                                         <input type="hidden" asp-for="IdParagraph" class="form-control" value=@Model.Paragraph.Id />
                                         <input type="hidden" asp-for="Rating" value=0 class="form-control" />
                                                 <div class="form-group">
@@ -178,7 +179,7 @@
                                                     class="form-control"
                                                     id="exampleFormControlTextarea1"
                                                     rows="3"
-                                                  >@item.Text</textarea>
+                                                  ></textarea>
                                                 </div>
                                                 <button type="submit" class="btn btn-primary mb-1">
                                                   Sửa
@@ -191,17 +192,22 @@
                             {
                                 if (item.Id == com.IdTranslation)
                                 {
+                                    var mce = "suacomment"+@com.Id.ToString();
+                                    @Model.Message = @com.Message;
                                     <span class="text-success">@com.FirstName @com.LastName: </span>
                                     <span class="text-dark ml-1">@com.Message</span>
                                     <span class="text-danger timecomment ml-2">@com.DateComment</span>
-                                    <a class="text-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Sửa</a>
+                                    <a class="text-primary" data-toggle="collapse" href="#@mce" role="button" aria-expanded="false" aria-controls=@mce>Sửa</a>
                                     <hr class="mt-0 bg-info" />
-                                    @*<div class="row">
+                                    <div class="row">
                                           <div class="col">
                                           </div>
                                           <div class="col">
-                                            <div class="collapse multi-collapse" id="multiCollapseExample1">
-                                              <form asp-action="" enctype="multipart/form-data" method="post">
+                                            <div class="collapse multi-collapse" id=@mce>
+                                              <form asp-action="EditComment" enctype="multipart/form-data" method="post">
+                                                            <input  asp-for="IdComment" value=@com.Id />
+                                                            <input  asp-for="UserName" value=@User.Identity.Name class="form-control" />
+                                                            <input  asp-for="IdTranslation" class="form-control" value=@item.Id />
                                                             <div class="form-group">
                                                               <textarea
                                                                 asp-for="Message" 
@@ -216,17 +222,18 @@
                                                           </form>
                                             </div>
                                           </div>
-                                        </div>*@
+                                        </div>
                                 }
                             }
                             <form asp-action="CreateComment" enctype="multipart/form-data" method="post">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <input type="hidden" asp-for="UserName" value=@User.Identity.Name class="form-control" />
                                 <input type="hidden" asp-for="IdTranslation" value=@item.Id class="form-control" />
+                               
                                 <div class="form-group">
                                     <label class="text-primary"
                                            for="exampleFormControlTextarea1">Thêm bình luận</label>
-                                    <textarea asp-for="Message" class="form-control"
+                                    <textarea asp-for="MessageCreate" class="form-control"
                                               id="exampleFormControlTextarea1"
                                               rows="3"></textarea>
                                 </div>

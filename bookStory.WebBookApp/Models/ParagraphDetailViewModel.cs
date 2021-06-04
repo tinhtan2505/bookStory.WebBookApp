@@ -15,7 +15,9 @@ namespace bookStory.WebBookApp.Models
         public Guid UserId { set; get; }
         public string UserName { get; set; }
         public int IdTranslation { set; get; }
+        public int IdComment { set; get; }
         public string Message { set; get; }
+        public string MessageCreate { set; get; }
         public ParagraphViewModel Paragraph { get; set; }
         public BookViewModel Book { get; set; }
         public PagedResult<TranslationViewModel> ListTranslations { get; set; }
