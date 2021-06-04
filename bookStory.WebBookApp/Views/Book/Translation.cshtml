@@ -170,7 +170,7 @@
                                 <div class="collapse multi-collapse" id=@sb>
                                   <form asp-action="EditTranslation" enctype="multipart/form-data" method="post">
                                         <input type="hidden" asp-for="IdTranslation" value=@item.Id />
-                                        <input type="" asp-for="UserName" value=@User.Identity.Name class="form-control" />
+                                        <input type="hidden" asp-for="UserName" value=@User.Identity.Name class="form-control" />
                                         <input type="hidden" asp-for="IdParagraph" class="form-control" value=@Model.Paragraph.Id />
                                         <input type="hidden" asp-for="Rating" value=0 class="form-control" />
                                                 <div class="form-group">
@@ -196,8 +196,9 @@
                                     @Model.Message = @com.Message;
                                     <span class="text-success">@com.FirstName @com.LastName: </span>
                                     <span class="text-dark ml-1">@com.Message</span>
-                                    <span class="text-danger timecomment ml-2">@com.DateComment</span>
-                                    <a class="text-primary" data-toggle="collapse" href="#@mce" role="button" aria-expanded="false" aria-controls=@mce>Sửa</a>
+                                    <span class="text-warning timecomment ml-2">@com.DateComment</span>
+                                    <a class="text-primary" data-toggle="collapse" href="#@mce" role="button" aria-expanded="false" aria-controls=@mce>| Sửa</a>
+                                    <a class="text-danger" data-toggle="collapse" href="#@mce" role="button" aria-expanded="false" aria-controls=@mce>| Xóa</a>
                                     <hr class="mt-0 bg-info" />
                                     <div class="row">
                                           <div class="col">
@@ -205,9 +206,9 @@
                                           <div class="col">
                                             <div class="collapse multi-collapse" id=@mce>
                                               <form asp-action="EditComment" enctype="multipart/form-data" method="post">
-                                                            <input  asp-for="IdComment" value=@com.Id />
-                                                            <input  asp-for="UserName" value=@User.Identity.Name class="form-control" />
-                                                            <input  asp-for="IdTranslation" class="form-control" value=@item.Id />
+                                                            <input type="hidden" asp-for="IdComment" value=@com.Id />
+                                                            <input type="hidden" asp-for="UserName" value=@User.Identity.Name class="form-control" />
+                                                            <input type="hidden" asp-for="IdTranslation" class="form-control" value=@item.Id />
                                                             <div class="form-group">
                                                               <textarea
                                                                 asp-for="Message" 

@@ -21,7 +21,7 @@ namespace bookStory.Data.Configurations
             //builder.Property(x => x.IdUser).IsRequired(); //int
             //builder.Property(x => x.IdProject).IsRequired(); //int
             //builder.Property(x => x.IdParagraph).IsRequired(); //int
-            builder.Property(x => x.Text).IsRequired().HasMaxLength(200);
+            builder.Property(x => x.Text).IsRequired().HasColumnType("nvarchar(MAX)");
             builder.Property(x => x.Rating).IsRequired().HasMaxLength(200);
             //builder.Property(x => x.IdProject).IsRequired(); //int
 

@@ -21,7 +21,7 @@ namespace bookStory.Data.Configurations
 
             //builder.Property(x => x.IdUser).IsRequired(); //int
             builder.Property(x => x.IdTranslation).IsRequired();
-            builder.Property(x => x.Message).IsRequired().HasMaxLength(200);
+            builder.Property(x => x.Message).IsRequired().HasColumnType("nvarchar(MAX)");
             builder.Property(x => x.DateComment);
 
             //khóa ngoài
