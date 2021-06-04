@@ -20,5 +20,8 @@ namespace bookStory.WebBookApp.Models
         public BookViewModel Book { get; set; }
         public PagedResult<TranslationViewModel> ListTranslations { get; set; }
         public List<CommentViewModel> ListComments { get; set; }
+        public int IdParagraph { set; get; }
+        public string Text { set; get; }
+        public string Rating { set; get; }
     }
 }

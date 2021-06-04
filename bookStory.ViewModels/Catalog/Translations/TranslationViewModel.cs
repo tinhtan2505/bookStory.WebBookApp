@@ -11,7 +11,6 @@ namespace bookStory.ViewModels.Catalog.Translations
     {
         public int Id { set; get; }
         public Guid UserId { set; get; }
-        public int IdProject { set; get; }
         public int IdParagraph { set; get; }
         public string Text { set; get; }
         public string Rating { set; get; }

@@ -97,7 +97,6 @@ namespace bookStory.AdminApp.Controllers
             {
                 Id = Translation.Id,
                 UserId = Translation.UserId,
-                IdProject = Translation.IdProject,
                 IdParagraph = Translation.IdParagraph,
                 Text = Translation.Text,
                 Rating = Translation.Rating,
