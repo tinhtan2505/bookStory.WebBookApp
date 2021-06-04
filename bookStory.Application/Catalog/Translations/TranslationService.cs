@@ -32,7 +32,7 @@ namespace bookStory.Application.Catalog.Translations
         {
             var query = from b in _context.Translations
                         select b;
-            var data = await query.Select(x => new TranslationViewModel()
+            var data = await query.OrderByDescending(x => x.Date).Select(x => new TranslationViewModel()
             {
                 Id = x.Id,
                 UserId = x.UserId,
@@ -95,7 +95,7 @@ namespace bookStory.Application.Catalog.Translations
             }
 
             int totalRow = await query.CountAsync();
-            var data = await query.Skip((request.PageIndex - 1) * request.PageSize).Take(request.PageSize)
+            var data = await query.OrderByDescending(x => x.t.Date).Skip((request.PageIndex - 1) * request.PageSize).Take(request.PageSize)
                 .Select(x => new TranslationViewModel()
                 {
                     Id = x.t.Id,

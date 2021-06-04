@@ -32,7 +32,7 @@ namespace bookStory.Application.Catalog.Comments
             var query = from c in _context.Comments
                         join u in _userManager.Users on c.UserId equals u.Id
                         select new { c, u };
-            var data = await query.Select(x => new CommentViewModel()
+            var data = await query.OrderBy(x => x.c.DateComment).Select(x => new CommentViewModel()
             {
                 Id = x.c.Id,
                 UserId = x.c.UserId,

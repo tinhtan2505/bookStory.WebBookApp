@@ -40,6 +40,11 @@
         </div>
         
         <div class="container">
+            <div class="underlined-title">
+                <div class="editContent">
+                    <h1 class=" latestitems">Đoạn văn</h1>
+                </div>
+            </div>
             <div class="row border-top border-success rounded m-5">
                 <div class="
                 col-md-10
@@ -68,9 +73,9 @@
                         <div class="col-md-2"></div>
                         <div class="col-md-10 pt-3">
                             <form asp-action="CreateTranslation" enctype="multipart/form-data" method="post">
-                                <input asp-for="UserName" value=@User.Identity.Name class="form-control" />
-                                <input asp-for="IdParagraph" class="form-control" value=@Model.Paragraph.Id />
-                                <input asp-for="Rating" value=0 class="form-control" />
+                                <input type="hidden" asp-for="UserName" value=@User.Identity.Name class="form-control" />
+                                <input type="hidden" asp-for="IdParagraph" class="form-control" value=@Model.Paragraph.Id />
+                                <input type="hidden" asp-for="Rating" value=0 class="form-control" />
                                 <div class="form-group">
                                     <textarea asp-for="Text" 
                                               class="form-control"
@@ -84,6 +89,11 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="underlined-title">
+            <div class="editContent">
+                <h1 class=" latestitems">Các bản dịch</h1>
             </div>
         </div>
         @for (int i = 0; i < Model.ListTranslations.Items.Count; i++)
@@ -131,6 +141,7 @@
                             </div>
                             <div class="col-md-8">
                                 <span class="mt-2">@item.Text</span>
+                                <span class="text-danger timecomment ml-2">@item.Date</span>
                             </div>
                         </div>
                     </div>
@@ -141,16 +152,41 @@
                 rounded-right
                 text-dark
               ">
-                    <button type="button"
-                            class="btn btn-outline-primary float-right mt-2">
-                        Sửa
-                    </button>
+              @{
+                        var sb = "suabandich"+@item.Id.ToString();
+              }
+                    <button class="btn btn-outline-primary float-right mt-2" type="button" data-toggle="collapse" data-target="#@sb" aria-expanded="false" aria-controls=@sb>Sửa</button>
                 </div>
                 <div class="container">
                     <div class="row">
 
                         <div class="col-md-2"></div>
                         <div class="col-md-10 pt-3">
+                            <div class="row">
+                              <div class="col">
+                              </div>
+                              <div class="col">
+                                <div class="collapse multi-collapse" id=@sb>
+                                  <form asp-action="EditTranslation" enctype="multipart/form-data" method="post">
+                                        <input type="hidden" asp-for="IdTranslation" value=@item.Id />
+                                        <input type="hidden" asp-for="UserName" value=@User.Identity.Name class="form-control" />
+                                        <input type="hidden" asp-for="IdParagraph" class="form-control" value=@Model.Paragraph.Id />
+                                        <input type="hidden" asp-for="Rating" value=0 class="form-control" />
+                                                <div class="form-group">
+                                                  <textarea
+                                                    asp-for="Text" 
+                                                    class="form-control"
+                                                    id="exampleFormControlTextarea1"
+                                                    rows="3"
+                                                  >@item.Text</textarea>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary mb-1">
+                                                  Sửa
+                                                </button>
+                                              </form>
+                                </div>
+                              </div>
+                            </div>
                             @foreach (var com in Model.ListComments)
                             {
                                 if (item.Id == com.IdTranslation)
@@ -158,6 +194,7 @@
                                     <span class="text-success">@com.FirstName @com.LastName: </span>
                                     <span class="text-dark ml-1">@com.Message</span>
                                     <span class="text-danger timecomment ml-2">@com.DateComment</span>
+                                    <a class="text-primary text-right">Sửa</a>
                                     <hr class="mt-0 bg-info" />
                                 }
                             }

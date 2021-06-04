@@ -159,5 +159,32 @@ namespace bookStory.WebBookApp.Controllers
             ModelState.AddModelError("", "Thêm mới Sách thất bại");
             return View(request);
         }
+
+        [HttpPost]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> EditTranslation([FromForm] ParagraphDetailViewModel request)
+        {
+            var user = await _userApiClient.GetUsersName(request.UserName);
+            TranslationUpdateRequest create = new TranslationUpdateRequest()
+            {
+                Id = request.IdTranslation,
+                UserId = user.ResultObj.Id,
+                IdParagraph = request.IdParagraph,
+                Text = request.Text,
+                Rating = request.Rating
+            };
+            if (!ModelState.IsValid)
+                return View(request);
+
+            var result = await _translationApiClient.UpdateTranslation(create);
+            if (result)
+            {
+                TempData["result"] = "Cập nhật sách thành công";
+                return RedirectToAction("Translation", "Book", new { id = request.IdParagraph });
+            }
+
+            ModelState.AddModelError("", "Cập nhật sách thất bại");
+            return View(request);
+        }
     }
 }
