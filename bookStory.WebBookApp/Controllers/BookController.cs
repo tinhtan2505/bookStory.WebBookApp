@@ -49,16 +49,9 @@ namespace bookStory.WebBookApp.Controllers
             _userApiClient = userApiClient;
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> GetUsersName(string UserName)
-        //{
-        //    var roleAssignRequest = await _userApiClient.GetUsersName(UserName);
-        //    return View(roleAssignRequest);
-        //}
         public async Task<IActionResult> Index()
         {
             //var msg = _loc.GetLocalizedString("Vietnamese");
-            var user = await _userApiClient.GetUsersName("tinhtan");
             var culture = CultureInfo.CurrentCulture.Name;
             var viewModel = new HomeViewModel
             {
@@ -79,7 +72,6 @@ namespace bookStory.WebBookApp.Controllers
                 PageIndex = 1,
                 PageSize = 10
             });
-            //var pra = await _paragraphApiClient.GetA
             return View(new BookDetailViewModel()
             {
                 Book = book,

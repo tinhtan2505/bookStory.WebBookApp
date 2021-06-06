@@ -3,7 +3,6 @@
     ViewData["Title"] = "Translation";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var culture = CultureInfo.CurrentCulture;
-    
 }
 @inject Microsoft.Extensions.Configuration.IConfiguration Configuration;
 @inject LazZiya.ExpressLocalization.ISharedCultureLocalizer _loc;
@@ -72,20 +71,23 @@
                     <div class="row">
                         <div class="col-md-2"></div>
                         <div class="col-md-10 pt-3">
-                            <form asp-action="CreateTranslation" enctype="multipart/form-data" method="post">
-                                <input type="hidden" asp-for="UserName" value=@User.Identity.Name class="form-control" />
-                                <input type="hidden" asp-for="IdParagraph" class="form-control" value=@Model.Paragraph.Id />
-                                <input type="hidden" asp-for="Rating" value=0 class="form-control" />
-                                <div class="form-group">
-                                    <textarea asp-for="Text" 
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <form asp-action="CreateTranslation" enctype="multipart/form-data" method="post">
+                                    <input type="hidden" asp-for="UserName" value=@User.Identity.Name class="form-control" />
+                                    <input type="hidden" asp-for="IdParagraph" class="form-control" value=@Model.Paragraph.Id />
+                                    <input type="hidden" asp-for="Rating" value=0 class="form-control" />
+                                    <div class="form-group">
+                                        <textarea asp-for="Text" 
                                               class="form-control"
                                               id="exampleFormControlTextarea1"
                                               rows="3"></textarea>
-                                </div>
-                                <button type="submit" class="btn btn-primary mb-1">
-                                    Thêm bản dịch
-                                </button>
-                            </form>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary mb-1">
+                                        Thêm bản dịch
+                                    </button>
+                                </form>
+                            }
                         </div>
                     </div>
                 </div>
@@ -156,7 +158,11 @@
                     var sb = "suabandich"+@item.Id.ToString();
                         @Model.Text = @item.Text;
               }
-                    <button type="submit" class="btn btn-danger float-right mt-2 ml-2" data-toggle="modal" data-target="#@sb"> Xóa</button>
+                    @if(@item.UserName == @User.Identity.Name)
+                    {
+                        <button type="submit" class="btn btn-danger float-right mt-2 ml-2" data-toggle="modal" data-target="#@sb"> Xóa</button>
+                        <button class="btn btn-outline-primary float-right mt-2" type="button" data-toggle="collapse" data-target="#@sb" aria-expanded="false" aria-controls=@sb>Sửa</button>
+                    }
                     <div class="modal fade" id= @sb tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                           <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
@@ -173,16 +179,14 @@
                                               <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                                                 <form asp-action="DeleteTranslation">
-                                                    <input  asp-for="IdTranslation" value=@item.Id />
-                                                    <input  asp-for="IdParagraph" class="form-control" value=@Model.Paragraph.Id />
-                                                    <input class="btn btn-primary" type="submit" value="Yes" class="btn btn-danger" />
+                                                    <input type="hidden" asp-for="IdTranslation" value=@item.Id />
+                                                    <input type="hidden" asp-for="IdParagraph" class="form-control" value=@Model.Paragraph.Id />
+                                                    <input type="submit" value="Yes" class="btn btn-danger" />
                                                 </form>
                                               </div>
                                             </div>
                                           </div>
                                         </div>
-                    <button class="btn btn-outline-primary float-right mt-2" type="button" data-toggle="collapse" data-target="#@sb" aria-expanded="false" aria-controls=@sb>Sửa</button>
-                    
                 </div>
                 <div class="container">
                     <div class="row">
@@ -224,9 +228,12 @@
                                     <span class="text-success">@com.FirstName @com.LastName: </span>
                                     <span class="text-dark ml-1">@com.Message</span>
                                     <span class="text-warning timecomment ml-2">@com.DateComment</span>
-                                    <a class="text-primary" data-toggle="collapse" href="#@mce" role="button" aria-expanded="false" aria-controls=@mce>| Sửa</a>
-                                    <a class="text-danger" data-toggle="modal" data-target="#@mce" role="button" aria-expanded="false" aria-controls=@mce>| Xóa</a>
-
+                                    if(@com.UserName == @User.Identity.Name)
+                                    {
+                                        <a class="text-primary" data-toggle="collapse" href="#@mce" role="button" aria-expanded="false" aria-controls=@mce>| Sửa</a>
+                                        <a class="text-danger" data-toggle="modal" data-target="#@mce" role="button" aria-expanded="false" aria-controls=@mce>| Xóa</a>
+                                    }
+                                    
                                         <div class="modal fade" id= @mce tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                           <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
@@ -245,7 +252,7 @@
                                                 <form asp-action="DeleteComment">
                                                     <input type="hidden" asp-for="IdComment" value=@com.Id />
                                                     <input type="hidden" asp-for="IdTranslation" class="form-control" value=@item.Id />
-                                                    <input class="btn btn-primary" type="submit" value="Yes" class="btn btn-danger" />
+                                                    <input class="btn btn-primary" type="submit" value="Yes"/>
                                                 </form>
                                               </div>
                                             </div>
@@ -279,6 +286,7 @@
                                         </div>
                                 }
                             }
+                            @if (User.Identity.IsAuthenticated){
                             <form asp-action="CreateComment" enctype="multipart/form-data" method="post">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <input type="hidden" asp-for="UserName" value=@User.Identity.Name class="form-control" />
@@ -293,6 +301,7 @@
                                 </div>
                                 <button type="submit" class="btn btn-primary mb-1">Gửi</button>
                             </form>
+                            }
                         </div>
                     </div>
                 </div>

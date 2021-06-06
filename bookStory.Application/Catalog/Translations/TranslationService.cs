@@ -106,7 +106,8 @@ namespace bookStory.Application.Catalog.Translations
                     Rating = x.t.Rating,
                     Date = x.t.Date,
                     FirstName = x.u.FirstName,
-                    LastName = x.u.LastName
+                    LastName = x.u.LastName,
+                    UserName = x.u.UserName
                 }).ToListAsync();
 
             var pagedResult = new PagedResult<TranslationViewModel>()

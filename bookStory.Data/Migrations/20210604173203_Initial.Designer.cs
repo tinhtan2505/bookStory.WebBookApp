@@ -10,7 +10,7 @@ using bookStory.Data.EF;
 namespace bookStory.Data.Migrations
 {
     [DbContext(typeof(bookStoryDbContext))]
-    [Migration("20210603162320_Initial")]
+    [Migration("20210604173203_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -182,7 +182,7 @@ namespace bookStory.Data.Migrations
                         new
                         {
                             Id = new Guid("8d04dce2-969a-435d-bba4-df3f325983dc"),
-                            ConcurrencyStamp = "bae22d19-0445-404f-86df-29f5669a8f32",
+                            ConcurrencyStamp = "4351faea-522e-4960-b815-48ea45c71eb2",
                             Description = "Administrator role",
                             Name = "admin",
                             NormalizedName = "admin"
@@ -259,7 +259,7 @@ namespace bookStory.Data.Migrations
                         {
                             Id = new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fa82637e-e793-4186-a1c2-ffbbe6b294eb",
+                            ConcurrencyStamp = "9a4e2471-8b2a-4420-a661-3f30fee326dd",
                             Dob = new DateTime(2020, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "tedu.international@gmail.com",
                             EmailConfirmed = true,
@@ -268,7 +268,7 @@ namespace bookStory.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "tedu.international@gmail.com",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGbo5njssptE8Gl34PK6MpysVujBbd+eC2q7dz+WueoZ6sMOFfhgIWqLHF3M0HVZBA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBUkMw/p61zlenp5fWe3r/1+X9Jgu3OhO++hTwQ+/9rjIx02NaFUfJ9nguQ8bHYNTw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -388,8 +388,7 @@ namespace bookStory.Data.Migrations
 
                     b.Property<string>("Message")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(MAX)");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -477,8 +476,7 @@ namespace bookStory.Data.Migrations
 
                     b.Property<string>("Order")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(MAX)");
 
                     b.Property<string>("Type")
                         .IsRequired()
@@ -529,8 +527,7 @@ namespace bookStory.Data.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(MAX)");
 
                     b.Property<int>("IdBook")
                         .HasColumnType("int");
@@ -563,7 +560,7 @@ namespace bookStory.Data.Migrations
                         new
                         {
                             Id = 1,
-                            DateProject = new DateTime(2021, 6, 3, 23, 23, 18, 997, DateTimeKind.Local).AddTicks(6931),
+                            DateProject = new DateTime(2021, 6, 5, 0, 32, 3, 72, DateTimeKind.Local).AddTicks(6502),
                             Description = "Description1",
                             IdBook = 1,
                             IdLanguage = "vi",
@@ -574,7 +571,7 @@ namespace bookStory.Data.Migrations
                         new
                         {
                             Id = 2,
-                            DateProject = new DateTime(2021, 6, 3, 23, 23, 18, 999, DateTimeKind.Local).AddTicks(80),
+                            DateProject = new DateTime(2021, 6, 5, 0, 32, 3, 73, DateTimeKind.Local).AddTicks(6621),
                             Description = "Description2",
                             IdBook = 1,
                             IdLanguage = "en",
@@ -585,7 +582,7 @@ namespace bookStory.Data.Migrations
                         new
                         {
                             Id = 3,
-                            DateProject = new DateTime(2021, 6, 3, 23, 23, 18, 999, DateTimeKind.Local).AddTicks(103),
+                            DateProject = new DateTime(2021, 6, 5, 0, 32, 3, 73, DateTimeKind.Local).AddTicks(6638),
                             Description = "Description3",
                             IdBook = 1,
                             IdLanguage = "vi",
@@ -607,9 +604,6 @@ namespace bookStory.Data.Migrations
                     b.Property<int>("IdTranslation")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TranslationId")
-                        .HasColumnType("int");
-
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
@@ -618,7 +612,7 @@ namespace bookStory.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TranslationId");
+                    b.HasIndex("IdTranslation");
 
                     b.HasIndex("UserId");
 
@@ -665,12 +659,17 @@ namespace bookStory.Data.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
+                    b.Property<int?>("TranslationId")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("IdParagraph");
+
+                    b.HasIndex("TranslationId");
 
                     b.HasIndex("UserId");
 
@@ -715,9 +714,6 @@ namespace bookStory.Data.Migrations
                     b.Property<int>("IdParagraph")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdProject")
-                        .HasColumnType("int");
-
                     b.Property<string>("Rating")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -725,8 +721,7 @@ namespace bookStory.Data.Migrations
 
                     b.Property<string>("Text")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(MAX)");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -734,8 +729,6 @@ namespace bookStory.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("IdParagraph");
-
-                    b.HasIndex("IdProject");
 
                     b.HasIndex("UserId");
 
@@ -745,9 +738,8 @@ namespace bookStory.Data.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2021, 6, 3, 23, 23, 18, 999, DateTimeKind.Local).AddTicks(3178),
+                            Date = new DateTime(2021, 6, 5, 0, 32, 3, 73, DateTimeKind.Local).AddTicks(8367),
                             IdParagraph = 3,
-                            IdProject = 2,
                             Rating = "ok",
                             Text = "Text2",
                             UserId = new Guid("00000000-0000-0000-0000-000000000000")
@@ -755,9 +747,8 @@ namespace bookStory.Data.Migrations
                         new
                         {
                             Id = 2,
-                            Date = new DateTime(2021, 6, 3, 23, 23, 18, 999, DateTimeKind.Local).AddTicks(3615),
+                            Date = new DateTime(2021, 6, 5, 0, 32, 3, 73, DateTimeKind.Local).AddTicks(8669),
                             IdParagraph = 3,
-                            IdProject = 2,
                             Rating = "yes",
                             Text = "Text3",
                             UserId = new Guid("00000000-0000-0000-0000-000000000000")
@@ -765,9 +756,8 @@ namespace bookStory.Data.Migrations
                         new
                         {
                             Id = 3,
-                            Date = new DateTime(2021, 6, 3, 23, 23, 18, 999, DateTimeKind.Local).AddTicks(3622),
+                            Date = new DateTime(2021, 6, 5, 0, 32, 3, 73, DateTimeKind.Local).AddTicks(8674),
                             IdParagraph = 3,
-                            IdProject = 2,
                             Rating = "no",
                             Text = "Text4",
                             UserId = new Guid("00000000-0000-0000-0000-000000000000")
@@ -843,8 +833,10 @@ namespace bookStory.Data.Migrations
             modelBuilder.Entity("bookStory.Data.Entities.Rating", b =>
                 {
                     b.HasOne("bookStory.Data.Entities.Translation", "Translation")
-                        .WithMany()
-                        .HasForeignKey("TranslationId");
+                        .WithMany("Ratings")
+                        .HasForeignKey("IdTranslation")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("bookStory.Data.Entities.AppUser", "AppUser")
                         .WithMany("Ratings")
@@ -865,6 +857,10 @@ namespace bookStory.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("bookStory.Data.Entities.Translation", null)
+                        .WithMany("Reports")
+                        .HasForeignKey("TranslationId");
+
                     b.HasOne("bookStory.Data.Entities.AppUser", "AppUser")
                         .WithMany("Reports")
                         .HasForeignKey("UserId")
@@ -884,12 +880,6 @@ namespace bookStory.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("bookStory.Data.Entities.Project", "Project")
-                        .WithMany("Translations")
-                        .HasForeignKey("IdProject")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("bookStory.Data.Entities.AppUser", "AppUser")
                         .WithMany("Translations")
                         .HasForeignKey("UserId")
@@ -899,8 +889,6 @@ namespace bookStory.Data.Migrations
                     b.Navigation("AppUser");
 
                     b.Navigation("Paragraph");
-
-                    b.Navigation("Project");
                 });
 
             modelBuilder.Entity("bookStory.Data.Entities.AppUser", b =>
@@ -937,14 +925,13 @@ namespace bookStory.Data.Migrations
                     b.Navigation("Translations");
                 });
 
-            modelBuilder.Entity("bookStory.Data.Entities.Project", b =>
-                {
-                    b.Navigation("Translations");
-                });
-
             modelBuilder.Entity("bookStory.Data.Entities.Translation", b =>
                 {
                     b.Navigation("Comments");
+
+                    b.Navigation("Ratings");
+
+                    b.Navigation("Reports");
                 });
 #pragma warning restore 612, 618
         }

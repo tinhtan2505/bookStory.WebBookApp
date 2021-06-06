@@ -20,7 +20,6 @@ namespace bookStory.Data.Entities
         public AppUser AppUser { get; set; }
         public List<Comment> Comments { get; set; }
         public List<Rating> Ratings { get; set; }
-        public List<Report> Reports { get; set; }
         public Paragraph Paragraph { get; set; }
         //public Project Project { get; set; }
     }

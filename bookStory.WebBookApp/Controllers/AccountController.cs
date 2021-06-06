@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using bookStory.ApiIntegration.User;
 using bookStory.Utilities.Constants;
 using bookStory.ViewModels.System.Users;
+using bookStory.WebBookApp.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
@@ -22,6 +23,7 @@ namespace bookStory.WebBookApp.Controllers
     {
         private readonly IUserApiClient _userApiClient;
         private readonly IConfiguration _configuration;
+        private static Guid GetUserIdLoged;
 
         public AccountController(IUserApiClient userApiClient,
             IConfiguration configuration)
@@ -59,7 +61,7 @@ namespace bookStory.WebBookApp.Controllers
                         CookieAuthenticationDefaults.AuthenticationScheme,
                         userPrincipal,
                         authProperties);
-
+            GetUserIdLoged = (await _userApiClient.GetUsersName(request.UserName)).ResultObj.Id;
             return RedirectToAction("Index", "Home");
         }
 

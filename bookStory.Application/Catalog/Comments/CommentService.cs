@@ -40,7 +40,8 @@ namespace bookStory.Application.Catalog.Comments
                 Message = x.c.Message,
                 DateComment = x.c.DateComment,
                 FirstName = x.u.FirstName,
-                LastName = x.u.LastName
+                LastName = x.u.LastName,
+                UserName = x.u.UserName
             }).ToListAsync();
             return data;
         }

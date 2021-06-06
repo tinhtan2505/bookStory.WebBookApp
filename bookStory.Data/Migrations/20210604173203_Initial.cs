@@ -193,7 +193,7 @@ namespace bookStory.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     IdBook = table.Column<int>(type: "int", nullable: false),
-                    Order = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Order = table.Column<string>(type: "nvarchar(MAX)", nullable: false),
                     Type = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false)
                 },
                 constraints: table =>
@@ -216,7 +216,7 @@ namespace bookStory.Data.Migrations
                     IdBook = table.Column<int>(type: "int", nullable: false),
                     IdLanguage = table.Column<string>(type: "varchar(5)", nullable: true),
                     Title = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(MAX)", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     DateProject = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -245,42 +245,14 @@ namespace bookStory.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Reports",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IdParagraph = table.Column<int>(type: "int", nullable: false),
-                    Reason = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Reports", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Reports_AppUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AppUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Reports_Paragraphs_IdParagraph",
-                        column: x => x.IdParagraph,
-                        principalTable: "Paragraphs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Translations",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IdProject = table.Column<int>(type: "int", nullable: false),
                     IdParagraph = table.Column<int>(type: "int", nullable: false),
-                    Text = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Text = table.Column<string>(type: "nvarchar(MAX)", nullable: false),
                     Rating = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -299,11 +271,6 @@ namespace bookStory.Data.Migrations
                         principalTable: "Paragraphs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Translations_Projects_IdProject",
-                        column: x => x.IdProject,
-                        principalTable: "Projects",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -314,7 +281,7 @@ namespace bookStory.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdTranslation = table.Column<int>(type: "int", nullable: false),
-                    Message = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Message = table.Column<string>(type: "nvarchar(MAX)", nullable: false),
                     DateComment = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -341,8 +308,7 @@ namespace bookStory.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdTranslation = table.Column<int>(type: "int", nullable: false),
-                    Vote = table.Column<int>(type: "int", nullable: false),
-                    TranslationId = table.Column<int>(type: "int", nullable: true)
+                    Vote = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -354,7 +320,40 @@ namespace bookStory.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Ratings_Translations_TranslationId",
+                        name: "FK_Ratings_Translations_IdTranslation",
+                        column: x => x.IdTranslation,
+                        principalTable: "Translations",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Reports",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IdParagraph = table.Column<int>(type: "int", nullable: false),
+                    Reason = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    TranslationId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reports", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Reports_AppUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AppUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Reports_Paragraphs_IdParagraph",
+                        column: x => x.IdParagraph,
+                        principalTable: "Paragraphs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Reports_Translations_TranslationId",
                         column: x => x.TranslationId,
                         principalTable: "Translations",
                         principalColumn: "Id",
@@ -374,7 +373,7 @@ namespace bookStory.Data.Migrations
             migrationBuilder.InsertData(
                 table: "AppRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Description", "Name", "NormalizedName" },
-                values: new object[] { new Guid("8d04dce2-969a-435d-bba4-df3f325983dc"), "bae22d19-0445-404f-86df-29f5669a8f32", "Administrator role", "admin", "admin" });
+                values: new object[] { new Guid("8d04dce2-969a-435d-bba4-df3f325983dc"), "4351faea-522e-4960-b815-48ea45c71eb2", "Administrator role", "admin", "admin" });
 
             migrationBuilder.InsertData(
                 table: "AppUserRoles",
@@ -384,7 +383,7 @@ namespace bookStory.Data.Migrations
             migrationBuilder.InsertData(
                 table: "AppUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Dob", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { new Guid("00000000-0000-0000-0000-000000000000"), 0, "fa82637e-e793-4186-a1c2-ffbbe6b294eb", new DateTime(2020, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), "tedu.international@gmail.com", true, "Toan", "Bach", false, null, "tedu.international@gmail.com", "admin", "AQAAAAEAACcQAAAAEGbo5njssptE8Gl34PK6MpysVujBbd+eC2q7dz+WueoZ6sMOFfhgIWqLHF3M0HVZBA==", null, false, "", false, "admin" });
+                values: new object[] { new Guid("00000000-0000-0000-0000-000000000000"), 0, "9a4e2471-8b2a-4420-a661-3f30fee326dd", new DateTime(2020, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), "tedu.international@gmail.com", true, "Toan", "Bach", false, null, "tedu.international@gmail.com", "admin", "AQAAAAEAACcQAAAAEBUkMw/p61zlenp5fWe3r/1+X9Jgu3OhO++hTwQ+/9rjIx02NaFUfJ9nguQ8bHYNTw==", null, false, "", false, "admin" });
 
             migrationBuilder.InsertData(
                 table: "Books",
@@ -406,16 +405,6 @@ namespace bookStory.Data.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Ratings",
-                columns: new[] { "Id", "IdTranslation", "TranslationId", "UserId", "Vote" },
-                values: new object[,]
-                {
-                    { 1, 2, null, new Guid("00000000-0000-0000-0000-000000000000"), 1 },
-                    { 2, 3, null, new Guid("00000000-0000-0000-0000-000000000000"), 3 },
-                    { 3, 1, null, new Guid("00000000-0000-0000-0000-000000000000"), 5 }
-                });
-
-            migrationBuilder.InsertData(
                 table: "Paragraphs",
                 columns: new[] { "Id", "IdBook", "Order", "Type" },
                 values: new object[,]
@@ -430,45 +419,50 @@ namespace bookStory.Data.Migrations
                 columns: new[] { "Id", "DateProject", "Description", "IdBook", "IdLanguage", "Status", "Title", "UserId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2021, 6, 3, 23, 23, 18, 997, DateTimeKind.Local).AddTicks(6931), "Description1", 1, "vi", 1, "Title1", new Guid("00000000-0000-0000-0000-000000000000") },
-                    { 3, new DateTime(2021, 6, 3, 23, 23, 18, 999, DateTimeKind.Local).AddTicks(103), "Description3", 1, "vi", 1, "Title3", new Guid("00000000-0000-0000-0000-000000000000") },
-                    { 2, new DateTime(2021, 6, 3, 23, 23, 18, 999, DateTimeKind.Local).AddTicks(80), "Description2", 1, "en", 0, "Title2", new Guid("00000000-0000-0000-0000-000000000000") }
+                    { 1, new DateTime(2021, 6, 5, 0, 32, 3, 72, DateTimeKind.Local).AddTicks(6502), "Description1", 1, "vi", 1, "Title1", new Guid("00000000-0000-0000-0000-000000000000") },
+                    { 3, new DateTime(2021, 6, 5, 0, 32, 3, 73, DateTimeKind.Local).AddTicks(6638), "Description3", 1, "vi", 1, "Title3", new Guid("00000000-0000-0000-0000-000000000000") },
+                    { 2, new DateTime(2021, 6, 5, 0, 32, 3, 73, DateTimeKind.Local).AddTicks(6621), "Description2", 1, "en", 0, "Title2", new Guid("00000000-0000-0000-0000-000000000000") }
                 });
 
             migrationBuilder.InsertData(
                 table: "Reports",
-                columns: new[] { "Id", "IdParagraph", "Reason", "UserId" },
+                columns: new[] { "Id", "IdParagraph", "Reason", "TranslationId", "UserId" },
                 values: new object[,]
                 {
-                    { 2, 3, "Reason3", new Guid("00000000-0000-0000-0000-000000000000") },
-                    { 3, 1, "Reason5", new Guid("00000000-0000-0000-0000-000000000000") },
-                    { 1, 2, "Reason1", new Guid("00000000-0000-0000-0000-000000000000") }
+                    { 2, 3, "Reason3", null, new Guid("00000000-0000-0000-0000-000000000000") },
+                    { 3, 1, "Reason5", null, new Guid("00000000-0000-0000-0000-000000000000") },
+                    { 1, 2, "Reason1", null, new Guid("00000000-0000-0000-0000-000000000000") }
                 });
 
             migrationBuilder.InsertData(
                 table: "Translations",
-                columns: new[] { "Id", "Date", "IdParagraph", "IdProject", "Rating", "Text", "UserId" },
+                columns: new[] { "Id", "Date", "IdParagraph", "Rating", "Text", "UserId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2021, 6, 3, 23, 23, 18, 999, DateTimeKind.Local).AddTicks(3178), 3, 2, "ok", "Text2", new Guid("00000000-0000-0000-0000-000000000000") },
-                    { 2, new DateTime(2021, 6, 3, 23, 23, 18, 999, DateTimeKind.Local).AddTicks(3615), 3, 2, "yes", "Text3", new Guid("00000000-0000-0000-0000-000000000000") },
-                    { 3, new DateTime(2021, 6, 3, 23, 23, 18, 999, DateTimeKind.Local).AddTicks(3622), 3, 2, "no", "Text4", new Guid("00000000-0000-0000-0000-000000000000") }
+                    { 1, new DateTime(2021, 6, 5, 0, 32, 3, 73, DateTimeKind.Local).AddTicks(8367), 3, "ok", "Text2", new Guid("00000000-0000-0000-0000-000000000000") },
+                    { 2, new DateTime(2021, 6, 5, 0, 32, 3, 73, DateTimeKind.Local).AddTicks(8669), 3, "yes", "Text3", new Guid("00000000-0000-0000-0000-000000000000") },
+                    { 3, new DateTime(2021, 6, 5, 0, 32, 3, 73, DateTimeKind.Local).AddTicks(8674), 3, "no", "Text4", new Guid("00000000-0000-0000-0000-000000000000") }
                 });
 
             migrationBuilder.InsertData(
                 table: "Comments",
                 columns: new[] { "Id", "DateComment", "IdTranslation", "Message", "UserId" },
-                values: new object[] { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "Message3", new Guid("00000000-0000-0000-0000-000000000000") });
+                values: new object[,]
+                {
+                    { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "Message3", new Guid("00000000-0000-0000-0000-000000000000") },
+                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "Message1", new Guid("00000000-0000-0000-0000-000000000000") },
+                    { 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, "Message5", new Guid("00000000-0000-0000-0000-000000000000") }
+                });
 
             migrationBuilder.InsertData(
-                table: "Comments",
-                columns: new[] { "Id", "DateComment", "IdTranslation", "Message", "UserId" },
-                values: new object[] { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "Message1", new Guid("00000000-0000-0000-0000-000000000000") });
-
-            migrationBuilder.InsertData(
-                table: "Comments",
-                columns: new[] { "Id", "DateComment", "IdTranslation", "Message", "UserId" },
-                values: new object[] { 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, "Message5", new Guid("00000000-0000-0000-0000-000000000000") });
+                table: "Ratings",
+                columns: new[] { "Id", "IdTranslation", "UserId", "Vote" },
+                values: new object[,]
+                {
+                    { 3, 1, new Guid("00000000-0000-0000-0000-000000000000"), 5 },
+                    { 1, 2, new Guid("00000000-0000-0000-0000-000000000000"), 1 },
+                    { 2, 3, new Guid("00000000-0000-0000-0000-000000000000"), 3 }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_BookImages_IdBook",
@@ -506,9 +500,9 @@ namespace bookStory.Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Ratings_TranslationId",
+                name: "IX_Ratings_IdTranslation",
                 table: "Ratings",
-                column: "TranslationId");
+                column: "IdTranslation");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Ratings_UserId",
@@ -521,6 +515,11 @@ namespace bookStory.Data.Migrations
                 column: "IdParagraph");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Reports_TranslationId",
+                table: "Reports",
+                column: "TranslationId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Reports_UserId",
                 table: "Reports",
                 column: "UserId");
@@ -529,11 +528,6 @@ namespace bookStory.Data.Migrations
                 name: "IX_Translations_IdParagraph",
                 table: "Translations",
                 column: "IdParagraph");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Translations_IdProject",
-                table: "Translations",
-                column: "IdProject");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Translations_UserId",
@@ -571,28 +565,28 @@ namespace bookStory.Data.Migrations
                 name: "Comments");
 
             migrationBuilder.DropTable(
+                name: "Projects");
+
+            migrationBuilder.DropTable(
                 name: "Ratings");
 
             migrationBuilder.DropTable(
                 name: "Reports");
 
             migrationBuilder.DropTable(
+                name: "Languages");
+
+            migrationBuilder.DropTable(
                 name: "Translations");
-
-            migrationBuilder.DropTable(
-                name: "Paragraphs");
-
-            migrationBuilder.DropTable(
-                name: "Projects");
 
             migrationBuilder.DropTable(
                 name: "AppUsers");
 
             migrationBuilder.DropTable(
-                name: "Books");
+                name: "Paragraphs");
 
             migrationBuilder.DropTable(
-                name: "Languages");
+                name: "Books");
         }
     }
 }

@@ -12,6 +12,7 @@ namespace bookStory.WebBookApp.Models
 {
     public class ParagraphDetailViewModel
     {
+        public Guid UserIdLoged { set; get; }
         public Guid UserId { set; get; }
         public string UserName { get; set; }
         public int IdTranslation { set; get; }

@@ -22,7 +22,7 @@ namespace bookStory.Data.Configurations
             //builder.Property(x => x.IdBook).IsRequired(); //int
             //builder.Property(x => x.IdLanguage).IsRequired(); //int
             builder.Property(x => x.Title).IsRequired().HasMaxLength(200);
-            builder.Property(x => x.Description).IsRequired().HasMaxLength(200);
+            builder.Property(x => x.Description).IsRequired().HasColumnType("nvarchar(MAX)");
             builder.Property(x => x.DateProject);
             builder.Property(x => x.UserId).IsRequired(); //int
             builder.Property(x => x.Status).IsRequired(); //int
@@ -33,5 +33,4 @@ namespace bookStory.Data.Configurations
             builder.HasOne(x => x.Language).WithMany(x => x.Projects).HasForeignKey(x => x.IdLanguage);
         }
     }
-    
 }
