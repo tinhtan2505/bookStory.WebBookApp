@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using bookStory.AdminApp.Controllers;
 using bookStory.ApiIntegration.Paragraph;
 using bookStory.ApiIntegration.Translation;
 using bookStory.Utilities.Constants;
@@ -12,9 +11,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 
-namespace bookStory.AdminApp.Controllers
+namespace bookStory.WebBookApp.Controllers
 {
-    public class TranslationController : BaseController
+    public class TranslationController : Controller
     {
         private readonly ITranslationApiClient _TranslationApiClient;
         private readonly IParagraphApiClient _paragraphApiClient;
@@ -29,7 +28,7 @@ namespace bookStory.AdminApp.Controllers
             _paragraphApiClient = paragraphApiClient;
         }
 
-        public async Task<IActionResult> Index(string keyword, int? idparagraph, int pageIndex = 1, int pageSize = 2)
+        public async Task<IActionResult> Index(string keyword, int? idparagraph, int pageIndex = 1, int pageSize = 1)
         {
             var languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
 
