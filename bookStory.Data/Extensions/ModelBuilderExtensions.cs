@@ -71,7 +71,7 @@ namespace bookStory.Data.Extensions
                    Id = 1,
                    IdParagraph = 3,
                    Text = "Text2",
-                   Rating = "ok",
+                   Rating = 1,
                    Date = DateTime.Now
                },
                new Translation()
@@ -79,7 +79,7 @@ namespace bookStory.Data.Extensions
                    Id = 2,
                    IdParagraph = 3,
                    Text = "Text3",
-                   Rating = "yes",
+                   Rating = 2,
                    Date = DateTime.Now
                },
                new Translation()
@@ -87,7 +87,7 @@ namespace bookStory.Data.Extensions
                    Id = 3,
                    IdParagraph = 3,
                    Text = "Text4",
-                   Rating = "no",
+                   Rating = 3,
                    Date = DateTime.Now
                }
                );

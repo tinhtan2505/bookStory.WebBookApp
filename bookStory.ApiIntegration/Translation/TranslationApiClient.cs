@@ -95,7 +95,7 @@ namespace bookStory.ApiIntegration.Translation
             requestContent.Add(new StringContent(request.UserId.ToString()), "userId");
             requestContent.Add(new StringContent(request.IdParagraph.ToString()), "idParagraph");
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Text) ? "" : request.Text.ToString()), "text");
-            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Rating) ? "" : request.Rating.ToString()), "rating");
+            requestContent.Add(new StringContent(request.Rating.ToString()), "rating");
             requestContent.Add(new StringContent(request.Date.ToString()), "date");
             //requestContent.Add(new StringContent(languageId), "languageId");
 

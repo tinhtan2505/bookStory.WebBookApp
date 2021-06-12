@@ -12,7 +12,7 @@ namespace bookStory.ViewModels.Catalog.Translations
         public Guid UserId { set; get; }
         public int IdParagraph { set; get; }
         public string Text { set; get; }
-        public string Rating { set; get; }
+        public int Rating { set; get; }
         public DateTime Date { get; set; }
     }
 }

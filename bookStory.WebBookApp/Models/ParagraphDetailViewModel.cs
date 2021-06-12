@@ -25,6 +25,6 @@ namespace bookStory.WebBookApp.Models
         public List<CommentViewModel> ListComments { get; set; }
         public int IdParagraph { set; get; }
         public string Text { set; get; }
-        public string Rating { set; get; }
+        public int Rating { set; get; }
     }
 }

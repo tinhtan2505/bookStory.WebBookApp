@@ -1,5 +1,5 @@
 ﻿@using bookStory.ViewModels.Common;
-@model PagedResult<bookStory.ViewModels.Catalog.Translations.TranslationViewModel>
+@model PagedResult<bookStory.ViewModels.Catalog.Paragraps.ParagraphViewModel>
 
 @{
     ViewData["Title"] = "Danh sách Đoạn văn";
@@ -12,7 +12,6 @@
         }, 2000);
     </script>
 }
-
 <div class="container">
     <div class="row">
         <div class="col-md-12 text-center">
@@ -63,7 +62,7 @@
                             </div>
                             <div class="cold-md-3">
                                 <button type="submit" class="btn btn-primary">Tìm</button>
-                                <button type="button" onclick="window.location.href='/Translation/Index'" class="btn btn-dark">Reset</button>
+                                <button type="button" onclick="window.location.href='/Paragraph/Index'" class="btn btn-dark">Reset</button>
                             </div>
                         </div>
                     </form>
@@ -90,7 +89,7 @@
                                 <div class="row border border-success rounded mr-1">
                                     <div class="col-md-8 text-dark pl-0 pt-1">
                                         <div class="container">
-                                           @* <span>@item.Order</span>*@  @Html.DisplayFor(modelItem => item.IdParagraph)
+                                          @Html.DisplayFor(modelItem => item.Order)
                                         </div>
                                     </div>
                                     <div class="col-md-4 text-dark">
@@ -103,20 +102,23 @@
                             w-100
                           ">
 
-                                            @*@Html.ActionLink("Tất cả bản dịch", "Translation", new { id = item.Id })*@ Tất cả bản dịch
+                                            @Html.ActionLink("Tất cả bản dịch", "Translation", "Book", new { id = item.Id }) 
                                         </button>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="border border-success rounded">
-                                    <div class="text-dark pl-0 pt-1">
-                                        <div class="container">
-                                            <span>bản dịch</span>
+                            @if (@item.RatingMax != null)
+                                {
+                                    <div class="col-md-6">
+                                        <div class="border border-success rounded">
+                                            <div class="text-dark pl-0 pt-1">
+                                                <div class="container">
+                                                    <span>@Html.DisplayFor(modelItem => item.RatingMax)</span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
+                                }
                         </div>
                     }
                 </div>

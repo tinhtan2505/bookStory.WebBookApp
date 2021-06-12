@@ -15,7 +15,7 @@ namespace bookStory.Data.Entities
         public int IdParagraph { set; get; }
 
         public string Text { set; get; }
-        public string Rating { set; get; }
+        public int Rating { set; get; }
         public DateTime Date { get; set; }
         public AppUser AppUser { get; set; }
         public List<Comment> Comments { get; set; }

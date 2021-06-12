@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using bookStory.ApiIntegration.Book;
 using bookStory.ApiIntegration.Paragraph;
-using bookStory.ApiIntegration.Translation;
 using bookStory.Utilities.Constants;
-using bookStory.ViewModels.Catalog.Translations;
+using bookStory.ViewModels.Catalog.Paragraps;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -13,40 +13,41 @@ using Microsoft.Extensions.Configuration;
 
 namespace bookStory.WebBookApp.Controllers
 {
-    public class TranslationController : Controller
+    public class ParagraphController : Controller
     {
-        private readonly ITranslationApiClient _TranslationApiClient;
-        private readonly IParagraphApiClient _paragraphApiClient;
+        private readonly IParagraphApiClient _ParagraphApiClient;
+        private readonly IBookApiClient _bookApiClient;
         private readonly IConfiguration _configuration;
 
-        public TranslationController(ITranslationApiClient TranslationApiClient,
+        public ParagraphController(IParagraphApiClient ParagraphApiClient,
             IConfiguration configuration,
-            IParagraphApiClient paragraphApiClient)
+            IBookApiClient bookApiClient)
         {
             _configuration = configuration;
-            _TranslationApiClient = TranslationApiClient;
-            _paragraphApiClient = paragraphApiClient;
+            _ParagraphApiClient = ParagraphApiClient;
+            _bookApiClient = bookApiClient;
         }
 
-        public async Task<IActionResult> Index(string keyword, int? idparagraph, int pageIndex = 1, int pageSize = 1)
+        public async Task<IActionResult> Index(string keyword, int? idbook, int pageIndex = 1, int pageSize = 2)
         {
             var languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
 
-            var request = new GetManageTranslationPagingRequest()
+            var request = new GetManageParagraphPagingRequest()
             {
                 Keyword = keyword,
                 PageIndex = pageIndex,
-                PageSize = pageSize
+                PageSize = pageSize,
+                IdBook = idbook
                 //LanguageId = languageId
             };
-            var data = await _TranslationApiClient.GetPagings(request);
+            var data = await _ParagraphApiClient.GetPagings(request);
             ViewBag.Keyword = keyword;
-            var paragraphs = await _paragraphApiClient.GetAll();
-            ViewBag.Paragraphs = paragraphs.Select(x => new SelectListItem()
+            var books = await _bookApiClient.GetAll();
+            ViewBag.Books = books.Select(x => new SelectListItem()
             {
-                Text = x.Order,
+                Text = x.FileName,
                 Value = x.Id.ToString(),
-                Selected = idparagraph.HasValue && idparagraph.Value == x.Id
+                Selected = idbook.HasValue && idbook.Value == x.Id
             });
             if (TempData["result"] != null)
             {
@@ -58,7 +59,7 @@ namespace bookStory.WebBookApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            var result = await _TranslationApiClient.GetById(id);
+            var result = await _ParagraphApiClient.GetById(id);
             return View(result);
         }
 
@@ -70,12 +71,12 @@ namespace bookStory.WebBookApp.Controllers
 
         [HttpPost]
         [Consumes("multipart/form-data")]
-        public async Task<IActionResult> Create([FromForm] TranslationCreateRequest request)
+        public async Task<IActionResult> Create([FromForm] ParagraphCreateRequest request)
         {
             if (!ModelState.IsValid)
                 return View(request);
 
-            var result = await _TranslationApiClient.CreateTranslation(request);
+            var result = await _ParagraphApiClient.CreateParagraph(request);
             if (result)
             {
                 TempData["result"] = "Thêm mới Sách thành công";
@@ -91,27 +92,25 @@ namespace bookStory.WebBookApp.Controllers
         {
             //var languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
 
-            var Translation = await _TranslationApiClient.GetById(id);
-            var editVm = new TranslationUpdateRequest()
+            var Paragraph = await _ParagraphApiClient.GetById(id);
+            var editVm = new ParagraphUpdateRequest()
             {
-                Id = Translation.Id,
-                UserId = Translation.UserId,
-                IdParagraph = Translation.IdParagraph,
-                Text = Translation.Text,
-                Rating = Translation.Rating,
-                Date = Translation.Date
+                Id = Paragraph.Id,
+                IdBook = Paragraph.IdBook,
+                Order = Paragraph.Order,
+                Type = Paragraph.Type
             };
             return View(editVm);
         }
 
         [HttpPost]
         [Consumes("multipart/form-data")]
-        public async Task<IActionResult> Edit([FromForm] TranslationUpdateRequest request)
+        public async Task<IActionResult> Edit([FromForm] ParagraphUpdateRequest request)
         {
             if (!ModelState.IsValid)
                 return View(request);
 
-            var result = await _TranslationApiClient.UpdateTranslation(request);
+            var result = await _ParagraphApiClient.UpdateParagraph(request);
             if (result)
             {
                 TempData["result"] = "Cập nhật sách thành công";
@@ -125,19 +124,19 @@ namespace bookStory.WebBookApp.Controllers
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            return View(new TranslationDeleteRequest()
+            return View(new ParagraphDeleteRequest()
             {
                 Id = id
             });
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(TranslationDeleteRequest request)
+        public async Task<IActionResult> Delete(ParagraphDeleteRequest request)
         {
             if (!ModelState.IsValid)
                 return View();
 
-            var result = await _TranslationApiClient.DeleteTranslation(request.Id);
+            var result = await _ParagraphApiClient.DeleteParagraph(request.Id);
             if (result)
             {
                 TempData["result"] = "Xóa thành công";
