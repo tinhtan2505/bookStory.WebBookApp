@@ -27,7 +27,7 @@ namespace bookStory.AdminApp.Controllers.Components
                 CurrentLanguageId = HttpContext
                 .Session
                 .GetString(SystemConstants.AppSettings.DefaultLanguageId),
-                Languages = languages.ResultObj
+                Languages = languages
             };
 
             return View("Default", navigationVm);

@@ -96,6 +96,7 @@
                         <input type="hidden" asp-for="UserName" class="form-control" value=@User.Identity.Name />
                         <span type="hidden" asp-validation-for="UserName" class="text-danger"></span>
                     </div>
+                    
                  @*//////////////////////////////////////////////////////////////////////////*@
                   <div
                     class="wrap-input100 validate-input m-b-23"
@@ -112,7 +113,7 @@
                   </div>
                   @*//////////////////////////////////////////////////////////////////////////*@
                   <div
-                    class="wrap-input100 validate-input"
+                    class="wrap-input100 validate-input m-b-23"
                   >
                   <span asp-for="Description" class="label-input100">Mô tả dự án</span>
                     <input
@@ -125,28 +126,34 @@
                   </div>
                   @*//////////////////////////////////////////////////////////////////////////*@
                   <div
-                    class="wrap-input100 validate-input"
+                    class="m-b-23"
                   >
-                    <span asp-for="IdBook" class="label-input100">Tên sách</span>
-                    <input
+                    <span asp-for="IdBook" class="label-input100 mt-2">Tên sách</span>
+                    <select asp-for="IdBook" name="idBook" asp-items="@ViewBag.Books" class="form-control">
+                                    <option>--Chọn sách--</option>
+                    </select>
+                    @*<input
                     asp-for="IdBook"
                       class="input101"
                       type="text"
                       placeholder="Tên sách"
-                    />
+                    />*@
                     <span asp-validation-for="IdBook" class="text-danger"></span>
                   </div>
                   @*//////////////////////////////////////////////////////////////////////////*@
                   <div
-                    class="wrap-input100 validate-input"
+                    class="m-b-23"
                   >
                     <span asp-for="IdLanguage" class="label-input100">Ngôn ngữ cần dịch</span>
-                    <input
+                    <select asp-for="IdLanguage" name="idLanguage" asp-items="@ViewBag.Languages" class="form-control">
+                                    <option>--Chọn ngôn ngữ--</option>
+                    </select>
+                    @*<input
                     asp-for="IdLanguage"
                       class="input101"
                       type="text"
                       placeholder="Ngôn ngữ cần dịch"
-                    />
+                    />*@
                     <span asp-validation-for="IdLanguage" class="text-danger"></span>
                   </div>
                   @*//////////////////////////////////////////////////////////////////////////*@

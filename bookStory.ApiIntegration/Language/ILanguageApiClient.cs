@@ -9,6 +9,6 @@ namespace bookStory.ApiIntegration.Language
 {
     public interface ILanguageApiClient
     {
-        Task<ApiResult<List<LanguageVm>>> GetAll();
+        Task<List<LanguageVm>> GetAll();
     }
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using bookStory.ApiIntegration.Book;
 using bookStory.ApiIntegration.Comment;
+using bookStory.ApiIntegration.Language;
 using bookStory.ApiIntegration.Paragraph;
 using bookStory.ApiIntegration.Project;
 using bookStory.ApiIntegration.Translation;
@@ -95,6 +96,7 @@ namespace bookStory.WebBookApp
             services.AddTransient<ICommentApiClient, CommentApiClient>();
             services.AddTransient<IUserApiClient, UserApiClient>();
             services.AddTransient<IProjectApiClient, ProjectApiClient>();
+            services.AddTransient<ILanguageApiClient, LanguageApiClient>();
             //services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
             //services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
 

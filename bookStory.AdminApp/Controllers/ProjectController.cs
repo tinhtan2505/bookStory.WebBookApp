@@ -46,7 +46,7 @@ namespace bookStory.AdminApp.Controllers
             var books = await _bookApiClient.GetAll();
             ViewBag.Books = books.Select(x => new SelectListItem()
             {
-                Text = x.Title,
+                Text = x.FileName,
                 Value = x.Id.ToString(),
                 Selected = idBook.HasValue && idBook.Value == x.Id
             });

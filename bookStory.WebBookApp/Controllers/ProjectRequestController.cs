@@ -1,9 +1,11 @@
 ﻿using bookStory.ApiIntegration.Book;
+using bookStory.ApiIntegration.Language;
 using bookStory.ApiIntegration.Project;
 using bookStory.ApiIntegration.User;
 using bookStory.ViewModels.Catalog.Projects;
 using bookStory.WebBookApp.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -18,25 +20,42 @@ namespace bookStory.WebBookApp.Controllers
         private readonly IConfiguration _configuration;
         private readonly IBookApiClient _bookApiClient;
         private readonly IUserApiClient _userApiClient;
+        private readonly ILanguageApiClient _languageApiClient;
 
         public ProjectRequestController(IProjectApiClient ProjectApiClient,
             IConfiguration configuration,
             IBookApiClient bookApiClient,
-            IUserApiClient userApiClient)
+            IUserApiClient userApiClient,
+            ILanguageApiClient languageApiClient)
         {
             _configuration = configuration;
             _ProjectApiClient = ProjectApiClient;
             _bookApiClient = bookApiClient;
             _userApiClient = userApiClient;
+            _languageApiClient = languageApiClient;
         }
 
         [HttpGet]
-        public IActionResult Request()
+        public async Task<IActionResult> Request(int? idBook, int? idLanguage)
         {
             if (TempData["result"] != null)
             {
                 ViewBag.SuccessMsg = TempData["result"];
             }
+            var books = await _bookApiClient.GetAll();
+            ViewBag.Books = books.Select(x => new SelectListItem()
+            {
+                Text = x.FileName,
+                Value = x.Id.ToString(),
+                Selected = idBook.HasValue && idBook.Value == x.Id
+            });
+            var languages = await _languageApiClient.GetAll();
+            ViewBag.Languages = languages.Select(x => new SelectListItem()
+            {
+                Text = x.Name,
+                Value = x.Id.ToString(),
+                Selected = idLanguage.HasValue && idLanguage.Value.Equals(x.Id)
+            });
             return View();
         }
 

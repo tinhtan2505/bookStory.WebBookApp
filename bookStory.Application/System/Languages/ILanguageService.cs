@@ -10,6 +10,6 @@ namespace bookStory.Application.System.Languages
 {
     public interface ILanguageService
     {
-        Task<ApiResult<List<LanguageVm>>> GetAll();
+        Task<List<LanguageVm>> GetAll();
     }
 }
