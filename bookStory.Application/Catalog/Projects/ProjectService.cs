@@ -52,7 +52,7 @@ namespace bookStory.Application.Catalog.Projects
                 Title = request.Title,
                 Description = request.Description,
                 UserId = request.UserId,
-                Status = request.Status,
+                Status = 0,
                 DateProject = DateTime.Now
             };
             _context.Projects.Add(item);

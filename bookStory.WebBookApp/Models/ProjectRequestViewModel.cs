@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace bookStory.ViewModels.Catalog.Projects
+namespace bookStory.WebBookApp.Models
 {
-    public class ProjectCreateRequest
+    public class ProjectRequestViewModel
     {
         public int IdBook { set; get; }
 
         public string IdLanguage { set; get; }
         public string Title { set; get; }
         public string Description { set; get; }
-        public Guid UserId { set; get; }
-        public int Status { set; get; }
+        public string UserName { get; set; }
     }
 }

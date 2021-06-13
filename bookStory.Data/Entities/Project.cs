@@ -10,7 +10,6 @@ namespace bookStory.Data.Entities
     {
         public int Id { set; get; }
         public int IdBook { set; get; }
-
         public string IdLanguage { set; get; }
         public string Title { set; get; }
         public string Description { set; get; }

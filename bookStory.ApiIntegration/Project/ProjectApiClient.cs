@@ -49,7 +49,7 @@ namespace bookStory.ApiIntegration.Project
             requestContent.Add(new StringContent(request.UserId.ToString()), "userId");
             requestContent.Add(new StringContent(request.Title.ToString()), "title");
             requestContent.Add(new StringContent(request.Description.ToString()), "description");
-            requestContent.Add(new StringContent(request.Status.ToString()), "status");
+            //requestContent.Add(new StringContent(request.Status.ToString()), "status");
             //requestContent.Add(new StringContent(request.DateProject.ToString()), "dateProject");
             //requestContent.Add(new StringContent(languageId), "languageId");
 

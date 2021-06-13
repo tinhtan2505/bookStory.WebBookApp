@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using bookStory.ApiIntegration.Book;
 using bookStory.ApiIntegration.Comment;
 using bookStory.ApiIntegration.Paragraph;
+using bookStory.ApiIntegration.Project;
 using bookStory.ApiIntegration.Translation;
 using bookStory.ApiIntegration.User;
 using bookStory.Data.Entities;
@@ -93,6 +94,7 @@ namespace bookStory.WebBookApp
             services.AddTransient<ITranslationApiClient, TranslationApiClient>();
             services.AddTransient<ICommentApiClient, CommentApiClient>();
             services.AddTransient<IUserApiClient, UserApiClient>();
+            services.AddTransient<IProjectApiClient, ProjectApiClient>();
             //services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
             //services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
 
