@@ -57,20 +57,13 @@
                     <div class="productbox">
                         <div class="fadeshop">
                             <div class="captionshop text-center" style="display: none">
-                                <h3>@item.FileName</h3>
+                                <h3>@item.Title</h3>
                                 <h5 style="text-align: right; margin-right: 1rem">
                                     @item.Author
                                 </h5>
-                                <p>
-                                    @item.Title
-                                </p>
-                                <p style="height: 20%">
-                                    <a href="#" class="learn-more detailslearn">
-                                        Xem Bản dịch
-                                    </a>
-                                    <a href="#" class="learn-more detailslearn">
-                                        Yêu cầu dự án
-                                    </a>
+                                
+                                <p style="height: 20%; margin-top: 10px">
+                                    <button type="button" class="btn btn-warning text-white">@Html.ActionLink("Xem Sách", "Detail", new { id = item.Id })</button>
                                 </p>
                             </div>
                             <span class="maxproduct">
@@ -79,7 +72,7 @@
                         </div>
                         <div class="product-details">
 
-                            <h1>@Html.ActionLink(@item.FileName, "Detail", new { id = item.Id })</h1>
+                            <h1>@Html.ActionLink(@item.Title, "Detail", new { id = item.Id })</h1>
                         </div>
                     </div>
                 </div>

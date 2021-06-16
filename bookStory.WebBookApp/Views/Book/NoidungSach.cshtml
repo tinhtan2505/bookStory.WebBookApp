@@ -1,0 +1,56 @@
+﻿@model BookDetailViewModel
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var culture = CultureInfo.CurrentCulture;
+}
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration;
+@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer _loc;
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <div class="text-pageheader">
+                <div class="subtext-image"
+                     data-scrollreveal="enter bottom over 1.7s after 0.1s">
+                    SÁCH
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+      </div>
+    </header>
+
+<!-- CONTENT =============================-->
+<section class="">
+    <div class="container-fluid toparea">
+        <div class="underlined-title">
+            <div class="editContent">
+                <h1 class="text-center latestitems">Thông tin sách</h1>
+            </div>
+            <div class="wow-hr type_short">
+                <span class="wow-hr-h">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                </span>
+            </div>
+        </div>
+
+          @*  <a href="@(Configuration["BaseAddress"])/user-content/10358-h/10358-h.htm">Bấm</a>*@
+           
+    
+    </div>
+    <div class="container-fluid ml-1 mr-1">
+        <div class="row">
+            <div class="col-md-8">
+                <iframe width="100%" height="1000px" frameborder="0" src="https://www.gutenberg.org/files/65613/65613-h/65613-h.htm"></iframe>
+            </div>
+            <div class="col-md-4">
+                Yêu cầu
+            </div>
+        </div>
+     </div>
+     
+</section>

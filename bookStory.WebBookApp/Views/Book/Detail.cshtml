@@ -50,7 +50,7 @@
                         <div class="product-dtl">
                             <div class="product-info">
                                 <div class="product-name">
-                                    <h2>@Html.DisplayFor(model => model.Book.FileName)</h2>
+                                    <h2>@Html.DisplayFor(model => model.Book.Title)</h2>
                                 </div>
                                 <div class="reviews-counter">
                                     <div class="rate">
@@ -83,39 +83,11 @@
                                     <h5><span>Tác giả: @Html.DisplayFor(model => model.Book.Author)</span></h5>
                                 </div>
                             </div>
-                            <p>
+                          @*  <p>
                                 @Html.DisplayFor(model => model.Book.Title)
-                            </p>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="size">Size</label>
-                                    <select id="size" name="size" class="form-control">
-                                        <option>S</option>
-                                        <option>M</option>
-                                        <option>L</option>
-                                        <option>XL</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="color">Color</label>
-                                    <select id="color" name="color" class="form-control">
-                                        <option>Blue</option>
-                                        <option>Green</option>
-                                        <option>Red</option>
-                                    </select>
-                                </div>
-                            </div>
+                            </p>*@
                             <div class="product-count">
-                                <label for="size">Quantity</label>
-                                <form action="#" class="display-flex">
-                                    <div class="qtyminus">-</div>
-                                    <input type="text"
-                                           name="quantity"
-                                           value="1"
-                                           class="qty" />
-                                    <div class="qtyplus">+</div>
-                                </form>
-                                <a href="#" class="round-black-btn">Yêu cầu dự án</a>
+                                <button type="button" class="btn btn-info">@Html.ActionLink("Đọc Sách", "NoidungSach")</button>
                             </div>
                         </div>
                     </div>

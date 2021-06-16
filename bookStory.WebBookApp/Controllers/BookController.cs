@@ -49,13 +49,17 @@ namespace bookStory.WebBookApp.Controllers
             _userApiClient = userApiClient;
         }
 
+        [HttpGet]
+        public IActionResult NoidungSach()
+        {
+            return View();
+        }
+
         public async Task<IActionResult> Index()
         {
-            //var msg = _loc.GetLocalizedString("Vietnamese");
             var culture = CultureInfo.CurrentCulture.Name;
             var viewModel = new HomeViewModel
             {
-                //Slides = await _slideApiClient.GetAll(),
                 FeaturedProducts = await _bookApiClient.GetFeaturedProducts(SystemConstants.ProductSettings.NumberOfFeaturedProducts),
                 LatestProducts = await _bookApiClient.GetLatestProducts(SystemConstants.ProductSettings.NumberOfLatestProducts),
             };
