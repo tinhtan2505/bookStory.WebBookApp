@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using bookStory.ApiIntegration.Book;
 using bookStory.ApiIntegration.Comment;
+using bookStory.ApiIntegration.Language;
 using bookStory.ApiIntegration.Paragraph;
 using bookStory.ApiIntegration.Translation;
 using bookStory.ApiIntegration.User;
@@ -18,6 +19,7 @@ using bookStory.WebBookApp.Models;
 using LazZiya.ExpressLocalization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
@@ -33,13 +35,15 @@ namespace bookStory.WebBookApp.Controllers
         private readonly IParagraphApiClient _paragraphApiClient;
         private readonly ITranslationApiClient _translationApiClient;
         private readonly ICommentApiClient _commentApiClient;
+        private readonly ILanguageApiClient _languageApiClient;
 
         public BookController(ILogger<BookController> logger,
             IBookApiClient bookApiClient,
             IParagraphApiClient paragraphApiClient,
             ITranslationApiClient translationApiClient,
             ICommentApiClient commentApiClient,
-            IUserApiClient userApiClient)
+            IUserApiClient userApiClient,
+            ILanguageApiClient languageApiClient)
         {
             _logger = logger;
             _bookApiClient = bookApiClient;
@@ -47,12 +51,31 @@ namespace bookStory.WebBookApp.Controllers
             _translationApiClient = translationApiClient;
             _commentApiClient = commentApiClient;
             _userApiClient = userApiClient;
+            _languageApiClient = languageApiClient;
         }
 
         [HttpGet]
-        public IActionResult NoidungSach()
+        public async Task<IActionResult> NoidungSach(int id, int? idLanguage)
         {
-            return View();
+            var languages = await _languageApiClient.GetAll();
+            ViewBag.Languages = languages.Select(x => new SelectListItem()
+            {
+                Text = x.Name,
+                Value = x.Id.ToString(),
+                Selected = idLanguage.HasValue && idLanguage.Value.Equals(x.Id)
+            });
+            var book = await _bookApiClient.GetById(id);
+            var pra = await _paragraphApiClient.GetPagings(new GetManageParagraphPagingRequest()
+            {
+                IdBook = id,
+                PageIndex = 1,
+                PageSize = 10
+            });
+            return View(new BookDetailViewModel()
+            {
+                Book = book,
+                ListParagraphs = pra
+            });
         }
 
         public async Task<IActionResult> Index()

@@ -45,10 +45,94 @@
     <div class="container-fluid ml-1 mr-1">
         <div class="row">
             <div class="col-md-8">
-                <iframe width="100%" height="1000px" frameborder="0" src="https://www.gutenberg.org/files/65613/65613-h/65613-h.htm"></iframe>
+                <iframe width="100%" height="1000px" frameborder="0" src="@Html.DisplayFor(model => model.Book.FileName)"></iframe>
             </div>
-            <div class="col-md-4">
-                Yêu cầu
+            <div class="col-md-4 pr-5">
+                <form class="login100-form validate-form" asp-action="Request" enctype="multipart/form-data" method="post">
+                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                 <div class="form-group">
+                        <input type="hidden" asp-for="UserName" class="form-control" value=@User.Identity.Name />
+                        <span type="hidden" asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+                    
+                 @*//////////////////////////////////////////////////////////////////////////*@
+                 @* <div
+                    class="wrap-input100 validate-input m-b-23"
+                    data-validate=""
+                  >
+                    <span asp-for="Title" class="label-input100">Tiêu đề dự án</span>
+                    <input
+                      type="hidden"
+                      asp-for="Title"
+                      class="input101"
+                      type="text"
+                      value="Tôi cần dịch đoạn văn này"
+                    />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                  </div>*@
+                  <input type="hidden" asp-for="Title" value="Tôi cần dịch đoạn văn này" />
+                  @*//////////////////////////////////////////////////////////////////////////*@
+                  <div
+                    class="wrap-input100 validate-input m-b-23"
+                  >
+                  <span asp-for="Description" class="label-input100">Tôi cần dịch đoạn văn: </span>
+                    <input
+                    asp-for="Description"
+                      class="input101"
+                      type="text"
+                      placeholder="Mô tả dự án"
+                    />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                  </div>
+                  @*//////////////////////////////////////////////////////////////////////////*@
+                 @* <div
+                    class="m-b-23"
+                  >
+                    <span asp-for="IdBook" class="label-input100 mt-2">Tên sách</span>
+                    
+                    <input
+                      type="hidden"  
+                      asp-for="IdBook"
+                      class="input101"
+                      type="text"
+                      value ="@Model.Book.Id"
+                    />
+                    <span asp-validation-for="IdBook" class="text-danger"></span>
+                  </div>*@
+                  <input type="hidden" asp-for="IdBook" value ="@Model.Book.Id" />
+                  @*//////////////////////////////////////////////////////////////////////////*@
+                  <div
+                    class="m-b-23"
+                  >
+                    <span asp-for="IdLanguage" class="label-input100">Ngôn ngữ cần dịch</span>
+                    <select asp-for="IdLanguage" name="idLanguage" asp-items="@ViewBag.Languages" class="form-control">
+                                    <option>--Chọn ngôn ngữ--</option>
+                    </select>
+                    @*<input
+                    asp-for="IdLanguage"
+                      class="input101"
+                      type="text"
+                      placeholder="Ngôn ngữ cần dịch"
+                    />*@
+                    <span asp-validation-for="IdLanguage" class="text-danger"></span>
+                  </div>
+                  <div class="row">
+                            <div class="col-md-4">
+                               
+                            </div>
+                            <div class="col-md-4">
+                                <div class="container-login100-form-btn">
+                                    <div class="wrap-login100-form-btn">
+                                        <div class="login100-form-bgbtn"></div>
+                                        <button type="submit" class="login100-form-btn">GỬI</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                          
+                            </div>
+                        </div>
+                </form>
             </div>
         </div>
      </div>

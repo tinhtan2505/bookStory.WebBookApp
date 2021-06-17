@@ -87,7 +87,8 @@
                                 @Html.DisplayFor(model => model.Book.Title)
                             </p>*@
                             <div class="product-count">
-                                <button type="button" class="btn btn-info">@Html.ActionLink("Đọc Sách", "NoidungSach")</button>
+                                <button type="button" class="btn btn-info">@Html.ActionLink("Đọc Sách", "NoidungSach", new { id = Model.Book.Id })</button>
+                                @*<h1>@Html.ActionLink("Đọc sách", "Detail", new { id = Model.Book.Id })</h1>*@
                             </div>
                         </div>
                     </div>
