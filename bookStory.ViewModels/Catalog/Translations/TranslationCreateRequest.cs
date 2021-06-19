@@ -12,6 +12,5 @@ namespace bookStory.ViewModels.Catalog.Translations
         public int IdParagraph { set; get; }
         public string Text { set; get; }
         public int Rating { set; get; }
-        //public DateTime Date { get; set; }
     }
 }

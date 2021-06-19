@@ -45,7 +45,7 @@ namespace bookStory.WebBookApp.Controllers
             var books = await _bookApiClient.GetAll();
             ViewBag.Books = books.Select(x => new SelectListItem()
             {
-                Text = x.FileName,
+                Text = x.Title,
                 Value = x.Id.ToString(),
                 Selected = idBook.HasValue && idBook.Value == x.Id
             });
@@ -63,6 +63,8 @@ namespace bookStory.WebBookApp.Controllers
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> Request([FromForm] ProjectRequestViewModel request)
         {
+            if (!ModelState.IsValid)
+                return View(request);
             var user = await _userApiClient.GetUsersName(request.UserName);
             ProjectCreateRequest create = new ProjectCreateRequest()
             {
@@ -72,17 +74,14 @@ namespace bookStory.WebBookApp.Controllers
                 Description = request.Description,
                 IdLanguage = request.IdLanguage
             };
-            if (!ModelState.IsValid)
-                return View(request);
-
             var result = await _ProjectApiClient.CreateProject(create);
             if (result)
             {
-                TempData["result"] = "Yêu cầu của bạn đã được chuyển đến Quản trị viên";
+                TempData["result"] = "Yêu cầu của bạn đã được chuyển đến Quản trị viên!";
                 return RedirectToAction("Request");
             }
 
-            ModelState.AddModelError("", "Yêu cầu thất bại");
+            ModelState.AddModelError("", "Yêu cầu thất bại! Vui lòng kiểm tra lại dữ liệu!");
             return View(request);
         }
     }

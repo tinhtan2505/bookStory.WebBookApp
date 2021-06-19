@@ -10,6 +10,19 @@
             $('#msgAlert').fadeOut('slow');
         }, 2000);
     </script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/21.0.0/classic/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#txt_title'), {
+                // toolbar: [ 'heading', '|', 'bold', 'italic', 'link' ]
+            })
+            .then(editor => {
+                window.editor = editor;
+            })
+            .catch(err => {
+                console.error(err.stack);
+            });
+    </script>
 }
 <div class="container">
     <div class="row">
@@ -98,32 +111,20 @@
                     </div>
                     
                  @*//////////////////////////////////////////////////////////////////////////*@
-                  <div
-                    class="wrap-input100 validate-input m-b-23"
-                    data-validate=""
-                  >
-                    <span asp-for="Title" class="label-input100">Tiêu đề dự án</span>
-                    <input
-                    asp-for="Title"
-                      class="input101"
-                      type="text"
-                      placeholder="Tiêu đề dự án"
-                    />
-                    <span asp-validation-for="Title" class="text-danger"></span>
-                  </div>
-                  @*//////////////////////////////////////////////////////////////////////////*@
-                  <div
-                    class="wrap-input100 validate-input m-b-23"
-                  >
-                  <span asp-for="Description" class="label-input100">Mô tả dự án</span>
-                    <input
-                    asp-for="Description"
-                      class="input101"
-                      type="text"
-                      placeholder="Mô tả dự án"
-                    />
-                    <span asp-validation-for="Description" class="text-danger"></span>
-                  </div>
+                  <div class="wrap-input100 validate-input m-b-23">
+                        <span asp-for="Title" class="label-input100">Tiêu đề</span>
+                            <input 
+                                    asp-for="Title"
+                                   class="input101"
+                                   type="text"
+                                   placeholder="Tiêu đề" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                    <div class="wrap-input100 validate-input m-b-23">
+                        <span asp-for="Description" class="label-input100">Mô tả dự án</span>
+                        <textarea id="txt_title" asp-for="Description" rows="35" class="form-control"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
                   @*//////////////////////////////////////////////////////////////////////////*@
                   <div
                     class="m-b-23"
@@ -132,12 +133,6 @@
                     <select asp-for="IdBook" name="idBook" asp-items="@ViewBag.Books" class="form-control">
                                     <option>--Chọn sách--</option>
                     </select>
-                    @*<input
-                    asp-for="IdBook"
-                      class="input101"
-                      type="text"
-                      placeholder="Tên sách"
-                    />*@
                     <span asp-validation-for="IdBook" class="text-danger"></span>
                   </div>
                   @*//////////////////////////////////////////////////////////////////////////*@
@@ -148,12 +143,6 @@
                     <select asp-for="IdLanguage" name="idLanguage" asp-items="@ViewBag.Languages" class="form-control">
                                     <option>--Chọn ngôn ngữ--</option>
                     </select>
-                    @*<input
-                    asp-for="IdLanguage"
-                      class="input101"
-                      type="text"
-                      placeholder="Ngôn ngữ cần dịch"
-                    />*@
                     <span asp-validation-for="IdLanguage" class="text-danger"></span>
                   </div>
                   @*//////////////////////////////////////////////////////////////////////////*@

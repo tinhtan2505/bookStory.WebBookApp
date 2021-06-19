@@ -47,8 +47,10 @@ namespace bookStory.ApiIntegration.Project
             requestContent.Add(new StringContent(request.IdLanguage.ToString()), "idLanguage");
             requestContent.Add(new StringContent(request.IdBook.ToString()), "idBook");
             requestContent.Add(new StringContent(request.UserId.ToString()), "userId");
-            requestContent.Add(new StringContent(request.Title.ToString()), "title");
-            requestContent.Add(new StringContent(request.Description.ToString()), "description");
+            //requestContent.Add(new StringContent(request.Title.ToString()), "title");
+            //requestContent.Add(new StringContent(request.Description.ToString()), "description");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Title) ? "" : request.Title.ToString()), "title");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Description) ? "" : request.Description.ToString()), "description");
             //requestContent.Add(new StringContent(request.Status.ToString()), "status");
             //requestContent.Add(new StringContent(request.DateProject.ToString()), "dateProject");
             //requestContent.Add(new StringContent(languageId), "languageId");

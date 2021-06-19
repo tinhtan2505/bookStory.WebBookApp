@@ -132,6 +132,8 @@ namespace bookStory.WebBookApp.Controllers
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> CreateComment([FromForm] ParagraphDetailViewModel request)
         {
+            if (!ModelState.IsValid)
+                return View(request);
             var user = await _userApiClient.GetUsersName(request.UserName);
             CommentCreateRequest create = new CommentCreateRequest()
             {
@@ -157,6 +159,8 @@ namespace bookStory.WebBookApp.Controllers
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> EditComment([FromForm] ParagraphDetailViewModel request)
         {
+            if (!ModelState.IsValid)
+                return View(request);
             var user = await _userApiClient.GetUsersName(request.UserName);
             CommentUpdateRequest create = new CommentUpdateRequest()
             {
@@ -183,6 +187,8 @@ namespace bookStory.WebBookApp.Controllers
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> CreateTranslation([FromForm] ParagraphDetailViewModel request)
         {
+            if (!ModelState.IsValid)
+                return View(request);
             var user = await _userApiClient.GetUsersName(request.UserName);
             TranslationCreateRequest create = new TranslationCreateRequest()
             {
@@ -209,6 +215,8 @@ namespace bookStory.WebBookApp.Controllers
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> EditTranslation([FromForm] ParagraphDetailViewModel request)
         {
+            if (!ModelState.IsValid)
+                return View(request);
             var user = await _userApiClient.GetUsersName(request.UserName);
             TranslationUpdateRequest create = new TranslationUpdateRequest()
             {
