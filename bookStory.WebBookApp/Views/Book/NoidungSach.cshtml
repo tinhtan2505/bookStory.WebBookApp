@@ -7,6 +7,11 @@
 @inject Microsoft.Extensions.Configuration.IConfiguration Configuration;
 @inject LazZiya.ExpressLocalization.ISharedCultureLocalizer _loc;
 @section Scripts{
+    <script>
+        setTimeout(function () {
+            $('#msgAlert').fadeOut('slow');
+        }, 2000);
+    </script>
     <script src="https://cdn.ckeditor.com/ckeditor5/21.0.0/classic/ckeditor.js"></script>
     <script>
         ClassicEditor
@@ -59,8 +64,15 @@
                 <iframe width="100%" height="1000px" frameborder="0" src="@Html.DisplayFor(model => model.Book.FileName)"></iframe>
             </div>
             <div class="col-md-4 pr-5">
+                @if (ViewBag.SuccessMsg != null)
+                {
+                            <div id="msgAlert" class="alert alert-success" role="alert">
+                                @ViewBag.SuccessMsg
+                            </div>
+                           
+                 }
                 <h1 class="latestitems mt-5 mb-4">Yêu cầu dịch văn bản</h1>
-                <form class="login100-form validate-form" asp-action="Request" enctype="multipart/form-data" method="post">
+                <form class="login100-form validate-form" asp-action="NoidungSach" enctype="multipart/form-data" method="post">
                  <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                  <div class="form-group">
                         <input type="hidden" asp-for="UserName" class="form-control" value=@User.Identity.Name />
@@ -75,12 +87,7 @@
                     class="wrap-input100 validate-input m-b-23"
                   >
                   <span asp-for="Description" class="label-input100">Tôi cần dịch đoạn văn: </span>
-                    @*<input
-                    asp-for="Description"
-                      class="input101"
-                      type="text"
-                      placeholder="Mô tả dự án"
-                    />*@
+                 
                     <textarea id="txt_title" asp-for="Description" class="form-control"></textarea>
                     <span asp-validation-for="Description" class="text-danger"></span>
                   </div>

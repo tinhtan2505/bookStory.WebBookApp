@@ -8,12 +8,14 @@ using bookStory.ApiIntegration.Book;
 using bookStory.ApiIntegration.Comment;
 using bookStory.ApiIntegration.Language;
 using bookStory.ApiIntegration.Paragraph;
+using bookStory.ApiIntegration.Project;
 using bookStory.ApiIntegration.Translation;
 using bookStory.ApiIntegration.User;
 using bookStory.Utilities.Constants;
 using bookStory.ViewModels.Catalog.Books;
 using bookStory.ViewModels.Catalog.Comments;
 using bookStory.ViewModels.Catalog.Paragraps;
+using bookStory.ViewModels.Catalog.Projects;
 using bookStory.ViewModels.Catalog.Translations;
 using bookStory.WebBookApp.Models;
 using LazZiya.ExpressLocalization;
@@ -36,6 +38,7 @@ namespace bookStory.WebBookApp.Controllers
         private readonly ITranslationApiClient _translationApiClient;
         private readonly ICommentApiClient _commentApiClient;
         private readonly ILanguageApiClient _languageApiClient;
+        private readonly IProjectApiClient _ProjectApiClient;
 
         public BookController(ILogger<BookController> logger,
             IBookApiClient bookApiClient,
@@ -43,7 +46,8 @@ namespace bookStory.WebBookApp.Controllers
             ITranslationApiClient translationApiClient,
             ICommentApiClient commentApiClient,
             IUserApiClient userApiClient,
-            ILanguageApiClient languageApiClient)
+            ILanguageApiClient languageApiClient,
+            IProjectApiClient ProjectApiClient)
         {
             _logger = logger;
             _bookApiClient = bookApiClient;
@@ -52,11 +56,16 @@ namespace bookStory.WebBookApp.Controllers
             _commentApiClient = commentApiClient;
             _userApiClient = userApiClient;
             _languageApiClient = languageApiClient;
+            _ProjectApiClient = ProjectApiClient;
         }
 
         [HttpGet]
         public async Task<IActionResult> NoidungSach(int id, int? idLanguage)
         {
+            if (TempData["result"] != null)
+            {
+                ViewBag.SuccessMsg = TempData["result"];
+            }
             var languages = await _languageApiClient.GetAll();
             ViewBag.Languages = languages.Select(x => new SelectListItem()
             {
@@ -76,6 +85,32 @@ namespace bookStory.WebBookApp.Controllers
                 Book = book,
                 ListParagraphs = pra
             });
+        }
+
+        [HttpPost]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> NoidungSach([FromForm] ProjectRequestViewModel request)
+        {
+            if (!ModelState.IsValid)
+                return View(request);
+            var user = await _userApiClient.GetUsersName(request.UserName);
+            ProjectCreateRequest create = new ProjectCreateRequest()
+            {
+                UserId = user.ResultObj.Id,
+                IdBook = request.IdBook,
+                Title = request.Title,
+                Description = request.Description,
+                IdLanguage = request.IdLanguage
+            };
+            var result = await _ProjectApiClient.CreateProject(create);
+            if (result)
+            {
+                TempData["result"] = "Yêu cầu của bạn đã được chuyển đến Quản trị viên!";
+                return RedirectToAction("NoidungSach");
+            }
+
+            ModelState.AddModelError("", "Yêu cầu thất bại! Vui lòng kiểm tra lại dữ liệu!");
+            return View(request);
         }
 
         public async Task<IActionResult> Index()
