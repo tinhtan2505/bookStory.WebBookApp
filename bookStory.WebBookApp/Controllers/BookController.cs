@@ -59,8 +59,73 @@ namespace bookStory.WebBookApp.Controllers
             _ProjectApiClient = ProjectApiClient;
         }
 
+        //[HttpGet]
+        //public async Task<IActionResult> NoidungSach(int id, int? idLanguage)
+        //{
+        //    if (TempData["result"] != null)
+        //    {
+        //        ViewBag.SuccessMsg = TempData["result"];
+        //    }
+        //    var languages = await _languageApiClient.GetAll();
+        //    ViewBag.Languages = languages.Select(x => new SelectListItem()
+        //    {
+        //        Text = x.Name,
+        //        Value = x.Id.ToString(),
+        //        Selected = idLanguage.HasValue && idLanguage.Value.Equals(x.Id)
+        //    });
+        //    var book = await _bookApiClient.GetById(id);
+        //    var pra = await _paragraphApiClient.GetPagings(new GetManageParagraphPagingRequest()
+        //    {
+        //        IdBook = id,
+        //        PageIndex = 1,
+        //        PageSize = 10
+        //    });
+        //    return View(new BookDetailViewModel()
+        //    {
+        //        Book = book,
+        //        ListParagraphs = pra
+        //    });
+        //}
+
+        //[HttpPost]
+        //[Consumes("multipart/form-data")]
+        //public async Task<IActionResult> NoidungSach([FromForm] ProjectRequestViewModel request)
+        //{
+        //    if (!ModelState.IsValid)
+        //        return View(request);
+        //    var user = await _userApiClient.GetUsersName(request.UserName);
+        //    ProjectCreateRequest create = new ProjectCreateRequest()
+        //    {
+        //        UserId = user.ResultObj.Id,
+        //        IdBook = request.IdBook,
+        //        Title = request.Title,
+        //        Description = request.Description,
+        //        IdLanguage = request.IdLanguage
+        //    };
+        //    var result = await _ProjectApiClient.CreateProject(create);
+        //    if (result)
+        //    {
+        //        TempData["result"] = "Yêu cầu của bạn đã được chuyển đến Quản trị viên!";
+        //        return RedirectToAction("NoidungSach");
+        //    }
+
+        //    ModelState.AddModelError("", "Yêu cầu thất bại! Vui lòng kiểm tra lại dữ liệu!");
+        //    return View(request);
+        //}
+
+        public async Task<IActionResult> Index()
+        {
+            var culture = CultureInfo.CurrentCulture.Name;
+            var viewModel = new HomeViewModel
+            {
+                FeaturedProducts = await _bookApiClient.GetFeaturedProducts(SystemConstants.ProductSettings.NumberOfFeaturedProducts),
+                LatestProducts = await _bookApiClient.GetLatestProducts(SystemConstants.ProductSettings.NumberOfLatestProducts),
+            };
+            return View(viewModel);
+        }
+
         [HttpGet]
-        public async Task<IActionResult> NoidungSach(int id, int? idLanguage)
+        public async Task<IActionResult> Detail(int id, int? idLanguage)
         {
             if (TempData["result"] != null)
             {
@@ -89,10 +154,11 @@ namespace bookStory.WebBookApp.Controllers
 
         [HttpPost]
         [Consumes("multipart/form-data")]
-        public async Task<IActionResult> NoidungSach([FromForm] ProjectRequestViewModel request)
+        public async Task<IActionResult> Detail([FromForm] BookDetailViewModel request)
         {
             if (!ModelState.IsValid)
                 return View(request);
+            if (request.Title != null || request.IdLanguage != null) { }
             var user = await _userApiClient.GetUsersName(request.UserName);
             ProjectCreateRequest create = new ProjectCreateRequest()
             {
@@ -106,39 +172,11 @@ namespace bookStory.WebBookApp.Controllers
             if (result)
             {
                 TempData["result"] = "Yêu cầu của bạn đã được chuyển đến Quản trị viên!";
-                return RedirectToAction("NoidungSach");
+                return RedirectToAction("Detail");
             }
 
-            ModelState.AddModelError("", "Yêu cầu thất bại! Vui lòng kiểm tra lại dữ liệu!");
-            return View(request);
-        }
-
-        public async Task<IActionResult> Index()
-        {
-            var culture = CultureInfo.CurrentCulture.Name;
-            var viewModel = new HomeViewModel
-            {
-                FeaturedProducts = await _bookApiClient.GetFeaturedProducts(SystemConstants.ProductSettings.NumberOfFeaturedProducts),
-                LatestProducts = await _bookApiClient.GetLatestProducts(SystemConstants.ProductSettings.NumberOfLatestProducts),
-            };
-            return View(viewModel);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Detail(int id)
-        {
-            var book = await _bookApiClient.GetById(id);
-            var pra = await _paragraphApiClient.GetPagings(new GetManageParagraphPagingRequest()
-            {
-                IdBook = id,
-                PageIndex = 1,
-                PageSize = 10
-            });
-            return View(new BookDetailViewModel()
-            {
-                Book = book,
-                ListParagraphs = pra
-            });
+            TempData["result"] = "Yêu cầu thất bại! Vui lòng kiểm tra lại dữ liệu!!";
+            return RedirectToAction("Detail");
         }
 
         [HttpGet]
