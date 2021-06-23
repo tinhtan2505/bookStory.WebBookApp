@@ -28,5 +28,6 @@ namespace bookStory.WebBookApp.Models
         public string Text { set; get; }
         public int Rating { set; get; }
         public int Vote { get; set; }
+        public string Reason { set; get; }
     }
 }

@@ -12,7 +12,6 @@ namespace bookStory.ViewModels.Catalog.Reports
         public CommentCreateValidator()
         {
             RuleFor(x => x.IdParagraph).NotEmpty().WithMessage("IdParagraph không thể bỏ trống");
-            RuleFor(x => x.Reason).NotEmpty().WithMessage("Reason không thể bỏ trống");
             RuleFor(x => x.UserId).NotEmpty().WithMessage("UserId không thể bỏ trống");
         }
     }
