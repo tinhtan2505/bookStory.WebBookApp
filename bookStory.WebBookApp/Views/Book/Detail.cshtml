@@ -111,14 +111,11 @@
                                     </div>
                                     <span>3 Reviews</span>
                                 </div>
+                                
                                 <div class="product-price-discount">
                                     <h5><span>Tác giả: @Html.DisplayFor(model => model.Book.Author)</span></h5>
                                 </div>
                             </div>
-                           @* <div class="product-count">
-                                <button type="button" class="btn btn-info">@Html.ActionLink("Đọc Sách", "NoidungSach", new { id = Model.Book.Id })</button>
-                                
-                            </div>*@
                         </div>
                     </div>
                 </div>
@@ -166,18 +163,25 @@
                     <span asp-validation-for="IdLanguage" class="text-danger"></span>
                   </div>
                   <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                
                             </div>
-                            <div class="col-md-4">
-                                <div class="container-login100-form-btn">
-                                    <div class="wrap-login100-form-btn">
-                                        <div class="login100-form-bgbtn"></div>
-                                        <button type="submit" class="login100-form-btn">GỬI</button>
+                            <div class="col-md-6">
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <div class="container-login100-form-btn">
+                                        <div class="wrap-login100-form-btn">
+                                            <div class="login100-form-bgbtn"></div>
+                                            <button type="submit" class="login100-form-btn">GỬI</button>
+                                        </div>
                                     </div>
-                                </div>
+                            }
+                            else
+                            {
+                                <a class="text-danger" href="/@culture/Account/Login" >Nhấn để đăng nhập!</a>
+                            }
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                           
                             </div>
                         </div>

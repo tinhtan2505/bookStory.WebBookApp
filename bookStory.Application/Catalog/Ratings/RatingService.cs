@@ -65,7 +65,7 @@ namespace bookStory.Application.Catalog.Ratings
             var query = from b in _context.Ratings
                         select b;
             if (!string.IsNullOrEmpty(request.Keyword))
-                query = query.Where(x => x.Vote.ToString().Contains(request.Keyword));
+                query = query.Where(x => x.UserId.ToString().Contains(request.Keyword));
 
             int totalRow = await query.CountAsync();
             var data = await query.Skip((request.PageIndex - 1) * request.PageSize).Take(request.PageSize)
@@ -85,6 +85,36 @@ namespace bookStory.Application.Catalog.Ratings
                 Items = data,
             };
             return pagedResult;
+        }
+
+        public async Task<RatingViewModel> GetRating(Guid keywordUserId, int keywordIdTranslation)
+        {
+            //var bookVM = new RatingViewModel();
+            var query = from b in _context.Ratings
+                        where b.UserId == keywordUserId && b.IdTranslation == keywordIdTranslation
+                        select b;
+
+            int totalRow = await query.CountAsync();
+            var data = await query.Select(x => new RatingViewModel()
+            {
+                Id = x.Id,
+                UserId = x.UserId,
+                IdTranslation = x.IdTranslation,
+                Vote = x.Vote
+            }).ToListAsync();
+            var item = data.FirstOrDefault();
+            if (item != null)
+            {
+                var bookVM = new RatingViewModel()
+                {
+                    Id = item.Id,
+                    UserId = item.UserId,
+                    IdTranslation = item.IdTranslation,
+                    Vote = item.Vote
+                };
+                return bookVM;
+            }
+            else return null;
         }
 
         public async Task<RatingViewModel> GetById(int id)

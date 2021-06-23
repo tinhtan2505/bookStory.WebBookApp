@@ -30,6 +30,11 @@ namespace bookStory.ApiIntegration.Rating
             _httpClientFactory = httpClientFactory;
         }
 
+        public async Task<List<RatingViewModel>> GetAll()
+        {
+            return await GetListAsync<RatingViewModel>("/api/ratings");
+        }
+
         public async Task<bool> CreateRating(RatingCreateRequest request)
         {
             var sessions = _httpContextAccessor
@@ -57,6 +62,16 @@ namespace bookStory.ApiIntegration.Rating
         public async Task<RatingViewModel> GetById(int id)
         {
             var data = await GetAsync<RatingViewModel>($"/api/ratings/{id}");
+
+            return data;
+        }
+
+        public async Task<RatingViewModel> GetRating(Guid keywordUserId, int keywordIdTranslation)
+        {
+            //var data1 = await GetAsync<RatingViewModel>($"/api/ratings/&userId = {keywordUserId}" + $"&idTran={keywordIdTranslation}");
+            var data = await GetAsync<RatingViewModel>(
+                $"/api/ratings/getrating?UserId={keywordUserId}" +
+                $"&IdTranslation={keywordIdTranslation}");
 
             return data;
         }

@@ -21,10 +21,12 @@ namespace bookStory.WebBookApp.Models
         public string MessageCreate { set; get; }
         public ParagraphViewModel Paragraph { get; set; }
         public BookViewModel Book { get; set; }
+        public TranslationViewModel Translation { get; set; }
         public PagedResult<TranslationViewModel> ListTranslations { get; set; }
         public List<CommentViewModel> ListComments { get; set; }
         public int IdParagraph { set; get; }
         public string Text { set; get; }
         public int Rating { set; get; }
+        public int Vote { get; set; }
     }
 }

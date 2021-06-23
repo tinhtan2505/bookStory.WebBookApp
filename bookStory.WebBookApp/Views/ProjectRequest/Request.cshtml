@@ -143,12 +143,22 @@
                     <span asp-validation-for="IdLanguage" class="text-danger"></span>
                   </div>
                   @*//////////////////////////////////////////////////////////////////////////*@
-                  <div class="container-login100-form-btn mt-4">
-                    <div class="wrap-login100-form-btn">
-                      <div class="login100-form-bgbtn"></div>
-                      <button type="submit" class="login100-form-btn">Yêu cầu dự án</button>
-                    </div>
-                  </div>
+                  
+                  @if (User.Identity.IsAuthenticated)
+                  {
+                                    <div class="container-login100-form-btn mt-4">
+                                        <div class="wrap-login100-form-btn">
+                                          <div class="login100-form-bgbtn"></div>
+                                          <button type="submit" class="login100-form-btn">Yêu cầu dự án</button>
+                                        </div>
+                                      </div>
+                  }
+                  else
+                  {
+                        <div class="d-flex justify-content-center">
+                                <a class="text-danger" href="/@culture/Account/Login" >Nhấn để đăng nhập!</a>
+                        </div>
+                  }
                 </form>
               </div>
             </div>

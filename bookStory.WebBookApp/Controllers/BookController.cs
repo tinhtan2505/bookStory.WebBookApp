@@ -9,6 +9,7 @@ using bookStory.ApiIntegration.Comment;
 using bookStory.ApiIntegration.Language;
 using bookStory.ApiIntegration.Paragraph;
 using bookStory.ApiIntegration.Project;
+using bookStory.ApiIntegration.Rating;
 using bookStory.ApiIntegration.Translation;
 using bookStory.ApiIntegration.User;
 using bookStory.Utilities.Constants;
@@ -16,6 +17,7 @@ using bookStory.ViewModels.Catalog.Books;
 using bookStory.ViewModels.Catalog.Comments;
 using bookStory.ViewModels.Catalog.Paragraps;
 using bookStory.ViewModels.Catalog.Projects;
+using bookStory.ViewModels.Catalog.Ratings;
 using bookStory.ViewModels.Catalog.Translations;
 using bookStory.WebBookApp.Models;
 using LazZiya.ExpressLocalization;
@@ -37,8 +39,10 @@ namespace bookStory.WebBookApp.Controllers
         private readonly IParagraphApiClient _paragraphApiClient;
         private readonly ITranslationApiClient _translationApiClient;
         private readonly ICommentApiClient _commentApiClient;
-        private readonly ILanguageApiClient _languageApiClient;
+        private readonly IRatingApiClient _ratingApiClient;
         private readonly IProjectApiClient _ProjectApiClient;
+
+        private readonly ILanguageApiClient _languageApiClient;
 
         public BookController(ILogger<BookController> logger,
             IBookApiClient bookApiClient,
@@ -46,8 +50,9 @@ namespace bookStory.WebBookApp.Controllers
             ITranslationApiClient translationApiClient,
             ICommentApiClient commentApiClient,
             IUserApiClient userApiClient,
-            ILanguageApiClient languageApiClient,
-            IProjectApiClient ProjectApiClient)
+            IRatingApiClient ratingApiClient,
+            IProjectApiClient projectApiClient,
+            ILanguageApiClient languageApiClient)
         {
             _logger = logger;
             _bookApiClient = bookApiClient;
@@ -55,69 +60,18 @@ namespace bookStory.WebBookApp.Controllers
             _translationApiClient = translationApiClient;
             _commentApiClient = commentApiClient;
             _userApiClient = userApiClient;
+            _ratingApiClient = ratingApiClient;
+            _ProjectApiClient = projectApiClient;
             _languageApiClient = languageApiClient;
-            _ProjectApiClient = ProjectApiClient;
         }
-
-        //[HttpGet]
-        //public async Task<IActionResult> NoidungSach(int id, int? idLanguage)
-        //{
-        //    if (TempData["result"] != null)
-        //    {
-        //        ViewBag.SuccessMsg = TempData["result"];
-        //    }
-        //    var languages = await _languageApiClient.GetAll();
-        //    ViewBag.Languages = languages.Select(x => new SelectListItem()
-        //    {
-        //        Text = x.Name,
-        //        Value = x.Id.ToString(),
-        //        Selected = idLanguage.HasValue && idLanguage.Value.Equals(x.Id)
-        //    });
-        //    var book = await _bookApiClient.GetById(id);
-        //    var pra = await _paragraphApiClient.GetPagings(new GetManageParagraphPagingRequest()
-        //    {
-        //        IdBook = id,
-        //        PageIndex = 1,
-        //        PageSize = 10
-        //    });
-        //    return View(new BookDetailViewModel()
-        //    {
-        //        Book = book,
-        //        ListParagraphs = pra
-        //    });
-        //}
-
-        //[HttpPost]
-        //[Consumes("multipart/form-data")]
-        //public async Task<IActionResult> NoidungSach([FromForm] ProjectRequestViewModel request)
-        //{
-        //    if (!ModelState.IsValid)
-        //        return View(request);
-        //    var user = await _userApiClient.GetUsersName(request.UserName);
-        //    ProjectCreateRequest create = new ProjectCreateRequest()
-        //    {
-        //        UserId = user.ResultObj.Id,
-        //        IdBook = request.IdBook,
-        //        Title = request.Title,
-        //        Description = request.Description,
-        //        IdLanguage = request.IdLanguage
-        //    };
-        //    var result = await _ProjectApiClient.CreateProject(create);
-        //    if (result)
-        //    {
-        //        TempData["result"] = "Yêu cầu của bạn đã được chuyển đến Quản trị viên!";
-        //        return RedirectToAction("NoidungSach");
-        //    }
-
-        //    ModelState.AddModelError("", "Yêu cầu thất bại! Vui lòng kiểm tra lại dữ liệu!");
-        //    return View(request);
-        //}
 
         public async Task<IActionResult> Index()
         {
+            //var msg = _loc.GetLocalizedString("Vietnamese");
             var culture = CultureInfo.CurrentCulture.Name;
             var viewModel = new HomeViewModel
             {
+                //Slides = await _slideApiClient.GetAll(),
                 FeaturedProducts = await _bookApiClient.GetFeaturedProducts(SystemConstants.ProductSettings.NumberOfFeaturedProducts),
                 LatestProducts = await _bookApiClient.GetLatestProducts(SystemConstants.ProductSettings.NumberOfLatestProducts),
             };
@@ -205,8 +159,6 @@ namespace bookStory.WebBookApp.Controllers
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> CreateComment([FromForm] ParagraphDetailViewModel request)
         {
-            if (!ModelState.IsValid)
-                return View(request);
             var user = await _userApiClient.GetUsersName(request.UserName);
             CommentCreateRequest create = new CommentCreateRequest()
             {
@@ -221,7 +173,7 @@ namespace bookStory.WebBookApp.Controllers
             if (result)
             {
                 TempData["result"] = "Thêm mới thành công";
-                return RedirectToAction("Translation", "Book", new { id = tran.IdParagraph });
+                return RedirectToAction("BinhLuan", "Book", new { id = request.IdTranslation });
             }
 
             ModelState.AddModelError("", "Thêm mới thất bại");
@@ -232,8 +184,6 @@ namespace bookStory.WebBookApp.Controllers
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> EditComment([FromForm] ParagraphDetailViewModel request)
         {
-            if (!ModelState.IsValid)
-                return View(request);
             var user = await _userApiClient.GetUsersName(request.UserName);
             CommentUpdateRequest create = new CommentUpdateRequest()
             {
@@ -249,7 +199,7 @@ namespace bookStory.WebBookApp.Controllers
             if (result)
             {
                 TempData["result"] = "Cập nhật thành công";
-                return RedirectToAction("Translation", "Book", new { id = tran.IdParagraph });
+                return RedirectToAction("BinhLuan", "Book", new { id = request.IdTranslation });
             }
 
             ModelState.AddModelError("", "Cập nhật thất bại");
@@ -260,8 +210,6 @@ namespace bookStory.WebBookApp.Controllers
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> CreateTranslation([FromForm] ParagraphDetailViewModel request)
         {
-            if (!ModelState.IsValid)
-                return View(request);
             var user = await _userApiClient.GetUsersName(request.UserName);
             TranslationCreateRequest create = new TranslationCreateRequest()
             {
@@ -288,8 +236,6 @@ namespace bookStory.WebBookApp.Controllers
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> EditTranslation([FromForm] ParagraphDetailViewModel request)
         {
-            if (!ModelState.IsValid)
-                return View(request);
             var user = await _userApiClient.GetUsersName(request.UserName);
             TranslationUpdateRequest create = new TranslationUpdateRequest()
             {
@@ -306,7 +252,7 @@ namespace bookStory.WebBookApp.Controllers
             if (result)
             {
                 TempData["result"] = "Cập nhật sách thành công";
-                return RedirectToAction("Translation", "Book", new { id = request.IdParagraph });
+                return RedirectToAction("BinhLuan", "Book", new { id = request.IdTranslation });
             }
 
             ModelState.AddModelError("", "Cập nhật sách thất bại");
@@ -323,7 +269,7 @@ namespace bookStory.WebBookApp.Controllers
             if (result)
             {
                 TempData["result"] = "Xóa thành công";
-                return RedirectToAction("Translation", "Book", new { id = tran.IdParagraph });
+                return RedirectToAction("BinhLuan", "Book", new { id = request.IdTranslation });
             }
 
             ModelState.AddModelError("", "Xóa không thành công");
@@ -345,6 +291,74 @@ namespace bookStory.WebBookApp.Controllers
 
             ModelState.AddModelError("", "Xóa không thành công");
             return View(request);
+        }
+
+        [HttpPost]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> CreateXepHang([FromForm] ParagraphDetailViewModel request)
+        {
+            var user = await _userApiClient.GetUsersName(request.UserName);
+
+            bool kt = false;
+            int IdRating = 0;
+            var ratings = await _ratingApiClient.GetAll();
+            foreach (var r in ratings)
+            {
+                if (r.UserId == user.ResultObj.Id && r.IdTranslation == request.IdTranslation)
+                {
+                    kt = true;
+                    IdRating = r.Id;
+                    break;
+                }
+            }
+            var result = false;
+            if (kt == false)
+            {
+                RatingCreateRequest create = new RatingCreateRequest()
+                {
+                    UserId = user.ResultObj.Id,
+                    IdTranslation = request.IdTranslation,
+                    Vote = request.Vote
+                };
+                result = await _ratingApiClient.CreateRating(create);
+            }
+            else
+            {
+                RatingUpdateRequest edit = new RatingUpdateRequest()
+                {
+                    Id = IdRating,
+                    UserId = user.ResultObj.Id,
+                    IdTranslation = request.IdTranslation,
+                    Vote = request.Vote
+                };
+                result = await _ratingApiClient.UpdateRating(edit);
+            }
+
+            if (result)
+            {
+                TempData["result"] = "Thêm mới Sách thành công";
+                return RedirectToAction("BinhLuan", "Book", new { id = request.IdTranslation });
+            }
+
+            ModelState.AddModelError("", "Thêm mới Sách thất bại");
+            return View(request);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> BinhLuan(int id)
+        {
+            var tran = await _translationApiClient.GetById(id);
+            var paragraph = await _paragraphApiClient.GetById(tran.IdParagraph);
+            var book = await _bookApiClient.GetById(paragraph.IdBook);
+            var com = await _commentApiClient.GetAll();
+
+            return View(new ParagraphDetailViewModel()
+            {
+                Paragraph = paragraph,
+                Book = book,
+                ListComments = com,
+                Translation = tran
+            });
         }
     }
 }

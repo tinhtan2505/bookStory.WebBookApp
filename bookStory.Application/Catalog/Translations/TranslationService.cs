@@ -76,8 +76,6 @@ namespace bookStory.Application.Catalog.Translations
                         join u in _userManager.Users on t.UserId equals u.Id
                         join p in _context.Paragraphs on t.IdParagraph equals p.Id into bp
                         from p in bp.DefaultIfEmpty()
-                            //join c in _context.Comments on t.Id equals c.IdTranslation into tc
-                            //from c in tc.DefaultIfEmpty()
                         select new { t, p, u };
 
             var querycomment = from c in _context.Comments
@@ -136,6 +134,8 @@ namespace bookStory.Application.Catalog.Translations
         public async Task<TranslationViewModel> GetById(int id)
         {
             var item = await _context.Translations.FindAsync(id);
+            //var user = await _context.Users.FindAsync(item.UserId);
+            var user = await _userManager.FindByIdAsync(item.UserId.ToString());
             var bookVM = new TranslationViewModel()
             {
                 Id = item.Id,
@@ -143,7 +143,10 @@ namespace bookStory.Application.Catalog.Translations
                 IdParagraph = item.IdParagraph,
                 Text = item.Text,
                 Rating = item.Rating,
-                Date = item.Date
+                Date = item.Date,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                UserName = user.UserName
             };
             return bookVM;
         }

@@ -1,12 +1,30 @@
 ﻿@model ParagraphDetailViewModel
 @{
-    ViewData["Title"] = "Translation";
+    ViewData["Title"] = "BinhLuan";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var culture = CultureInfo.CurrentCulture;
 }
 @inject Microsoft.Extensions.Configuration.IConfiguration Configuration;
 @inject LazZiya.ExpressLocalization.ISharedCultureLocalizer _loc;
 @section Scripts{
+    <script>
+      $(".ratingStar").hover(function () {
+        $(".ratingStar").addClass("fa-star-o").removeClass("fa-star");
+        $(this).addClass("fa-star").removeClass("fa-star-o");
+        $(this)
+          .prevAll(".ratingStar")
+          .addClass("fa-star")
+          .removeClass("fa-star-o");
+        debugger;
+        var starValue = $(this).attr("data-value");
+        $("#ratingValue").val(starValue);
+      });
+      $(".ratingStar").click(function () {
+        debugger;
+        var starValue = $(this).attr("data-value");
+        $("#ratingValue").val(starValue);
+      });
+    </script>
 }
 <div class="container">
     <div class="row">
@@ -38,14 +56,21 @@
                 </span>
             </div>
         </div>
-        
+        @if (ViewBag.SuccessMsg != null)
+                {
+                            <div id="msgAlert" class="alert alert-success" role="alert">
+                                <h5>@ViewBag.SuccessMsg</h5>
+                            </div>
+                           
+                 }
         <div class="container">
             <div class="underlined-title">
                 <div class="editContent">
                     <h1 class=" latestitems">Đoạn văn</h1>
                 </div>
             </div>
-            <div class="row border-top border-success rounded m-5">
+        </div>
+        <div class="row border-top border-success rounded m-5">
                 <div class="
                 col-md-10
                 border-left border-bottom border-success
@@ -68,41 +93,14 @@
                         Báo cáo
                     </button>
                 </div>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-2"></div>
-                        <div class="col-md-10 pt-3">
-                            @if (User.Identity.IsAuthenticated)
-                            {
-                                <form asp-action="CreateTranslation" enctype="multipart/form-data" method="post">
-                                    <input type="hidden" asp-for="UserName" value=@User.Identity.Name class="form-control" />
-                                    <input type="hidden" asp-for="IdParagraph" class="form-control" value=@Model.Paragraph.Id />
-                                    <input type="hidden" asp-for="Rating" value=0 class="form-control" />
-                                    <div class="form-group">
-                                        <textarea asp-for="Text" 
-                                              class="form-control"
-                                              id="exampleFormControlTextarea1"
-                                              rows="3"></textarea>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary mb-1">
-                                        Thêm bản dịch
-                                    </button>
-                                </form>
-                            }
-                        </div>
-                    </div>
-                </div>
+           
             </div>
-        </div>
         <div class="underlined-title">
             <div class="editContent">
-                <h1 class=" latestitems">Các bản dịch</h1>
+                <h1 class=" latestitems">Bản dịch</h1>
             </div>
         </div>
-        @for (int i = 0; i < Model.ListTranslations.Items.Count; i++)
-        {
-            var item = Model.ListTranslations.Items[i];
-            <div class="row border-top border-primary rounded m-5">
+        <div class="row border-top border-primary rounded">
                 <div class="
                 col-md-10
                 border-left border-bottom border-primary
@@ -122,7 +120,7 @@
                                                  height="80" />
                                         </div>
                                         <div class="ml-3 w-100">
-                                            <h5 class="mb-0 mt-0">@item.FirstName @item.LastName</h5>
+                                            <h5 class="mb-0 mt-0">@Model.Translation.FirstName @Model.Translation.LastName</h5>
                                             <span></span>
                                             <div class="
                               button
@@ -143,8 +141,8 @@
                                 </div>
                             </div>
                             <div class="col-md-8">
-                                <span class="mt-2">@item.Text</span>
-                                <span class="text-danger timecomment ml-2">@item.Date</span>
+                                <span class="mt-2">@Model.Translation.Text</span>
+                                <span class="text-danger timecomment ml-2">@Model.Translation.Date</span>
                             </div>
                         </div>
                     </div>
@@ -156,24 +154,17 @@
                 text-dark
               ">
               @{
-                    var sb = "suabandich"+@item.Id.ToString();
-                    var dg = "danhgia"+@item.Id.ToString();
-                        @Model.Text = @item.Text;
+                    var sb = "suabandich"+@Model.Translation.Id.ToString();
+                        @Model.Text = @Model.Translation.Text;
               }
-                    @*@if(@item.UserName == @User.Identity.Name)
+                    @if(@Model.Translation.UserName == @User.Identity.Name)
                     {
-                        <div class="d-flex justify-content-center">
-                        <button type="submit" class="btn btn-danger float-right mt-2 mr-2" data-toggle="modal" data-target="#@sb"> Xóa</button>
+                        <button type="submit" class="btn btn-danger float-right mt-2 ml-2" data-toggle="modal" data-target="#@sb"> Xóa</button>
                         <button class="btn btn-outline-primary float-right mt-2" type="button" data-toggle="collapse" data-target="#@sb" aria-expanded="false" aria-controls=@sb>Sửa</button>
-                         </div>
                         
                       
-                    }*@
-                    <div class="mt-2 d-flex justify-content-center">
-                        <button class="btn btn-outline-primary float-right mt-2" type="button">@Html.ActionLink("Xem chi tiết", "BinhLuan", new { id = item.Id })</button>
-                                            
-                    </div>
-                    @*<div class="modal fade" id= @sb tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    }
+                    <div class="modal fade" id= @sb tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                           <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
                                               <div class="modal-header">
@@ -189,14 +180,14 @@
                                               <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                                                 <form asp-action="DeleteTranslation">
-                                                    <input type="hidden" asp-for="IdTranslation" value=@item.Id />
+                                                    <input type="hidden" asp-for="IdTranslation" value=@Model.Translation.Id />
                                                     <input type="hidden" asp-for="IdParagraph" class="form-control" value=@Model.Paragraph.Id />
                                                     <input type="submit" value="Yes" class="btn btn-danger" />
                                                 </form>
                                               </div>
                                             </div>
                                           </div>
-                                        </div>*@
+                                        </div>
                 </div>
                 <div class="container">
                     <div class="row">
@@ -205,11 +196,36 @@
                         <div class="col-md-10 pt-3">
                             <div class="row">
                               <div class="col-md-6 mb-2">
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <div>
+                                        <form asp-action="CreateXepHang" enctype="multipart/form-data" method="post">
+                                            <div class="form-group">
+                                                <label>Xếp hạng: </label>
+                                                <span class="text-warning">
+                                                    <i class="ratingStar fa fa-star-o" data-value="1"></i>
+                                                    <i class="ratingStar fa fa-star-o" data-value="2"></i>
+                                                    <i class="ratingStar fa fa-star-o" data-value="3"></i>
+                                                    <i class="ratingStar fa fa-star-o" data-value="4"></i>
+                                                    <i class="ratingStar fa fa-star-o" data-value="5"></i>
+                                                </span>
+
+                                                <input type="hidden" asp-for="Vote" id="ratingValue" class="form-control"  />
+                                                <input type="hidden" asp-for="UserName" value=@User.Identity.Name class="form-control" />
+                                                <input type="hidden" asp-for="IdTranslation" id="idTranslation" value=@Model.Translation.Id class="form-control" />
+                                                <input type="hidden" asp-for="IdParagraph" class="form-control" value=@Model.Paragraph.Id />
+                                                <button type="submit" class="btn btn-warning btn-xs ml-2 mb-1">
+                                                    Đánh giá
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                }
                               </div>
                               <div class="col-md-6">
-                                @*<div class="collapse multi-collapse" id=@sb>
+                                <div class="collapse multi-collapse" id=@sb>
                                   <form asp-action="EditTranslation" enctype="multipart/form-data" method="post">
-                                        <input type="hidden" asp-for="IdTranslation" value=@item.Id />
+                                        <input type="hidden" asp-for="IdTranslation" value=@Model.Translation.Id />
                                         <input type="hidden" asp-for="UserName" value=@User.Identity.Name class="form-control" />
                                         <input type="hidden" asp-for="IdParagraph" class="form-control" value=@Model.Paragraph.Id />
                                         <input type="hidden" asp-for="Rating" value=0 class="form-control" />
@@ -225,21 +241,13 @@
                                                   Sửa
                                                 </button>
                                     </form>
-                                </div>*@
+                                </div>
                               </div>
                             </div>
-                            <div class="row">
-                              <div class="col-md-9">
-                              </div>
-                              <div class="col-md-3">
-                                 
-                              </div>
-                            </div>
-
-                                   
+                            
                             @foreach (var com in Model.ListComments)
                             {
-                                if (item.Id == com.IdTranslation)
+                                if (Model.Translation.Id == com.IdTranslation)
                                 {
                                     var mce = "suacomment"+@com.Id.ToString();
                                     @Model.Message = @com.Message;
@@ -269,7 +277,7 @@
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                                                 <form asp-action="DeleteComment">
                                                     <input type="hidden" asp-for="IdComment" value=@com.Id />
-                                                    <input type="hidden" asp-for="IdTranslation" class="form-control" value=@item.Id />
+                                                    <input type="hidden" asp-for="IdTranslation" class="form-control" value=@Model.Translation.Id />
                                                     <input class="btn btn-primary" type="submit" value="Yes"/>
                                                 </form>
                                               </div>
@@ -286,7 +294,7 @@
                                               <form asp-action="EditComment" enctype="multipart/form-data" method="post">
                                                             <input type="hidden" asp-for="IdComment" value=@com.Id />
                                                             <input type="hidden" asp-for="UserName" value=@User.Identity.Name class="form-control" />
-                                                            <input type="hidden" asp-for="IdTranslation" class="form-control" value=@item.Id />
+                                                            <input type="hidden" asp-for="IdTranslation" class="form-control" value=@Model.Translation.Id />
                                                             <div class="form-group">
                                                               <textarea
                                                                 asp-for="Message" 
@@ -304,11 +312,11 @@
                                         </div>
                                 }
                             }
-                           @* @if (User.Identity.IsAuthenticated){
+                            @if (User.Identity.IsAuthenticated){
                             <form asp-action="CreateComment" enctype="multipart/form-data" method="post">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <input type="hidden" asp-for="UserName" value=@User.Identity.Name class="form-control" />
-                                <input type="hidden" asp-for="IdTranslation" value=@item.Id class="form-control" />
+                                <input type="hidden" asp-for="IdTranslation" value=@Model.Translation.Id class="form-control" />
                                
                                 <div class="form-group">
                                     <label class="text-primary"
@@ -319,11 +327,10 @@
                                 </div>
                                 <button type="submit" class="btn btn-primary mb-1">Gửi</button>
                             </form>
-                            }*@
+                            }
                         </div>
                     </div>
                 </div>
             </div>
-        }
     </div>
 </section>

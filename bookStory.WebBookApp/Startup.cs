@@ -8,6 +8,7 @@ using bookStory.ApiIntegration.Comment;
 using bookStory.ApiIntegration.Language;
 using bookStory.ApiIntegration.Paragraph;
 using bookStory.ApiIntegration.Project;
+using bookStory.ApiIntegration.Rating;
 using bookStory.ApiIntegration.Translation;
 using bookStory.ApiIntegration.User;
 using bookStory.Data.Entities;
@@ -97,6 +98,7 @@ namespace bookStory.WebBookApp
             services.AddTransient<IUserApiClient, UserApiClient>();
             services.AddTransient<IProjectApiClient, ProjectApiClient>();
             services.AddTransient<ILanguageApiClient, LanguageApiClient>();
+            services.AddTransient<IRatingApiClient, RatingApiClient>();
             //services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
             //services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
 
