@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -61,6 +62,21 @@ namespace bookStory.Application.System.Users
                 signingCredentials: creds);
 
             return new ApiSuccessResult<string>(new JwtSecurityTokenHandler().WriteToken(token));
+        }
+
+        public async Task<List<UserVm>> GetAll()
+        {
+            var query = _userManager.Users;
+            var data = await query.Select(x => new UserVm()
+            {
+                Email = x.Email,
+                PhoneNumber = x.PhoneNumber,
+                UserName = x.UserName,
+                FirstName = x.FirstName,
+                Id = x.Id,
+                LastName = x.LastName
+            }).ToListAsync();
+            return data;
         }
 
         public async Task<ApiResult<UserVm>> GetById(Guid id)

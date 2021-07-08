@@ -82,6 +82,13 @@ namespace bookStory.BackendApi.Controllers
             return Ok(result);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            var items = await _userService.GetAll();
+            return Ok(items);
+        }
+
         //http://localhost/api/users/paging?pageIndex=1&pageSize=10&keyword=
         [HttpGet("paging")]
         public async Task<IActionResult> GetAllPaging([FromQuery] GetUserPagingRequest request)
