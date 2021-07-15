@@ -13,6 +13,7 @@ using bookStory.ApiIntegration.Rating;
 using bookStory.ApiIntegration.Report;
 using bookStory.ApiIntegration.Translation;
 using bookStory.ApiIntegration.User;
+using bookStory.Data.EF;
 using bookStory.Utilities.Constants;
 using bookStory.ViewModels.Catalog.Books;
 using bookStory.ViewModels.Catalog.Comments;
@@ -21,11 +22,13 @@ using bookStory.ViewModels.Catalog.Projects;
 using bookStory.ViewModels.Catalog.Ratings;
 using bookStory.ViewModels.Catalog.Reports;
 using bookStory.ViewModels.Catalog.Translations;
+using bookStory.WebBookApp.Hubs;
 using bookStory.WebBookApp.Models;
 using LazZiya.ExpressLocalization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
@@ -36,6 +39,8 @@ namespace bookStory.WebBookApp.Controllers
         private readonly ILogger<BookController> _logger;
         private readonly ISharedCultureLocalizer _loc;
         private readonly IUserApiClient _userApiClient;
+        private readonly IHubContext<ChatSignlR> _signalrHub;
+        //private readonly bookStoryDbContext _context;
 
         private readonly IBookApiClient _bookApiClient;
         private readonly IParagraphApiClient _paragraphApiClient;
@@ -55,7 +60,9 @@ namespace bookStory.WebBookApp.Controllers
             IRatingApiClient ratingApiClient,
             IProjectApiClient projectApiClient,
             ILanguageApiClient languageApiClient,
-            IReportApiClient ReportApiClient)
+            IReportApiClient ReportApiClient,
+            IHubContext<ChatSignlR> signalrHub
+            /*bookStoryDbContext context*/)
         {
             _logger = logger;
             _bookApiClient = bookApiClient;
@@ -67,6 +74,8 @@ namespace bookStory.WebBookApp.Controllers
             _ProjectApiClient = projectApiClient;
             _languageApiClient = languageApiClient;
             _ReportApiClient = ReportApiClient;
+            _signalrHub = signalrHub;
+            //_context = context;
         }
 
         public async Task<IActionResult> Index()
@@ -186,6 +195,41 @@ namespace bookStory.WebBookApp.Controllers
             return View(request);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetComment()
+        {
+            var com = await _commentApiClient.GetAll();
+
+            return Ok(com);
+        }
+
+        public async Task<IActionResult> IndexComment(int id)
+        {
+            var tran = await _translationApiClient.GetById(id);
+            var paragraph = await _paragraphApiClient.GetById(tran.IdParagraph);
+            var book = await _bookApiClient.GetById(paragraph.IdBook);
+            var com = await _commentApiClient.GetAll();
+            string hoten = "";
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = await _userApiClient.GetUsersName(User.Identity.Name);
+                hoten = user.ResultObj.FirstName + " " + user.ResultObj.LastName;
+                ViewBag.HoTen = hoten;
+            }
+            else
+            {
+                ViewBag.HoTen = hoten;
+            }
+
+            return View(new ParagraphDetailViewModel()
+            {
+                Paragraph = paragraph,
+                Book = book,
+                ListComments = com,
+                Translation = tran
+            });
+        }
+
         [HttpPost]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> CreateComment([FromForm] ParagraphDetailViewModel request)
@@ -201,6 +245,7 @@ namespace bookStory.WebBookApp.Controllers
                 return View(request);
             var tran = await _translationApiClient.GetById(request.IdTranslation);
             var result = await _commentApiClient.CreateComment(create);
+            await _signalrHub.Clients.All.SendAsync("LoadComment");
             if (result)
             {
                 TempData["result"] = "Thêm mới thành công";
@@ -208,6 +253,7 @@ namespace bookStory.WebBookApp.Controllers
             }
 
             ModelState.AddModelError("", "Thêm mới thất bại");
+
             return View(request);
         }
 
@@ -227,6 +273,7 @@ namespace bookStory.WebBookApp.Controllers
                 return View(request);
             var tran = await _translationApiClient.GetById(request.IdTranslation);
             var result = await _commentApiClient.UpdateComment(create);
+            await _signalrHub.Clients.All.SendAsync("LoadComment");
             if (result)
             {
                 TempData["result"] = "Cập nhật thành công";
@@ -297,6 +344,7 @@ namespace bookStory.WebBookApp.Controllers
                 return View();
             var tran = await _translationApiClient.GetById(request.IdTranslation);
             var result = await _commentApiClient.DeleteComment(request.IdComment);
+            await _signalrHub.Clients.All.SendAsync("LoadComment");
             if (result)
             {
                 TempData["result"] = "Xóa thành công";
@@ -382,6 +430,17 @@ namespace bookStory.WebBookApp.Controllers
             var paragraph = await _paragraphApiClient.GetById(tran.IdParagraph);
             var book = await _bookApiClient.GetById(paragraph.IdBook);
             var com = await _commentApiClient.GetAll();
+            string hoten = "";
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = await _userApiClient.GetUsersName(User.Identity.Name);
+                hoten = user.ResultObj.FirstName + " " + user.ResultObj.LastName;
+                ViewBag.HoTen = hoten;
+            }
+            else
+            {
+                ViewBag.HoTen = hoten;
+            }
 
             return View(new ParagraphDetailViewModel()
             {

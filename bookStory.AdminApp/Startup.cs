@@ -22,6 +22,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using bookStory.ApiIntegration.Paragraph;
+using bookStory.AdminApp.Hubs;
 
 namespace bookStory.AdminApp
 {
@@ -63,7 +64,11 @@ namespace bookStory.AdminApp
             services.AddTransient<IRatingApiClient, RatingApiClient>();
             services.AddTransient<IReportApiClient, ReportApiClient>();
             services.AddTransient<ITranslationApiClient, TranslationApiClient>();
-
+            services.AddSignalR();
+            services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.PropertyNamingPolicy = null;
+            });
             IMvcBuilder builder = services.AddRazorPages();
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
@@ -103,6 +108,7 @@ namespace bookStory.AdminApp
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapHub<ChatSignlR>("/chatsignlr");
             });
         }
     }

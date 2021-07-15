@@ -63,6 +63,8 @@
                             </div>
                            
                  }
+        <input type="hidden" value="@User.Identity.Name" class="form-control" id="username" name="username" />
+        <input type="hidden" value="@Model.Translation.Id" class="form-control" id="idtran" name="idtran" />
         <div class="container">
             <div class="underlined-title">
                 <div class="editContent">
@@ -88,10 +90,6 @@
                 rounded-right
                 text-dark
               ">
-                    @*<button type="button"
-                            class="btn btn-outline-primary float-right mt-2 mb-2 w-100">
-                        Báo cáo
-                    </button>*@
                 </div>
            
             </div>
@@ -244,21 +242,24 @@
                                 </div>
                               </div>
                             </div>
-                            
+                            <div id="tableBody"></div>
                             @foreach (var com in Model.ListComments)
                             {
                                 if (Model.Translation.Id == com.IdTranslation)
                                 {
                                     var mce = "suacomment"+@com.Id.ToString();
+                                    var dce = "editcomment"+@com.Id.ToString();
                                     @Model.Message = @com.Message;
-                                    <span class="text-success">@com.FirstName @com.LastName: </span>
+                                    <div></div>
+                                    @*<span class="text-success">@com.FirstName @com.LastName: </span>
                                     <span class="text-dark ml-1">@com.Message</span>
                                     <span class="text-warning timecomment ml-2">@com.DateComment</span>
+                                   
                                     if(@com.UserName == @User.Identity.Name)
                                     {
                                         <a class="text-primary" data-toggle="collapse" href="#@mce" role="button" aria-expanded="false" aria-controls=@mce>| Sửa</a>
                                         <a class="text-danger" data-toggle="modal" data-target="#@mce" role="button" aria-expanded="false" aria-controls=@mce>| Xóa</a>
-                                    }
+                                    }*@
                                     
                                         <div class="modal fade" id= @mce tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                           <div class="modal-dialog modal-dialog-centered" role="document">
@@ -284,8 +285,37 @@
                                             </div>
                                           </div>
                                         </div>
+                                        <div class="modal fade" id= @dce tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                          <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLongTitle">Sửa bình luận của bạn</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                  <span aria-hidden="true">&times;</span>
+                                                </button>
+                                              </div>
+                                              
+                                                <form asp-action="EditComment" enctype="multipart/form-data" method="post" class="m-2">
+                                                            <input type="hidden" asp-for="IdComment" value=@com.Id />
+                                                            <input type="hidden" asp-for="UserName" value=@User.Identity.Name class="form-control" />
+                                                            <input type="hidden" asp-for="IdTranslation" class="form-control" value=@Model.Translation.Id />
+                                                            <div class="form-group">
+                                                              <textarea
+                                                                asp-for="Message" 
+                                                                class="form-control"
+                                                                id="exampleFormControlTextarea1"
+                                                                rows="3"
+                                                              ></textarea>
+                                                            </div>
+                                                            <button type="submit" class="btn btn-primary mb-1 float-right">
+                                                              Sửa
+                                                            </button>
+                                                          </form>
+                                            </div>
+                                          </div>
+                                        </div>
                                     
-                                    <hr class="mt-0 bg-info" />
+                                    @*<hr class="mt-0 bg-info" />
                                     <div class="row">
                                           <div class="col-md-6">
                                           </div>
@@ -309,9 +339,15 @@
                                                           </form>
                                             </div>
                                           </div>
-                                        </div>
+                                        </div>*@
                                 }
+                                 
                             }
+                            <div id="messagearea" class="row">
+                                <div class="col-md-12">
+                                        <ul id="messagesList"></ul>
+                                    </div>
+                                    </div>
                             @if (User.Identity.IsAuthenticated){
                             <form asp-action="CreateComment" enctype="multipart/form-data" method="post">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -322,11 +358,12 @@
                                     <label class="text-primary"
                                            for="exampleFormControlTextarea1">Thêm bình luận</label>
                                     <textarea asp-for="MessageCreate" class="form-control"
-                                              id="exampleFormControlTextarea1"
+                                              id="message" autocomplete="off"
                                               rows="3"></textarea>
                                 </div>
                                 <button type="submit" class="btn btn-primary mb-1">Gửi</button>
                             </form>
+                    
                             }
                         </div>
                     </div>
