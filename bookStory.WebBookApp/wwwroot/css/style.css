@@ -1720,12 +1720,13 @@ body {
     margin-right: 2rem;
     color: white;
     background-color: var(--chat-bubble-you);
+    align-self: flex-end;
 }
 
 .chat__bubble--me {
     margin-left: 2rem;
     background-color: var(--chat-bubble-me);
-    align-self: flex-end;
+    
 }
 
 .chat__time {

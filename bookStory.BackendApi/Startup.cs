@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using bookStory.Application.Catalog.Books;
+using bookStory.Application.Catalog.Chats;
 using bookStory.Application.Catalog.Comments;
 using bookStory.Application.Catalog.Paragraphs;
 using bookStory.Application.Catalog.Projects;
@@ -58,6 +59,7 @@ namespace bookStory.BackendApi
             services.AddTransient<ICommentService, CommentService>();
             services.AddTransient<IRatingService, RatingService>();
             services.AddTransient<IReportService, ReportService>();
+            services.AddTransient<IChatService, ChatService>();
 
             services.AddTransient<UserManager<AppUser>, UserManager<AppUser>>();
             services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();

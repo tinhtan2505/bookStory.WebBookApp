@@ -7,6 +7,7 @@ using bookStory.AdminApp.Hubs;
 using bookStory.ApiIntegration.Comment;
 using bookStory.ApiIntegration.Translation;
 using bookStory.Utilities.Constants;
+using bookStory.ViewModels.Catalog.Chats;
 using bookStory.ViewModels.Catalog.Comments;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

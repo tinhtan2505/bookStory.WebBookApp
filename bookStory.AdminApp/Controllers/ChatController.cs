@@ -1,9 +1,10 @@
-﻿using bookStory.ApiIntegration.Chat;
+﻿using bookStory.AdminApp.Hubs;
+using bookStory.ApiIntegration.Chat;
 using bookStory.Utilities.Constants;
 using bookStory.ViewModels.Catalog.Chats;
-using bookStory.WebBookApp.Hubs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -11,18 +12,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace bookStory.WebBookApp.Controllers
+namespace bookStory.AdminApp.Controllers
 {
-    //public class ChatController : Controller
-    //{
-    //    public IActionResult Index()
-    //    {
-    //        return View();
-    //    }
-    //}
-    public class ChatController : Controller
+    public class ChatController : BaseController
     {
-        private readonly IChatApiClient _chatApiClient;
+        private readonly IChatApiClient _CommentApiClient;
         private readonly IConfiguration _configuration;
         private readonly IHubContext<ChatSignlR> _signalrHub;
 
@@ -31,14 +25,14 @@ namespace bookStory.WebBookApp.Controllers
             IHubContext<ChatSignlR> signalrHub)
         {
             _configuration = configuration;
-            _chatApiClient = CommentApiClient;
+            _CommentApiClient = CommentApiClient;
             _signalrHub = signalrHub;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetChat()
         {
-            var com = await _chatApiClient.GetAll();
+            var com = await _CommentApiClient.GetAll();
 
             return Ok(com);
         }
@@ -53,7 +47,7 @@ namespace bookStory.WebBookApp.Controllers
                 PageIndex = pageIndex,
                 PageSize = pageSize
             };
-            var data = await _chatApiClient.GetPagings(request);
+            var data = await _CommentApiClient.GetPagings(request);
             ViewBag.Keyword = keyword;
             if (TempData["result"] != null)
             {
@@ -65,7 +59,7 @@ namespace bookStory.WebBookApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            var result = await _chatApiClient.GetById(id);
+            var result = await _CommentApiClient.GetById(id);
             return View(result);
         }
 
@@ -82,7 +76,7 @@ namespace bookStory.WebBookApp.Controllers
             if (!ModelState.IsValid)
                 return View(request);
 
-            var result = await _chatApiClient.CreateChat(request);
+            var result = await _CommentApiClient.CreateChat(request);
             await _signalrHub.Clients.All.SendAsync("LoadChat");
             if (result)
             {
@@ -99,7 +93,7 @@ namespace bookStory.WebBookApp.Controllers
         {
             //var languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
 
-            var Comment = await _chatApiClient.GetById(id);
+            var Comment = await _CommentApiClient.GetById(id);
             var editVm = new ChatUpdateRequest()
             {
                 Id = Comment.Id,
@@ -118,7 +112,7 @@ namespace bookStory.WebBookApp.Controllers
             if (!ModelState.IsValid)
                 return View(request);
 
-            var result = await _chatApiClient.UpdateChat(request);
+            var result = await _CommentApiClient.UpdateChat(request);
             if (result)
             {
                 TempData["result"] = "Cập nhật sách thành công";
@@ -144,7 +138,7 @@ namespace bookStory.WebBookApp.Controllers
             if (!ModelState.IsValid)
                 return View();
 
-            var result = await _chatApiClient.DeleteChat(request.Id);
+            var result = await _CommentApiClient.DeleteChat(request.Id);
             if (result)
             {
                 TempData["result"] = "Xóa thành công";

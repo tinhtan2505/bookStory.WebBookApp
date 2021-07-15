@@ -1,12 +1,12 @@
 ﻿$(() => {
-    LoadProdData();
+    LoadCommentData();
     var connection = new signalR.HubConnectionBuilder().withUrl("/chatsignlr").build();
     connection.start();
     connection.on("LoadComment", function () {
-        LoadProdData();
+        LoadCommentData();
     })
-    LoadProdData();
-    function LoadProdData() {
+    LoadCommentData();
+    function LoadCommentData() {
         var tr = '';
         var idtran = document.getElementById("idtran").value;
         var username = document.getElementById("username").value.toString();
@@ -36,6 +36,81 @@
                     }
                 })
                 $("#tableBody").html(tr);
+            },
+            error: (error) => {
+                console.log(error)
+            }
+        })
+    }
+})
+//$(() => {
+//    LoadProdData();
+//    var connection = new signalR.HubConnectionBuilder().withUrl("/chatsignlr").build();
+//    connection.start();
+//    connection.on("LoadChat", function () {
+//        LoadProdData();
+//    })
+//    LoadProdData();
+//    function LoadProdData() {
+//        var tr = '';
+//        $.ajax({
+//            url: '/vi/Chat/GetChat',
+//            method: 'GET',
+//            success: (result) => {
+//                $.each(result, (k, v) => {
+//                    tr += `<tr>
+//                            <td>${v.UserIdSender}</td>
+//                            <td>${v.UserIdReceiver}</td>
+//                            <td>${v.Message}</td>
+//                            <td>${v.DateComment}</td>
+//                            <td>${v.UserName1}</td>
+//                            <td>
+//                            <a href='../Product/Edit?id=${v.Id}'>Edit</a>
+//                            <a href='../Product/Details?id=${v.Id}'>Details</a>
+//                            <a href='../Product/Delete?id=${v.Id}'>Delete</a>
+//                            </td>
+//                       </tr>`
+//                })
+//                $("#tableBodyChat").html(tr);
+//            },
+//            error: (error) => {
+//                console.log(error)
+//            }
+//        })
+//    }
+//})
+$(() => {
+    LoadChatData();
+    var connection = new signalR.HubConnectionBuilder().withUrl("/chatsignlr").build();
+    connection.start();
+    connection.on("LoadChat", function () {
+        LoadChatData();
+    })
+    LoadChatData();
+    function LoadChatData() {
+        var li = '';
+        var unsender = document.getElementById("unsender").value.toString();
+        $.ajax({
+            url: '/vi/Chat/GetChat',
+            method: 'GET',
+            success: (result) => {
+                $.each(result, (k, v) => {
+                    if (v.UserName1 == unsender && v.UserName2 == "hoangha") {
+                        li += `
+                           <div class="chat__bubble chat__bubble--you">
+                                        ${v.Message}
+                           </div>
+                            `
+                    }
+                    if (v.UserName1 == "hoangha" && v.UserName2 == unsender) {
+                        li += `
+                           <div class="chat__bubble chat__bubble--me">
+                                ${v.Message}
+                            </div>
+                            `
+                    }
+                })
+                $("#chatsender").html(li);
             },
             error: (error) => {
                 console.log(error)

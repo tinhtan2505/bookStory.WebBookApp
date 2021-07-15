@@ -2,6 +2,7 @@
 using bookStory.Data.EF;
 using bookStory.Data.Entities;
 using bookStory.Utilities.Exceptions;
+using bookStory.ViewModels.Catalog.Chats;
 using bookStory.ViewModels.Catalog.Comments;
 using bookStory.ViewModels.Common;
 using Microsoft.AspNetCore.Identity;

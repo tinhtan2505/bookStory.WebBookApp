@@ -1,11 +1,12 @@
 ﻿@using bookStory.ViewModels.Common;
-@model PagedResult<bookStory.ViewModels.Catalog.Paragraps.ParagraphViewModel>
+@model PagedResult<bookStory.ViewModels.Catalog.Chats.ChatViewModel>
 
 @{
-    ViewData["Title"] = "Danh sách Đoạn văn";
+    ViewData["Title"] = "Chat";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section Scripts{
+    <script src="~/js/chat.js"></script>
     <script>
         setTimeout(function () {
             $('#msgAlert').fadeOut('slow');
@@ -42,6 +43,7 @@
                 </span>
             </div>
         </div>
+        <input type="" value="@User.Identity.Name" class="form-control" id="unsender" name="unsender" />
      <div class="home-page__content messages-page">
             <div class="container-fluid h-100">
                 <div class="row px-0 h-100">
@@ -65,7 +67,7 @@
                         </button>
                     </div>
                     </div>
-
+                    @*danh sách tin nhắn*@
                     <ul class="messages-page__list pb-5 px-1 px-md-3">
                     <li class="messaging-member messaging-member--new messaging-member--online">
                         <div class="messaging-member__wrapper">
@@ -166,6 +168,21 @@
                         <span class="messaging-member__message">Really ?!</span>
                         </div>
                     </li>
+
+                    <div id="listReceiver">
+                        
+                    </div>
+                    <li class="messaging-member">
+                        <div class="messaging-member__wrapper">
+                        <div class="messaging-member__avatar">
+                            <img src="https://randomuser.me/api/portraits/thumb/women/17.jpg" alt="Courtney Simmons" loading="lazy">
+                            <div class="user-status"></div>
+                        </div>
+
+                        <span class="messaging-member__name">Courtney Simmons</span>
+                        <span class="messaging-member__message">Going home soon, don't worry</span>
+                        </div>
+                    </li>
                     </ul>
                 </div>
 
@@ -181,6 +198,7 @@
                         <div class="chat__notification d-flex d-md-none chat__notification--new">
                             <span>1</span>
                         </div>
+                        @*người nhắn tin*@
                         <div class="chat__infos pl-2 pl-md-0">
                             <div class="chat-member__wrapper" data-online="true">
                             <div class="chat-member__avatar">
@@ -220,53 +238,14 @@
                         </div>
                         </div>
                         <div class="chat__content pt-4 px-3">
+                            @*danh sách tin nhắn*@
                         <ul class="chat__list-messages">
-                            <li>
-                            <div class="chat__time">Yesterday at 16:43</div>
-                            <div class="chat__bubble chat__bubble--you">
-                                Hey, I bought something yesterdat but haven't gotten any confirmation. Do you know I if the order went through?
-                            </div>
-                            </li>
-                            <li>
-                            <div class="chat__bubble chat__bubble--me">
-                                Hi! I just checked, your order went through and is on it's way home. Enjoy your new computer! 😃
-                            </div>
-                            </li>
-                            <li>
-                            <div class="chat__bubble chat__bubble--you">
-                                Ohh thanks ! I was really worried about it !
-                            </div>
-                            <div class="chat__bubble chat__bubble--you">
-                                Can't wait for it to be delivered
-                            </div>
-                            </li>
-                            <li>
-                            <div class="chat__time">07:14</div>
-                            <div class="chat__bubble chat__bubble--me">
-                                Aenean iaculis massa non lorem dignissim volutpat. Praesent id faucibus lorem, a sagittis nunc. Duis facilisis lectus vel sapien ultricies, sed placerat augue elementum. In sagittis, justo nec sodales posuere, nunc est sagittis tellus, eget scelerisque dolor risus vel augue
-                            </div>
-                            <div class="chat__bubble chat__bubble--me">
-                                Is everything alright?
-                            </div>
-
-                            </li>
-                            <li>
-                            <div class="chat__bubble chat__bubble--you">
-                                Vestibulum finibus pulvinar quam, at tempus lorem. Pellentesque justo sapien, pulvinar sed magna et, vulputate commodo nisl. Aenean pharetra ornare turpis. Pellentesque viverra blandit ullamcorper. Mauris tincidunt ac lacus vel convallis. Vestibulum id nunc nec urna accumsan dapibus quis ullamcorper massa. Aliquam erat volutpat. Nam mollis mi et arcu dapibus condimentum.
-                            </div>
-                            <div class="chat__bubble chat__bubble--you">
-                                Nulla facilisi. Duis laoreet dignissim lectus vel maximus
-                            </div>
-                            <div class="chat__bubble chat__bubble--you">
-                                Curabitur volutpat, ipsum a condimentum hendrerit ! 😊
-                            </div>
-                            </li>
-                            <li>
-                            <div class="chat__time">09:26</div>
-                            <div class="chat__bubble chat__bubble--me">
-                                Perfect, thanks !
-                            </div>
-                            </li>
+                                <li id="chatsender">
+                                    <div class="chat__bubble chat__bubble--you">
+                                        Nulla facilisi. Duis laoreet dignissim lectus vel maximus
+                                    </div>
+                                </li>
+                            
                         </ul>
                         </div>
                         <div class="chat__send-container px-2 px-md-3 pt-1 pt-md-3">
@@ -299,6 +278,46 @@
                 </div>
             </div>
             </div>
+            
+            @*=====================================================================================================*@
+            <div class="container-fluid">
+    <h1 class="mt-4">Danh sách Chat</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+        <li class="breadcrumb-item active">Danh sách Chat</li>
+    </ol>
+   @* <div class="">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                UserIdSender
+                            </th>
+                            <th>
+                                UserIdSender
+                            </th>
+                            <th>
+                                Message
+                            </th>
+                            <th>
+                                DateTime
+                            </th>
+                            <th>
+                                UserName
+                            </th>
 
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                         <tbody id="tableBodyChat"></tbody>
+                    </tbody>
+                </table>
+            
+            @await Component.InvokeAsync("Pager", Model)
+        
+    </div>*@
+</div>
+                @*=////////////////////////////////////////////////=*@
     </div>
 </section>

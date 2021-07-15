@@ -16,6 +16,7 @@ using bookStory.ApiIntegration.User;
 using bookStory.Data.EF;
 using bookStory.Utilities.Constants;
 using bookStory.ViewModels.Catalog.Books;
+using bookStory.ViewModels.Catalog.Chats;
 using bookStory.ViewModels.Catalog.Comments;
 using bookStory.ViewModels.Catalog.Paragraps;
 using bookStory.ViewModels.Catalog.Projects;

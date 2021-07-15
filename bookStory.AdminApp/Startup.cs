@@ -23,6 +23,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using bookStory.ApiIntegration.Paragraph;
 using bookStory.AdminApp.Hubs;
+using bookStory.ApiIntegration.Chat;
 
 namespace bookStory.AdminApp
 {
@@ -61,6 +62,7 @@ namespace bookStory.AdminApp
             services.AddTransient<IParagraphApiClient, ParagraphApiClient>();
             services.AddTransient<IProjectApiClient, ProjectApiClient>();
             services.AddTransient<ICommentApiClient, CommentApiClient>();
+            services.AddTransient<IChatApiClient, ChatApiClient>();
             services.AddTransient<IRatingApiClient, RatingApiClient>();
             services.AddTransient<IReportApiClient, ReportApiClient>();
             services.AddTransient<ITranslationApiClient, TranslationApiClient>();

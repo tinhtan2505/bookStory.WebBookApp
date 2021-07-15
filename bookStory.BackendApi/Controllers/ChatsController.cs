@@ -1,24 +1,22 @@
-﻿using System;
+﻿using bookStory.Application.Catalog.Chats;
+using bookStory.ViewModels.Catalog.Chats;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using bookStory.Application.Catalog.Comments;
-using bookStory.ViewModels.Catalog.Chats;
-using bookStory.ViewModels.Catalog.Comments;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 
 namespace bookStory.BackendApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     //[Authorize]
-    public class CommentsController : ControllerBase
+    public class ChatsController : ControllerBase
     {
-        private readonly ICommentService _paragrapService;
+        private readonly IChatService _paragrapService;
 
-        public CommentsController(ICommentService bookService)
+        public ChatsController(IChatService bookService)
         {
             _paragrapService = bookService;
         }
@@ -31,7 +29,7 @@ namespace bookStory.BackendApi.Controllers
         }
 
         [HttpGet("paging")]
-        public async Task<IActionResult> GetAllPaging([FromQuery] GetManageCommentPagingRequest request)
+        public async Task<IActionResult> GetAllPaging([FromQuery] GetManageChatPagingRequest request)
         {
             var products = await _paragrapService.GetAllPaging(request);
             return Ok(products);
@@ -50,7 +48,7 @@ namespace bookStory.BackendApi.Controllers
         [HttpPost]
         [Consumes("multipart/form-data")]
         [Authorize]
-        public async Task<IActionResult> Create([FromForm] CommentCreateRequest request)
+        public async Task<IActionResult> Create([FromForm] ChatCreateRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -68,7 +66,7 @@ namespace bookStory.BackendApi.Controllers
         [HttpPut("{id}")]
         [Consumes("multipart/form-data")]
         [Authorize]
-        public async Task<IActionResult> Update([FromRoute] int id, [FromForm] CommentUpdateRequest request)
+        public async Task<IActionResult> Update([FromRoute] int id, [FromForm] ChatUpdateRequest request)
         {
             if (!ModelState.IsValid)
             {

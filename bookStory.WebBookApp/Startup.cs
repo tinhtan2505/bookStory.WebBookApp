@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using bookStory.ApiIntegration.Book;
+using bookStory.ApiIntegration.Chat;
 using bookStory.ApiIntegration.Comment;
 using bookStory.ApiIntegration.Language;
 using bookStory.ApiIntegration.Paragraph;
@@ -104,6 +105,7 @@ namespace bookStory.WebBookApp
             services.AddTransient<ILanguageApiClient, LanguageApiClient>();
             services.AddTransient<IRatingApiClient, RatingApiClient>();
             services.AddTransient<IReportApiClient, ReportApiClient>();
+            services.AddTransient<IChatApiClient, ChatApiClient>();
             services.AddTransient<IUserApiClient, UserApiClient>();
             services.AddSignalR();
             services.AddControllers().AddJsonOptions(options =>
