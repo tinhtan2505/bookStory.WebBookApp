@@ -2,6 +2,7 @@
 using bookStory.Utilities.Constants;
 using bookStory.ViewModels.Catalog.Chats;
 using bookStory.WebBookApp.Hubs;
+using bookStory.WebBookApp.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -43,23 +44,47 @@ namespace bookStory.WebBookApp.Controllers
             return Ok(com);
         }
 
-        public async Task<IActionResult> Index(string keyword, int? idtranslation, int pageIndex = 1, int pageSize = 10)
-        {
-            var languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
+        //public async Task<IActionResult> Index(string keyword, int? idtranslation, int pageIndex = 1, int pageSize = 10)
+        //{
+        //    var languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
 
-            var request = new GetManageChatPagingRequest()
+        //    var request = new GetManageChatPagingRequest()
+        //    {
+        //        Keyword = keyword,
+        //        PageIndex = pageIndex,
+        //        PageSize = pageSize
+        //    };
+        //    var data = await _chatApiClient.GetPagings(request);
+        //    ViewBag.Keyword = keyword;
+        //    if (TempData["result"] != null)
+        //    {
+        //        ViewBag.SuccessMsg = TempData["result"];
+        //    }
+        //    return View(data);
+        //}
+        [HttpGet]
+        public async Task<IActionResult> Index()
+        {
+            //var tran = await _translationApiClient.GetById(id);
+            //var paragraph = await _paragraphApiClient.GetById(tran.IdParagraph);
+            //var book = await _bookApiClient.GetById(paragraph.IdBook);
+            //var com = await _commentApiClient.GetAll();
+            //string hoten = "";
+            //if (User.Identity.IsAuthenticated)
+            //{
+            //    var user = await _userApiClient.GetUsersName(User.Identity.Name);
+            //    hoten = user.ResultObj.FirstName + " " + user.ResultObj.LastName;
+            //    ViewBag.HoTen = hoten;
+            //}
+            //else
+            //{
+            //    ViewBag.HoTen = hoten;
+            //}
+            var chats = await _chatApiClient.GetAll();
+            return View(new ChatDetailViewModel()
             {
-                Keyword = keyword,
-                PageIndex = pageIndex,
-                PageSize = pageSize
-            };
-            var data = await _chatApiClient.GetPagings(request);
-            ViewBag.Keyword = keyword;
-            if (TempData["result"] != null)
-            {
-                ViewBag.SuccessMsg = TempData["result"];
-            }
-            return View(data);
+                ListChats = chats
+            });
         }
 
         [HttpGet]
