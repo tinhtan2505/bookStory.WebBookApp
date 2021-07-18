@@ -11,12 +11,13 @@
         var unnn_array = new Array();
         var dem = 0;
         var array_id = new Array();
+        var userloged = document.getElementById("unsender").value.toString();
         $.ajax({
             url: '/vi/Chat/GetChat',
             method: 'GET',
             success: (result) => {
                 $.each(result, (k, v) => {
-                    if (v.UserName1 == unsender) {
+                    if (v.UserName1 == userloged) {
                         var username2 = v.UserName2.toString();
                         var kt = false;
                         for (var i = 0; i < dem; i++) {
@@ -29,18 +30,18 @@
                             unnn_array[dem] = username2;
                             array_id[dem] = v.Id;
                             dem++;
+                            list += `${v.Id}//`
                         }
                     }
                 })
+                for (var j = 0; j < dem; j++) {
+                    callchat(array_id[j]);
+                }
             },
             error: (error) => {
                 console.log(error)
             }
         })
-        var arr = [5, 8, 9, 10, 11];
-        for (var i = 0; i < 5; i++) {
-            callchat(arr[i]);
-        }
         function callchat(id) {
             var tinnhan = "#tinnhan" + id.toString();
             var unsender = document.getElementById("unsender").value.toString();
@@ -68,10 +69,6 @@
                                 `
                         }
                     })
-
-                    //var lii = `tinhtan`;
-                    //var tinhtan = "#chatchat123"
-                    //$(tinhtan).html(lii);
                     $(tinnhan).html(li);
                 },
                 error: (error) => {
