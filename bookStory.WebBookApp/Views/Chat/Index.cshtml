@@ -1,6 +1,4 @@
-﻿@*@using bookStory.ViewModels.Common;
-@model PagedResult<bookStory.ViewModels.Catalog.Chats.ChatViewModel>*@
-@model ChatDetailViewModel
+﻿@model ChatDetailViewModel
 
 @{
     ViewData["Title"] = "Chat";
@@ -132,14 +130,10 @@
                                 }
                                 
                             }
-                        @*<div id="listReceiver"></div>*@
                     </ul>
                 </div>
-
-                @*<div class="chat col-12 col-md-8" id="chatsender"></div>  *@
                 @*//////////////////////////////////////////////////////////////////////////////*@
                 <div class="chat col-12 col-md-8">
-                    @*<div id="chatchat123"></div>*@
                 @{
                         string[] list_un22 = new string[1000];
                         int dem1 = 0;
@@ -215,24 +209,10 @@
 
                                             </div>
                                             </div>
-                                            <input type="" value="@username2" class="form-control" id="@un2" name="@un2" />
+                                            <input type="hidden" value="@username2" class="form-control" id="@un2" name="@un2" />
                                             <div class="chat__content pt-4 px-3">
                                             <ul class="chat__list-messages">
-                                                <li id="@tinnhan">
-                                                @*@foreach (var chat1 in Model.ListChats)
-                                                {
-                                                    if (chat1.UserName1 == User.Identity.Name && chat1.UserName2 == username2) {
-                                                               <div class="chat__bubble chat__bubble--you">
-                                                                            @chat1.Message
-                                                               </div>
-                                                    }
-                                                    if (chat1.UserName1 == username2 && chat1.UserName2 == User.Identity.Name) {
-                                                               <div class="chat__bubble chat__bubble--me">
-                                                                   @chat1.Message
-                                                                </div>
-                                                    }
-                                                }*@
-                                                </li>
+                                                <li id="@tinnhan"></li>
                                             </ul>
                                             </div>
                                             <div class="chat__send-container px-2 px-md-3 pt-1 pt-md-3">
