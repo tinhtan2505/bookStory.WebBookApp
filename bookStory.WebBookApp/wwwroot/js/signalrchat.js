@@ -2,7 +2,7 @@
     LoadChatData();
     var connection = new signalR.HubConnectionBuilder().withUrl("/chatsignlr").build();
     connection.start();
-    connection.on("LoadChat", function () {
+    connection.on("LoadListChat", function () {
         LoadChatData();
     })
     LoadChatData();

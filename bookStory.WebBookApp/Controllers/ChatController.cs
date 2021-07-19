@@ -1,4 +1,5 @@
 ﻿using bookStory.ApiIntegration.Chat;
+using bookStory.ApiIntegration.User;
 using bookStory.Utilities.Constants;
 using bookStory.ViewModels.Catalog.Chats;
 using bookStory.WebBookApp.Hubs;
@@ -14,26 +15,22 @@ using System.Threading.Tasks;
 
 namespace bookStory.WebBookApp.Controllers
 {
-    //public class ChatController : Controller
-    //{
-    //    public IActionResult Index()
-    //    {
-    //        return View();
-    //    }
-    //}
     public class ChatController : Controller
     {
         private readonly IChatApiClient _chatApiClient;
         private readonly IConfiguration _configuration;
+        private readonly IUserApiClient _userApiClient;
         private readonly IHubContext<ChatSignlR> _signalrHub;
 
         public ChatController(IChatApiClient CommentApiClient,
             IConfiguration configuration,
+            IUserApiClient userApiClient,
             IHubContext<ChatSignlR> signalrHub)
         {
             _configuration = configuration;
             _chatApiClient = CommentApiClient;
             _signalrHub = signalrHub;
+            _userApiClient = userApiClient;
         }
 
         [HttpGet]
@@ -94,30 +91,62 @@ namespace bookStory.WebBookApp.Controllers
             return View(result);
         }
 
-        [HttpGet]
-        public IActionResult Create()
-        {
-            return View();
-        }
+        //[HttpGet]
+        //public IActionResult Create()
+        //{
+        //    return View();
+        //}
 
         [HttpPost]
         [Consumes("multipart/form-data")]
-        public async Task<IActionResult> Create([FromForm] ChatCreateRequest request)
+        public async Task<IActionResult> Create([FromForm] ChatDetailViewModel request)
         {
+            var iduser1 = await _userApiClient.GetUsersName(request.UserName1);
+            var iduser2 = await _userApiClient.GetUsersName(request.UserName2);
+            ChatCreateRequest create = new ChatCreateRequest()
+            {
+                UserIdSender = iduser1.ResultObj.Id,
+                UserIdReceiver = iduser2.ResultObj.Id,
+                Message = request.Message,
+            };
             if (!ModelState.IsValid)
                 return View(request);
 
-            var result = await _chatApiClient.CreateChat(request);
-            await _signalrHub.Clients.All.SendAsync("LoadChat");
+            var result = await _chatApiClient.CreateChat(create);
+            await _signalrHub.Clients.All.SendAsync("LoadListChat");
             if (result)
             {
-                TempData["result"] = "Thêm mới Sách thành công";
+                TempData["result"] = "Thêm mới Chat thành công";
                 return RedirectToAction("Index");
             }
 
-            ModelState.AddModelError("", "Thêm mới Sách thất bại");
+            ModelState.AddModelError("", "Thêm mới Chat thất bại");
             return View(request);
         }
+
+        //[HttpPost]
+        //[Consumes("multipart/form-data")]
+        //public async Task<IActionResult> Create(ChatDetailViewModel request)
+        //{
+        //    ChatCreateRequest create = new ChatCreateRequest()
+        //    {
+        //        UserIdSender = request.UserIdSender,
+        //        UserIdReceiver = request.UserIdReceiver,
+        //        Message = request.Message,
+        //    };
+        //    if (!ModelState.IsValid)
+        //        return View(request);
+        //    var result = await _chatApiClient.CreateChat(create);
+        //    //await _signalrHub.Clients.All.SendAsync("LoadChat");
+        //    if (result)
+        //    {
+        //        TempData["result"] = "Thêm mới Chat thành công";
+        //        return RedirectToAction("Index");
+        //    }
+
+        //    ModelState.AddModelError("", "Thêm mới Chat thất bại");
+        //    return View(request);
+        //}
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
