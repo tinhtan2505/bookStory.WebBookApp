@@ -53,7 +53,7 @@
         <input type="" value="@ViewBag.HoTen2" class="form-control" id="hoten2" name="hoten2" />
  
             <div
-            class="container home-page__content messages-page h-100"
+            class="container home-page__content messages-page"
             id="accordionExample"
           >
             <div class="row px-0 h-100">
@@ -121,32 +121,6 @@
                                 {
                                     list_un2[dem] = chat.UserName2;
                                     dem++;
-                                    if(chat.UserName2 == ViewBag.NguoiNhan2.ToString())
-                                    {
-                                       ktusername2 = true;
-                                       <li
-                                        class="
-                                          messaging-member
-                                          messaging-member--active
-                                        "
-                                        data-toggle="collapse"
-                                        data-target="#@mce"
-                                        aria-expanded="true"
-                                        aria-controls="@mce"
-                                      >
-                                           <div class="messaging-member__wrapper">
-                                                <div class="messaging-member__avatar">
-                                                    <img src="https://randomuser.me/api/portraits/thumb/women/17.jpg" alt="Courtney Simmons" loading="lazy">
-                                                    <div class="user-status"></div>
-                                                </div>
-
-                                                <span class="messaging-member__name">@chat.FirstName2 @chat.LastName2</span>
-                                                <span class="messaging-member__message">@chat.Message</span>
-                                            </div>
-                                        </li>
-                                    }
-                                    else
-                                    {
                                         <li
                                         class="
                                           messaging-member
@@ -167,7 +141,7 @@
                                                 <span class="messaging-member__message">@chat.Message</span>
                                             </div>
                                         </li>
-                                    }
+                                    
                                 }
                                 }
                                 

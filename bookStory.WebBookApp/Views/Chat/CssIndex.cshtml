@@ -49,8 +49,10 @@
             </div>
         </div>
         <input type="hidden" value="@User.Identity.Name" class="form-control" id="unsender" name="unsender" />
+        @*<button class="btn btn-outline-primary float-right mt-2" type="button">@Html.ActionLink("Chat riêng", "IndexPrivate", new { username2 = "anhtuan" })</button>*@
+           
         <div
-            class="home-page__content messages-page"
+            class="home-page__content messages-page h-100"
             id="accordionExample"
           >
           <div class="container-fluid h-100">
@@ -151,8 +153,9 @@
                             }
                   </ul>
               </div>
-              <div class="chat col-12 col-md-8">
-                    @{
+              <div class="col-sm-8 chat">
+              
+                @{
                         string[] list_un22 = new string[1000];
                         int dem1 = 0;
                  }
@@ -365,8 +368,6 @@
             </div>
             </div>
           </div>
-    @*MXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*@
-  
-    @*MXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX*@
+
     </div>
 </section>
