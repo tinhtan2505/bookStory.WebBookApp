@@ -92,7 +92,7 @@ namespace bookStory.Application.Catalog.Books
             var query = from b in _context.Books
                         select b;
             if (!string.IsNullOrEmpty(request.Keyword))
-                query = query.Where(x => x.FileName.Contains(request.Keyword));
+                query = query.Where(x => x.Title.Contains(request.Keyword));
 
             int totalRow = await query.CountAsync();
             var data = await query.Skip((request.PageIndex - 1) * request.PageSize).Take(request.PageSize)

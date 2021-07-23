@@ -8,9 +8,13 @@
     LoadChatData();
     function LoadChatData() {
         var unnn_array = new Array();
-        var dem = 0;
         var array_id = new Array();
         var userloged = document.getElementById("unsender").value.toString();
+        var nguoinhan2 = document.getElementById("nguoinhan2").value.toString();
+        var hoten2 = document.getElementById("hoten2").value.toString();
+        unnn_array[0] = nguoinhan2;
+        array_id[0] = 0;
+        var dem = 1;
         $.ajax({
             url: '/vi/Chat/GetChat',
             method: 'GET',

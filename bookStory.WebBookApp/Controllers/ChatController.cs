@@ -62,22 +62,19 @@ namespace bookStory.WebBookApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            //var tran = await _translationApiClient.GetById(id);
-            //var paragraph = await _paragraphApiClient.GetById(tran.IdParagraph);
-            //var book = await _bookApiClient.GetById(paragraph.IdBook);
-            //var com = await _commentApiClient.GetAll();
-            //string hoten = "";
-            //if (User.Identity.IsAuthenticated)
-            //{
-            //    var user = await _userApiClient.GetUsersName(User.Identity.Name);
-            //    hoten = user.ResultObj.FirstName + " " + user.ResultObj.LastName;
-            //    ViewBag.HoTen = hoten;
-            //}
-            //else
-            //{
-            //    ViewBag.HoTen = hoten;
-            //}
             var chats = await _chatApiClient.GetAll();
+            return View(new ChatDetailViewModel()
+            {
+                ListChats = chats
+            });
+        }
+
+        public async Task<IActionResult> IndexPrivate(string username2)
+        {
+            var chats = await _chatApiClient.GetAll();
+            ViewBag.NguoiNhan2 = username2;
+            var iduser2 = await _userApiClient.GetUsersName(username2);
+            ViewBag.HoTen2 = iduser2.ResultObj.FirstName + iduser2.ResultObj.LastName;
             return View(new ChatDetailViewModel()
             {
                 ListChats = chats

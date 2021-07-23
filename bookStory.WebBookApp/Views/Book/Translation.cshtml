@@ -209,7 +209,7 @@
                               align-items-center
                             ">
                                                 <button class="btn btn-sm btn-outline-primary w-25">
-                                                    Chat
+                                                    @Html.ActionLink("Chat", "IndexPrivate", "Chat", new { username2 = @item.UserName })
                                                 </button>
                                                 <button class="btn btn-sm btn-primary w-25 ml-2">
                                                     Follow
