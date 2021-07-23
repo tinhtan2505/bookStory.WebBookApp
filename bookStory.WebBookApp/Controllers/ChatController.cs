@@ -74,7 +74,7 @@ namespace bookStory.WebBookApp.Controllers
             var chats = await _chatApiClient.GetAll();
             ViewBag.NguoiNhan2 = username2;
             var iduser2 = await _userApiClient.GetUsersName(username2);
-            ViewBag.HoTen2 = iduser2.ResultObj.FirstName + iduser2.ResultObj.LastName;
+            ViewBag.HoTen2 = iduser2.ResultObj.FirstName + " " + iduser2.ResultObj.LastName;
             return View(new ChatDetailViewModel()
             {
                 ListChats = chats
@@ -87,12 +87,6 @@ namespace bookStory.WebBookApp.Controllers
             var result = await _chatApiClient.GetById(id);
             return View(result);
         }
-
-        //[HttpGet]
-        //public IActionResult Create()
-        //{
-        //    return View();
-        //}
 
         [HttpPost]
         [Consumes("multipart/form-data")]
@@ -114,36 +108,12 @@ namespace bookStory.WebBookApp.Controllers
             if (result)
             {
                 TempData["result"] = "Thêm mới Chat thành công";
-                return RedirectToAction("Index");
+                return RedirectToAction("IndexPrivate", "Chat", new { username2 = request.UserName2 });
             }
 
             ModelState.AddModelError("", "Thêm mới Chat thất bại");
             return View(request);
         }
-
-        //[HttpPost]
-        //[Consumes("multipart/form-data")]
-        //public async Task<IActionResult> Create(ChatDetailViewModel request)
-        //{
-        //    ChatCreateRequest create = new ChatCreateRequest()
-        //    {
-        //        UserIdSender = request.UserIdSender,
-        //        UserIdReceiver = request.UserIdReceiver,
-        //        Message = request.Message,
-        //    };
-        //    if (!ModelState.IsValid)
-        //        return View(request);
-        //    var result = await _chatApiClient.CreateChat(create);
-        //    //await _signalrHub.Clients.All.SendAsync("LoadChat");
-        //    if (result)
-        //    {
-        //        TempData["result"] = "Thêm mới Chat thành công";
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    ModelState.AddModelError("", "Thêm mới Chat thất bại");
-        //    return View(request);
-        //}
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
