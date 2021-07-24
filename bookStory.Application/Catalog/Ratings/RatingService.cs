@@ -48,6 +48,11 @@ namespace bookStory.Application.Catalog.Ratings
             };
             _context.Ratings.Add(item);
             await _context.SaveChangesAsync();
+            var tran = await _context.Translations.FindAsync(request.IdTranslation);
+            tran.Rating = (float)(from b in _context.Ratings
+                                  where b.IdTranslation == request.IdTranslation
+                                  select b.Vote).Average();
+            await _context.SaveChangesAsync();
             return item.Id;
         }
 
@@ -133,12 +138,15 @@ namespace bookStory.Application.Catalog.Ratings
         public async Task<int> Update(RatingUpdateRequest request)
         {
             var item = await _context.Ratings.FindAsync(request.Id);
-
             if (item == null) throw new BookException($"Cannot find a product with id: {request.Id}");
-
             item.UserId = request.UserId;
             item.IdTranslation = request.IdTranslation;
             item.Vote = request.Vote;
+            await _context.SaveChangesAsync();
+            var tran = await _context.Translations.FindAsync(request.IdTranslation);
+            tran.Rating = (float)(from b in _context.Ratings
+                                  where b.IdTranslation == request.IdTranslation
+                                  select b.Vote).Average();
 
             return await _context.SaveChangesAsync();
         }

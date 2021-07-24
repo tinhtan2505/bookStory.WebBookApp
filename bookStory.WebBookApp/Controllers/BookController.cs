@@ -38,7 +38,6 @@ namespace bookStory.WebBookApp.Controllers
     public class BookController : Controller
     {
         private readonly ILogger<BookController> _logger;
-        private readonly ISharedCultureLocalizer _loc;
         private readonly IUserApiClient _userApiClient;
         private readonly IHubContext<ChatSignlR> _signalrHub;
         //private readonly bookStoryDbContext _context;
