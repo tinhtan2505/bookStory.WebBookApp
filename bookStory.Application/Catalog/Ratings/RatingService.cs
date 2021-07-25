@@ -4,6 +4,7 @@ using bookStory.Data.Entities;
 using bookStory.Utilities.Exceptions;
 using bookStory.ViewModels.Catalog.Ratings;
 using bookStory.ViewModels.Common;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -17,11 +18,13 @@ namespace bookStory.Application.Catalog.Ratings
     {
         private readonly bookStoryDbContext _context;
         private readonly IStorageService _storageService;
+        private readonly UserManager<AppUser> _userManager;
 
-        public RatingService(bookStoryDbContext context, IStorageService storageService)
+        public RatingService(bookStoryDbContext context, IStorageService storageService, UserManager<AppUser> userManager)
         {
             _context = context;
             _storageService = storageService;
+            _userManager = userManager;
         }
 
         public async Task<List<RatingViewModel>> GetAll()
@@ -143,7 +146,32 @@ namespace bookStory.Application.Catalog.Ratings
             item.IdTranslation = request.IdTranslation;
             item.Vote = request.Vote;
             await _context.SaveChangesAsync();
+
             var tran = await _context.Translations.FindAsync(request.IdTranslation);
+            //update Xếp hạng người dùng
+            var user = await _userManager.FindByIdAsync(tran.UserId.ToString());
+            user.Rating = (float)(from t in _context.Translations
+                                  where t.UserId == tran.UserId
+                                  select t.Rating).Average();
+            await _userManager.UpdateAsync(user);
+            //update Xếp hạng sách
+            var query = from r in _context.Ratings
+                        join t in _context.Translations on r.IdTranslation equals t.Id
+                        join pr in _context.Paragraphs on t.IdParagraph equals pr.Id
+                        join b in _context.Books on pr.IdBook equals b.Id
+                        where r.IdTranslation == request.IdTranslation
+                        select b;
+            var bok = await query.FirstOrDefaultAsync();
+            var book = await _context.Books.FindAsync(bok.Id);
+
+            book.Rating = (float)(from r in _context.Ratings
+                                  join t in _context.Translations on r.IdTranslation equals t.Id
+                                  join pr in _context.Paragraphs on t.IdParagraph equals pr.Id
+                                  join b in _context.Books on pr.IdBook equals b.Id
+                                  where b.Id == bok.Id
+                                  select r.Vote).Average();
+            await _context.SaveChangesAsync();
+            //update Xếp hạng bản dịch
             tran.Rating = (float)(from b in _context.Ratings
                                   where b.IdTranslation == request.IdTranslation
                                   select b.Vote).Average();

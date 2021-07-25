@@ -49,7 +49,8 @@ namespace bookStory.Application.Catalog.Books
             {
                 FileName = request.FileName,
                 Title = request.Title,
-                Author = request.Author
+                Author = request.Author,
+                Rating = 0
             };
             //Save image
             if (request.ThumbnailImage != null)
@@ -101,7 +102,8 @@ namespace bookStory.Application.Catalog.Books
                     Id = x.Id,
                     FileName = x.FileName,
                     Title = x.Title,
-                    Author = x.Author
+                    Author = x.Author,
+                    Rating = x.Rating
                 }).ToListAsync();
 
             var pagedResult = new PagedResult<BookViewModel>()
@@ -124,6 +126,7 @@ namespace bookStory.Application.Catalog.Books
                 FileName = book.FileName,
                 Title = book.Title,
                 Author = book.Author,
+                Rating = book.Rating,
                 ThumbnailImage = image != null ? image.ImagePath : "no-image.jpg"
             };
             return bookVM;

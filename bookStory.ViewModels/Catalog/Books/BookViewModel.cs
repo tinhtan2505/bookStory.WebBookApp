@@ -12,6 +12,7 @@ namespace bookStory.ViewModels.Catalog.Books
         public string FileName { set; get; }
         public string Title { set; get; }
         public string Author { set; get; } //Tác giả
+        public float Rating { set; get; }
         public bool? IsFeatured { get; set; }
         public string ThumbnailImage { get; set; }
     }

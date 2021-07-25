@@ -74,7 +74,8 @@ namespace bookStory.Application.System.Users
                 UserName = x.UserName,
                 FirstName = x.FirstName,
                 Id = x.Id,
-                LastName = x.LastName
+                LastName = x.LastName,
+                Rating = x.Rating
             }).ToListAsync();
             return data;
         }
@@ -96,6 +97,7 @@ namespace bookStory.Application.System.Users
                 Id = user.Id,
                 LastName = user.LastName,
                 UserName = user.UserName,
+                Rating = user.Rating,
                 Roles = roles
             };
             return new ApiSuccessResult<UserVm>(userVm);
@@ -122,7 +124,8 @@ namespace bookStory.Application.System.Users
                     UserName = x.UserName,
                     FirstName = x.FirstName,
                     Id = x.Id,
-                    LastName = x.LastName
+                    LastName = x.LastName,
+                    Rating = x.Rating
                 }).ToListAsync();
 
             //4. Select and projection
@@ -153,6 +156,7 @@ namespace bookStory.Application.System.Users
                 Id = user.Id,
                 LastName = user.LastName,
                 UserName = user.UserName,
+                Rating = user.Rating,
                 Roles = roles
             };
             return new ApiSuccessResult<UserVm>(userVm);
@@ -177,7 +181,8 @@ namespace bookStory.Application.System.Users
                 FirstName = request.FirstName,
                 LastName = request.LastName,
                 UserName = request.UserName,
-                PhoneNumber = request.PhoneNumber
+                PhoneNumber = request.PhoneNumber,
+                Rating = 0
             };
             var result = await _userManager.CreateAsync(user, request.Password);
             if (result.Succeeded)

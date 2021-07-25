@@ -12,7 +12,7 @@ namespace bookStory.Data.Entities
         public string LastName { get; set; }
 
         public DateTime Dob { get; set; }
-
+        public float Rating { set; get; }
         public List<Comment> Comments { get; set; }
         public List<Translation> Translations { get; set; }
         public List<Report> Reports { get; set; }
