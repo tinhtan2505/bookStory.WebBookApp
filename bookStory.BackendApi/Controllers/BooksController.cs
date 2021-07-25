@@ -50,9 +50,9 @@ namespace bookStory.BackendApi.Controllers
 
         [HttpGet("featured/{take}")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetFeaturedProducts(int take)
+        public async Task<IActionResult> GetTops(int take)
         {
-            var products = await _bookService.GetFeaturedProducts(take);
+            var products = await _bookService.GetTops(take);
             return Ok(products);
         }
 

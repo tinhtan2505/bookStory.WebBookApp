@@ -244,7 +244,7 @@ namespace bookStory.Application.Catalog.Books
             return await _context.SaveChangesAsync();
         }
 
-        public async Task<List<BookViewModel>> GetFeaturedProducts(int take)
+        public async Task<List<BookViewModel>> GetTops(int take)
         {
             var query = from b in _context.Books
                         join bi in _context.BookImages on b.Id equals bi.IdBook into bbi
@@ -252,7 +252,7 @@ namespace bookStory.Application.Catalog.Books
                         where (bi == null || bi.IsDefault == true)
                         select new { b, bi };
 
-            var data = await query.OrderByDescending(x => x.b.Title).Take(take)
+            var data = await query.OrderByDescending(x => x.b.Rating).Take(take)
                 .Select(x => new BookViewModel()
                 {
                     Id = x.b.Id,

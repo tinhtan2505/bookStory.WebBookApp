@@ -13,6 +13,7 @@ using bookStory.ApiIntegration.Rating;
 using bookStory.ApiIntegration.Report;
 using bookStory.ApiIntegration.Translation;
 using bookStory.ApiIntegration.User;
+using bookStory.Data.EF;
 using bookStory.Data.Entities;
 using bookStory.ViewModels.System.Users;
 using bookStory.WebBookApp.Hubs;

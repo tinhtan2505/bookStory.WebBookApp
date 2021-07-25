@@ -254,16 +254,6 @@
                                     var mce = "suacomment"+@com.Id.ToString();
                                     var dce = "editcomment"+@com.Id.ToString();
                                     @Model.Message = @com.Message;
-                                    <div></div>
-                                    @*<span class="text-success">@com.FirstName @com.LastName: </span>
-                                    <span class="text-dark ml-1">@com.Message</span>
-                                    <span class="text-warning timecomment ml-2">@com.DateComment</span>
-                                   
-                                    if(@com.UserName == @User.Identity.Name)
-                                    {
-                                        <a class="text-primary" data-toggle="collapse" href="#@mce" role="button" aria-expanded="false" aria-controls=@mce>| Sửa</a>
-                                        <a class="text-danger" data-toggle="modal" data-target="#@mce" role="button" aria-expanded="false" aria-controls=@mce>| Xóa</a>
-                                    }*@
                                     
                                         <div class="modal fade" id= @mce tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                           <div class="modal-dialog modal-dialog-centered" role="document">
@@ -318,32 +308,6 @@
                                             </div>
                                           </div>
                                         </div>
-                                    
-                                    @*<hr class="mt-0 bg-info" />
-                                    <div class="row">
-                                          <div class="col-md-6">
-                                          </div>
-                                          <div class="col-md-6">
-                                            <div class="collapse multi-collapse" id=@mce>
-                                              <form asp-action="EditComment" enctype="multipart/form-data" method="post">
-                                                            <input type="hidden" asp-for="IdComment" value=@com.Id />
-                                                            <input type="hidden" asp-for="UserName" value=@User.Identity.Name class="form-control" />
-                                                            <input type="hidden" asp-for="IdTranslation" class="form-control" value=@Model.Translation.Id />
-                                                            <div class="form-group">
-                                                              <textarea
-                                                                asp-for="Message" 
-                                                                class="form-control"
-                                                                id="exampleFormControlTextarea1"
-                                                                rows="3"
-                                                              ></textarea>
-                                                            </div>
-                                                            <button type="submit" class="btn btn-primary mb-1">
-                                                              Sửa
-                                                            </button>
-                                                          </form>
-                                            </div>
-                                          </div>
-                                        </div>*@
                                 }
                                  
                             }
@@ -365,7 +329,7 @@
                                               id="message" autocomplete="off"
                                               rows="3"></textarea>
                                 </div>
-                                <button type="submit" class="btn btn-primary mb-1">Gửi</button>
+                                <button type="submit" class="btn btn-primary mb-1  rounded-pill">Gửi</button>
                             </form>
                     
                             }

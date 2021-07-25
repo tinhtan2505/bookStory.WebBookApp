@@ -18,7 +18,7 @@ namespace bookStory.Utilities.Constants
 
         public class ProductSettings
         {
-            public const int NumberOfFeaturedProducts = 4;
+            public const int NumberOfFeaturedProducts = 3;
             public const int NumberOfLatestProducts = 6;
         }
 

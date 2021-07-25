@@ -80,12 +80,11 @@ namespace bookStory.WebBookApp.Controllers
 
         public async Task<IActionResult> Index()
         {
-            //var msg = _loc.GetLocalizedString("Vietnamese");
             var culture = CultureInfo.CurrentCulture.Name;
+
             var viewModel = new HomeViewModel
             {
-                //Slides = await _slideApiClient.GetAll(),
-                FeaturedProducts = await _bookApiClient.GetFeaturedProducts(SystemConstants.ProductSettings.NumberOfFeaturedProducts),
+                FeaturedProducts = await _bookApiClient.GetTops(SystemConstants.ProductSettings.NumberOfFeaturedProducts),
                 LatestProducts = await _bookApiClient.GetLatestProducts(SystemConstants.ProductSettings.NumberOfLatestProducts),
             };
             return View(viewModel);
@@ -431,14 +430,10 @@ namespace bookStory.WebBookApp.Controllers
             var book = await _bookApiClient.GetById(paragraph.IdBook);
             var com = await _commentApiClient.GetAll();
             string hoten = "";
-            if (User.Identity.IsAuthenticated)
+            if (User.Identity.IsAuthenticated && User.Identity.Name != null)
             {
                 var user = await _userApiClient.GetUsersName(User.Identity.Name);
                 hoten = user.ResultObj.FirstName + " " + user.ResultObj.LastName;
-                ViewBag.HoTen = hoten;
-            }
-            else
-            {
                 ViewBag.HoTen = hoten;
             }
 

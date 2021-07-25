@@ -56,7 +56,6 @@ namespace bookStory.ApiIntegration.User
                 return JsonConvert.DeserializeObject<List<UserVm>>(body);
 
             return JsonConvert.DeserializeObject<List<UserVm>>(body);
-            //return await GetListAsync<UserVm>("/api/ratings");
         }
 
         public async Task<ApiResult<UserVm>> GetById(Guid id)

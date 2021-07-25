@@ -51,6 +51,16 @@ namespace bookStory.AdminApp.Controllers
             return View(data.ResultObj);
         }
 
+        //public async Task<IActionResult> IndexAll()
+        //{
+        //    var data = await _userApiClient.GetAll();
+        //    if (TempData["result"] != null)
+        //    {
+        //        ViewBag.SuccessMsg = TempData["result"];
+        //    }
+        //    return View(data);
+        //}
+
         [HttpGet]
         public async Task<IActionResult> Details(Guid id)
         {

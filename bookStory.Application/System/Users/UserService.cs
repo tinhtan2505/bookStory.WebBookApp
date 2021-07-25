@@ -67,7 +67,7 @@ namespace bookStory.Application.System.Users
         public async Task<List<UserVm>> GetAll()
         {
             var query = _userManager.Users;
-            var data = await query.Select(x => new UserVm()
+            var data = await query.OrderByDescending(x => x.Rating).Take(5).Select(x => new UserVm()
             {
                 Email = x.Email,
                 PhoneNumber = x.PhoneNumber,

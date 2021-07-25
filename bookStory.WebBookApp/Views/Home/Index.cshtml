@@ -45,30 +45,36 @@
             <div class="col-md-4 editContent">
                 <div class="col">
                     <span class="numberstep"><i class="fa fa-gift"></i></span>
-                    <h3 class="numbertext">Lời nhận xét</h3>
+                    <h3 class="numbertext">Người dịch tốt nhất</h3>
                     <div style="text-align: left;">
-                        <p>
-                            Dear Mr. Harcz:
-                        </p>
-                        <p>
-                            There is no need to ask. Your agency has a great reputation and I am really glad
-                            to co-operate with you. Vicky has already told me the very best.
-                        </p>
-                        <p>
-                            Thank you very much.
-                        </p>
-                        <p>
-                            Best regards,
-                            Anastasia
-                        </p>
-                        <p class="text-center">
-                            <a href="#">- Xem tất cả -</a>
-                        </p>
+                       <ul class="list-group">
+                           @{
+                                int dem = 1;
+                           }
+                           @foreach (var user in Model.TopUsers)
+                            {
+                                var star = (int)Math.Round(@user.Rating);
+                                <li class="list-group-item d-flex justify-content-between align-items-center border-0">
+                                  @dem. @user.FirstName @user.LastName
+                                    
+                                        <span class="text-warning">
+                                            @for (int s = 0; s < star; s++)
+                                            {
+                                                <i class="fa fa-star"></i>
+                                            }
+                                            @for (int s = star; s < 5; s++)
+                                            {
+                                                <i class="fa fa-star-o"></i>
+                                            }
+                                          </span>
+                                    
+                                  </li>
+                                dem++;
+                            }
+                        </ul>
                     </div>
                 </div>
-                <!-- /.col -->
             </div>
-            <!-- /.col-md-4 col -->
             <div class="col-md-4 editContent">
                 <div class="col">
                     <span class="numberstep"><i class="fa fa-download"></i></span>
@@ -154,85 +160,46 @@
     <div class="container">
         <div class="underlined-title">
             <div class="editContent">
-                <h1 class="text-center latestitems">Bản dịch mới nhất</h1>
+                <h1 class="text-center latestitems">Bảng xếp hạng Sách Tốt Nhất</h1>
             </div>
             <div class="wow-hr type_short">
                 <span class="wow-hr-h">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
                 </span>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4">
-                <div class="productbox">
-                    <div class="fadeshop">
-                        <div class="captionshop text-center" style="display: none;">
-                            <h3>Item Name</h3>
-                            <p>
-                                This is a short excerpt to generally describe what the item is about.
-                            </p>
-                            <p>
-                                <a href="#" class="learn-more detailslearn"> Xem Bản dịch</a>
-                                <a href="#" class="learn-more detailslearn"></i> Yêu cầu dự án</a>
-                            </p>
+            @foreach (var item in Model.FeaturedProducts)
+            {
+                var url = $"/{culture}/{_loc["bookUrl"]}/{item.Id}";
+
+                <div class="col-md-4">
+                    <div class="productbox">
+                        <div class="fadeshop">
+                            <div class="captionshop text-center" style="display: none">
+                                <h3>@item.Title</h3>
+                                <h5 style="text-align: right; margin-right: 1rem">
+                                    @item.Author
+                                </h5>
+                                
+                                <p style="height: 20%; margin-top: 10px">
+                                    <button type="button" class="btn btn-warning text-white">@Html.ActionLink("Xem Sách", "Detail", new { id = item.Id })</button>
+                                </p>
+                            </div>
+                            <span class="maxproduct">
+                                <a href="@url"><img src="@(Configuration["BaseAddress"] + item.ThumbnailImage)" alt="@item.Title" width="322" height="480"/></a>
+                            </span>
                         </div>
-                        <span class="maxproduct"><img src="images/product1-1.jpg" alt=""></span>
-                    </div>
-                    <div class="product-details">
-                        <a href="#">
-                            <h1>Công nghệ phần mềm</h1>
-                        </a>
+                        <div class="product-details">
+
+                            <h1>@Html.ActionLink(@item.Title, "Detail","Book", new { id = item.Id })</h1>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <!-- /.productbox -->
-            <div class="col-md-4">
-                <div class="productbox">
-                    <div class="fadeshop">
-                        <div class="captionshop text-center" style="display: none;">
-                            <h3>Item Name</h3>
-                            <p>
-                                This is a short excerpt to generally describe what the item is about.
-                            </p>
-                            <p>
-                                <a href="#" class="learn-more detailslearn"> Xem Bản dịch</a>
-                                <a href="#" class="learn-more detailslearn"></i> Yêu cầu dự án</a>
-                            </p>
-                        </div>
-                        <span class="maxproduct"><img src="images/product2.jpg" alt=""></span>
-                    </div>
-                    <div class="product-details">
-                        <a href="#">
-                            <h1>Thương mại điện tử</h1>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <!-- /.productbox -->
-            <div class="col-md-4">
-                <div class="productbox">
-                    <div class="fadeshop">
-                        <div class="captionshop text-center" style="display: none;">
-                            <h3>Item Name</h3>
-                            <p>
-                                This is a short excerpt to generally describe what the item is about.
-                            </p>
-                            <p>
-                                <a href="#" class="learn-more detailslearn"> Xem Bản dịch</a>
-                                <a href="#" class="learn-more detailslearn"></i> Yêu cầu dự án</a>
-                            </p>
-                        </div>
-                        <span class="maxproduct"><img src="images/product2-3.jpg" alt=""></span>
-                    </div>
-                    <div class="product-details">
-                        <a href="#">
-                            <h1>Hệ quản trị CSDL</h1>
-                        </a>
-                    </div>
-                </div>
-            </div>
+
+            }
         </div>
     </div>
 </section>
@@ -240,8 +207,8 @@
 <!-- BUTTON =============================-->
 <div class="item content">
     <div class="container text-center">
-        <a href="shop.html" class="homebrowseitems">
-            Tất cả bản dịch
+        <a asp-controller="Book" asp-action="Index" class="homebrowseitems">
+          Tất cả Sách
             <div class="homebrowseitemsicon">
                 <i class="fa fa-star fa-spin"></i>
             </div>

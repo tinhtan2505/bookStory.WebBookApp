@@ -1,4 +1,5 @@
 ﻿using bookStory.ViewModels.Catalog.Books;
+using bookStory.ViewModels.System.Users;
 using bookStory.ViewModels.Utilities.Slides;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ namespace bookStory.WebBookApp.Models
 {
     public class HomeViewModel
     {
-        public List<SlideVm> Slides { get; set; }
+        public List<UserVm> TopUsers { get; set; }
 
         public List<BookViewModel> FeaturedProducts { get; set; }
 

@@ -21,7 +21,7 @@ namespace bookStory.ApiIntegration.Book
 
         Task<List<BookViewModel>> GetAll();
 
-        Task<List<BookViewModel>> GetFeaturedProducts(int take);
+        Task<List<BookViewModel>> GetTops(int take);
 
         Task<List<BookViewModel>> GetLatestProducts(int take);
     }

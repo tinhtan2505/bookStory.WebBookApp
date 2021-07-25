@@ -88,7 +88,9 @@
                 </div>
             </div>
             <div class="row border-top border-success rounded m-5">
-                <div class="
+                <div 
+                style="background: #a5ff9c"
+                class="
                 col-md-10
                 border-left border-bottom border-success
                 rounded-left
@@ -99,7 +101,9 @@
                         <span>@Html.DisplayFor(model => model.Paragraph.Order)</span>
                     </div>
                 </div>
-                <div class="
+                <div 
+                style="background: #a5ff9c"
+                class="
                 col-md-2
                 border-right border-bottom border-success
                 rounded-right
@@ -108,10 +112,10 @@
                     @if (User.Identity.IsAuthenticated){
                     <button 
                         type="button"
-                        class="btn btn-outline-primary float-right mt-2 mb-2 w-100"
+                        class="btn btn-outline-danger float-right mt-2 mb-2 w-100"
                         data-toggle="modal" data-target="#baocao" role="button" aria-expanded="false" aria-controls="baocao"
                     >
-                        Báo cáo
+                        Báo Cáo
                     </button>
                     }
                     <div class="modal fade" id="baocao" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -179,7 +183,7 @@
                                               id="exampleFormControlTextarea1"
                                               rows="3"></textarea>
                                     </div>
-                                    <button type="submit" class="btn btn-primary mb-1">
+                                    <button type="submit" class="btn btn-primary mb-1 rounded-pill">
                                         Thêm bản dịch
                                     </button>
                                 </form>

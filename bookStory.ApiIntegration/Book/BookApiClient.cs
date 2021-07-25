@@ -144,7 +144,7 @@ namespace bookStory.ApiIntegration.Book
             return await Delete($"/api/books/" + id);
         }
 
-        public async Task<List<BookViewModel>> GetFeaturedProducts(int take)
+        public async Task<List<BookViewModel>> GetTops(int take)
         {
             var data = await GetListAsync<BookViewModel>($"/api/books/featured/{take}");
             return data;
