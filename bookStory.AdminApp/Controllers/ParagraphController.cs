@@ -65,8 +65,15 @@ namespace ParagraphStory.AdminApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create(int? idbook)
         {
+            var books = await _bookApiClient.GetAll();
+            ViewBag.Books = books.Select(x => new SelectListItem()
+            {
+                Text = x.Title,
+                Value = x.Id.ToString(),
+                Selected = idbook.HasValue && idbook.Value == x.Id
+            });
             return View();
         }
 

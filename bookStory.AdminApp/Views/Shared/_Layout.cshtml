@@ -44,96 +44,15 @@
                         </a>
                         <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
                             @*Sách*@
-                            <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                                    Sách
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                </a>
-                                <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-parent="#sidenavAccordionPages">
-                                    <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" asp-controller="Book" asp-action="Index">Danh sách</a>
-                                        <a class="nav-link" asp-controller="Book" asp-action="Create">Thêm mới</a>
-                                    </nav>
-                                </div>
-                            </nav>
-                            @*Đoạn văn*@
-                            <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseAuth1" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                                    Đoạn văn
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                </a>
-                                <div class="collapse" id="pagesCollapseAuth1" aria-labelledby="headingOne" data-parent="#sidenavAccordionPages">
-                                    <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" asp-controller="Paragraph" asp-action="Index">Danh sách</a>
-                                        <a class="nav-link" asp-controller="Paragraph" asp-action="Create">Thêm mới</a>
-                                    </nav>
-                                </div>
-                            </nav>
-                            @*Dự án*@
-                            <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseAuth2" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                                    Dự án
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                </a>
-                                <div class="collapse" id="pagesCollapseAuth2" aria-labelledby="headingOne" data-parent="#sidenavAccordionPages">
-                                    <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" asp-controller="Project" asp-action="Index">Danh sách</a>
-                                        <a class="nav-link" asp-controller="Project" asp-action="Create">Thêm mới</a>
-                                    </nav>
-                                </div>
-                            </nav>
-                            @*Bản dịch*@
-                            <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseAuth3" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                                    Bản dịch
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                </a>
-                                <div class="collapse" id="pagesCollapseAuth3" aria-labelledby="headingOne" data-parent="#sidenavAccordionPages">
-                                    <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" asp-controller="Translation" asp-action="Index">Danh sách</a>
-                                        <a class="nav-link" asp-controller="Translation" asp-action="Create">Thêm mới</a>
-                                    </nav>
-                                </div>
-                            </nav>
-                            @*Bình luận*@
-                            <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseAuth4" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                                    Bình luận
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                </a>
-                                <div class="collapse" id="pagesCollapseAuth4" aria-labelledby="headingOne" data-parent="#sidenavAccordionPages">
-                                    <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" asp-controller="Comment" asp-action="Index">Danh sách</a>
-                                        <a class="nav-link" asp-controller="Comment" asp-action="Create">Thêm mới</a>
-                                    </nav>
-                                </div>
-                            </nav>
-                            @*Xếp hạng*@
-                            <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseAuth5" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                                    Xếp hạng
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                </a>
-                                <div class="collapse" id="pagesCollapseAuth5" aria-labelledby="headingOne" data-parent="#sidenavAccordionPages">
-                                    <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" asp-controller="Rating" asp-action="Index">Danh sách</a>
-                                        <a class="nav-link" asp-controller="Rating" asp-action="Create">Thêm mới</a>
-                                    </nav>
-                                </div>
-                            </nav>
-                            @*Báo cáo*@
-                            <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseAuth6" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                                    Báo cáo
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                </a>
-                                <div class="collapse" id="pagesCollapseAuth6" aria-labelledby="headingOne" data-parent="#sidenavAccordionPages">
-                                    <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" asp-controller="Report" asp-action="Index">Danh sách</a>
-                                        <a class="nav-link" asp-controller="Report" asp-action="Create">Thêm mới</a>
-                                    </nav>
-                                </div>
-                            </nav>
+                            <a class="nav-link" asp-controller="Book" asp-action="Index">Sách</a>
+                            <a class="nav-link" asp-controller="Paragraph" asp-action="Index">Đoạn văn</a>
+                            <a class="nav-link" asp-controller="Project" asp-action="Index">Dự án</a>
+                            <a class="nav-link" asp-controller="Translation" asp-action="Index">Bản dịch</a>
+                            <a class="nav-link" asp-controller="Chat" asp-action="Index">Trò chuyện</a>
+                            <a class="nav-link" asp-controller="Comment" asp-action="Index">Bình luận</a>
+                            <a class="nav-link" asp-controller="Rating" asp-action="Index">Xếp hạng</a>
+                            <a class="nav-link" asp-controller="Report" asp-action="Index">Báo cáo</a>
+                          
                         </div>
                         <div class="sb-sidenav-menu-heading">Addons</div>
                         <a class="nav-link" href="charts.html">
@@ -172,6 +91,9 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="/js/scripts.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/microsoft/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/site.js"></script>
 
     @RenderSection("Scripts", required: false)
 </body>

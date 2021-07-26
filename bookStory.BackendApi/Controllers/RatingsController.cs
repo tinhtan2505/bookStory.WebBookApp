@@ -36,6 +36,15 @@ namespace bookStory.BackendApi.Controllers
             return Ok(products);
         }
 
+        [HttpGet("{keywordUserId}/{keywordIdTranslation}")]
+        public async Task<IActionResult> GetRating(Guid keywordUserId, int keywordIdTranslation)
+        {
+            var products = await _paragrapService.GetRating(keywordUserId, keywordIdTranslation);
+            if (products == null)
+                return BadRequest("Cannot find book");
+            return Ok(products);
+        }
+
         //http:/localhost:port/book/id
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)

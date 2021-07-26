@@ -32,11 +32,11 @@ namespace bookStory.Application.Catalog.Translations
         {
             var query = from b in _context.Translations
                         select b;
-            var data = await query.Select(x => new TranslationViewModel()
+            var data = await query.OrderByDescending(x => x.Date).Select(x => new TranslationViewModel()
             {
                 Id = x.Id,
                 UserId = x.UserId,
-                IdProject = x.IdProject,
+                //IdProject = x.IdProject,
                 IdParagraph = x.IdParagraph,
                 Text = x.Text,
                 Rating = x.Rating,
@@ -50,7 +50,7 @@ namespace bookStory.Application.Catalog.Translations
             var item = new Translation()
             {
                 UserId = request.UserId,
-                IdProject = request.IdProject,
+                //IdProject = request.IdProject,
                 IdParagraph = request.IdParagraph,
                 Text = request.Text,
                 Rating = request.Rating,
@@ -76,8 +76,6 @@ namespace bookStory.Application.Catalog.Translations
                         join u in _userManager.Users on t.UserId equals u.Id
                         join p in _context.Paragraphs on t.IdParagraph equals p.Id into bp
                         from p in bp.DefaultIfEmpty()
-                            //join c in _context.Comments on t.Id equals c.IdTranslation into tc
-                            //from c in tc.DefaultIfEmpty()
                         select new { t, p, u };
 
             var querycomment = from c in _context.Comments
@@ -95,18 +93,19 @@ namespace bookStory.Application.Catalog.Translations
             }
 
             int totalRow = await query.CountAsync();
-            var data = await query.Skip((request.PageIndex - 1) * request.PageSize).Take(request.PageSize)
+            var data = await query.OrderByDescending(x => x.t.Rating).Skip((request.PageIndex - 1) * request.PageSize).Take(request.PageSize)
                 .Select(x => new TranslationViewModel()
                 {
                     Id = x.t.Id,
                     UserId = x.t.UserId,
-                    IdProject = x.t.IdProject,
+                    //IdProject = x.t.IdProject,
                     IdParagraph = x.t.IdParagraph,
                     Text = x.t.Text,
                     Rating = x.t.Rating,
                     Date = x.t.Date,
                     FirstName = x.u.FirstName,
-                    LastName = x.u.LastName
+                    LastName = x.u.LastName,
+                    UserName = x.u.UserName
                 }).ToListAsync();
 
             var pagedResult = new PagedResult<TranslationViewModel>()
@@ -135,15 +134,19 @@ namespace bookStory.Application.Catalog.Translations
         public async Task<TranslationViewModel> GetById(int id)
         {
             var item = await _context.Translations.FindAsync(id);
+            //var user = await _context.Users.FindAsync(item.UserId);
+            var user = await _userManager.FindByIdAsync(item.UserId.ToString());
             var bookVM = new TranslationViewModel()
             {
                 Id = item.Id,
                 UserId = item.UserId,
-                IdProject = item.IdProject,
                 IdParagraph = item.IdParagraph,
                 Text = item.Text,
                 Rating = item.Rating,
-                Date = item.Date
+                Date = item.Date,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                UserName = user.UserName
             };
             return bookVM;
         }
@@ -155,7 +158,7 @@ namespace bookStory.Application.Catalog.Translations
             if (item == null) throw new BookException($"Cannot find a product with id: {request.Id}");
 
             item.UserId = request.UserId;
-            item.IdProject = request.IdProject;
+            //item.IdProject = request.IdProject;
             item.IdParagraph = request.IdParagraph;
             item.Text = request.Text;
             item.Rating = request.Rating;

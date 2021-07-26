@@ -1,0 +1,106 @@
+﻿@using bookStory.ViewModels.Common;
+@model PagedResult<bookStory.ViewModels.Catalog.Projects.ProjectViewModel>
+@{
+    ViewData["Title"] = "Trang chủ";
+}
+
+@section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="/assets/demo/chart-area-demo.js"></script>
+    <script src="/assets/demo/chart-bar-demo.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+    <script src="/assets/demo/datatables-demo.js"></script>
+    <script>
+        setTimeout(function () {
+            $('#msgAlert').fadeOut('slow');
+        }, 2000);
+    </script>
+}
+<div class="container-fluid">
+    <div class="d-flex align-items-center justify-content-center mb-5"><h1 class="mt-4">Quản trị Web Dịch sách</h1></div>
+        <div class="card mb-4">
+            <div class="card-header">
+               <h3><i class="fas fa-table mr-1"></i>
+                Dự án yêu cầu mới</h3>
+            </div>
+            <div class="card-body">
+                 @if (ViewBag.SuccessMsg != null)
+                {
+                    <div id="msgAlert" class="alert alert-success" role="alert">
+                        @ViewBag.SuccessMsg
+                    </div>
+                }
+                <div class="table-responsive">
+                <table class="table table-bordered"
+                    width="100%"
+                    cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>
+                                Ngôn ngữ
+                            </th>
+                            <th>
+                                Sách
+                            </th>
+                            <th>
+                                Người yêu cầu
+                            </th>
+                            <th>
+                                Tiêu đề
+                            </th>
+                            <th>
+                                Mô tả
+                            </th>
+                            <th>
+                                Trạng thái
+                            </th>
+                            <th>
+                                Thời gian yêu cầu
+                            </th>
+                            <th>Xử lý</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Items)
+                        {
+                            string xoa = "xoaduan" + item.Id.ToString();
+                            <tr>
+                               <td>
+                                    @Html.DisplayFor(modelItem => item.NameLanguage)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TitleBook)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Title)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Status)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DateProject)
+                                </td>
+
+                                <td>
+                                    @Html.ActionLink("Xem", "Details", new { id = item.Id })
+                                    <br />
+                                    @Html.ActionLink("Thêm Dự án", "CreateParagraph", new { idTran = item.Id })
+                                    <br />
+                                    @Html.ActionLink("Xóa", "DeleteProject", new { id = item.Id })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            @await Component.InvokeAsync("Pager", Model)
+            </div>
+        </div>
+</div>

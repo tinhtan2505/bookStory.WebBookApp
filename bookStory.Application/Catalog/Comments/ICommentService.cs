@@ -1,4 +1,5 @@
-﻿using bookStory.ViewModels.Catalog.Comments;
+﻿using bookStory.ViewModels.Catalog.Chats;
+using bookStory.ViewModels.Catalog.Comments;
 using bookStory.ViewModels.Common;
 using System;
 using System.Collections.Generic;

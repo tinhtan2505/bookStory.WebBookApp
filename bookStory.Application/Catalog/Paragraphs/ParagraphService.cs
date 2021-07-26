@@ -3,6 +3,7 @@ using bookStory.Data.EF;
 using bookStory.Data.Entities;
 using bookStory.Utilities.Exceptions;
 using bookStory.ViewModels.Catalog.Paragraps;
+using bookStory.ViewModels.Catalog.Translations;
 using bookStory.ViewModels.Common;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -75,8 +76,25 @@ namespace bookStory.Application.Catalog.Paragraphs
             return await _context.SaveChangesAsync();
         }
 
+        //public async Task<TranslationViewModel> GetTranslationMax(int idParagraph)
+        //{
+        //    var result = _context.Translations.First(x => x.IdParagraph == idParagraph && x.Rating == _context.Translations.Where(y => y.IdParagraph == idParagraph).Max(y => y.Rating));
+
+        //    var bookVM = new TranslationViewModel()
+        //    {
+        //        Id = result.Id,
+        //        UserId = result.UserId,
+        //        IdParagraph = result.IdParagraph,
+        //        Text = result.Text,
+        //        Rating = result.Rating,
+        //        Date = result.Date
+        //    };
+        //    return bookVM;
+        //}
+
         public async Task<PagedResult<ParagraphViewModel>> GetAllPaging(GetManageParagraphPagingRequest request)
         {
+            //TranslationViewModel tran = await GetTranslationMax(4);
             var query = from p in _context.Paragraphs
                         join b in _context.Books on p.IdBook equals b.Id into bp
                         from b in bp.DefaultIfEmpty()
@@ -95,7 +113,8 @@ namespace bookStory.Application.Catalog.Paragraphs
                     Id = x.p.Id,
                     IdBook = x.p.IdBook,
                     Order = x.p.Order,
-                    Type = x.p.Type
+                    Type = x.p.Type,
+                    RatingMax = _context.Translations.First(z => z.IdParagraph == x.p.Id && z.Rating == _context.Translations.Where(y => y.IdParagraph == x.p.Id).Max(y => y.Rating)).Text
                 }).ToListAsync();
 
             var pagedResult = new PagedResult<ParagraphViewModel>()
@@ -111,12 +130,14 @@ namespace bookStory.Application.Catalog.Paragraphs
         public async Task<ParagraphViewModel> GetById(int id)
         {
             var item = await _context.Paragraphs.FindAsync(id);
+            var book = await _context.Books.FindAsync(item.IdBook);
             var bookVM = new ParagraphViewModel()
             {
                 Id = item.Id,
                 IdBook = item.IdBook,
                 Order = item.Order,
-                Type = item.Type
+                Type = item.Type,
+                TitleBook = book.Title
             };
             return bookVM;
         }

@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using bookStory.AdminApp.Controllers;
+using bookStory.AdminApp.Hubs;
 using bookStory.ApiIntegration.Comment;
 using bookStory.ApiIntegration.Translation;
 using bookStory.Utilities.Constants;
+using bookStory.ViewModels.Catalog.Chats;
 using bookStory.ViewModels.Catalog.Comments;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Configuration;
 
 namespace bookStory.AdminApp.Controllers
@@ -19,14 +22,25 @@ namespace bookStory.AdminApp.Controllers
         private readonly ICommentApiClient _CommentApiClient;
         private readonly ITranslationApiClient _translationApiClient;
         private readonly IConfiguration _configuration;
+        private readonly IHubContext<ChatSignlR> _signalrHub;
 
         public CommentController(ICommentApiClient CommentApiClient,
             IConfiguration configuration,
-            ITranslationApiClient translationApiClient)
+            ITranslationApiClient translationApiClient,
+            IHubContext<ChatSignlR> signalrHub)
         {
             _configuration = configuration;
             _CommentApiClient = CommentApiClient;
             _translationApiClient = translationApiClient;
+            _signalrHub = signalrHub;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetComment()
+        {
+            var com = await _CommentApiClient.GetAll();
+
+            return Ok(com);
         }
 
         public async Task<IActionResult> Index(string keyword, int? idtranslation, int pageIndex = 1, int pageSize = 10)
@@ -78,6 +92,7 @@ namespace bookStory.AdminApp.Controllers
                 return View(request);
 
             var result = await _CommentApiClient.CreateComment(request);
+            await _signalrHub.Clients.All.SendAsync("LoadComment");
             if (result)
             {
                 TempData["result"] = "Thêm mới Sách thành công";

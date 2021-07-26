@@ -12,7 +12,6 @@ namespace bookStory.BackendApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -69,6 +68,7 @@ namespace bookStory.BackendApi.Controllers
         }
 
         [HttpPut("{id}/roles")]
+        [Authorize]
         public async Task<IActionResult> RoleAssign(Guid id, [FromBody] RoleAssignRequest request)
         {
             if (!ModelState.IsValid)
@@ -80,6 +80,13 @@ namespace bookStory.BackendApi.Controllers
                 return BadRequest(result);
             }
             return Ok(result);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            var items = await _userService.GetAll();
+            return Ok(items);
         }
 
         //http://localhost/api/users/paging?pageIndex=1&pageSize=10&keyword=

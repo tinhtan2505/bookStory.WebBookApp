@@ -78,16 +78,17 @@
                     <tbody>
                         @foreach (var item in Model.Items)
                         {
+                            
                             <tr>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Id)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.FileName
-                               )
+                                    @Html.DisplayFor(modelItem => item.FileName)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Title)
+                                    	
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Author)

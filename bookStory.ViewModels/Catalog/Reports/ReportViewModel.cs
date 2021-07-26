@@ -12,5 +12,9 @@ namespace bookStory.ViewModels.Catalog.Reports
         public Guid UserId { set; get; }
         public int IdParagraph { set; get; }
         public string Reason { set; get; }
+        public string TitleBook { set; get; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Order { get; set; }
     }
 }

@@ -48,30 +48,6 @@
                 </span>
             </div>
         </div>
-        @*<ul>
-                @foreach (var item in Model.LatestProducts)
-                {
-                    var url = $"/{culture}/{_loc["bookUrl"]}/{item.Id}";
-                    <li class="col-md-3">
-                        <div class="thumbnail">
-                            <a href="@url"><img src="@(Configuration["BaseAddress"] + item.ThumbnailImage)" alt="@item.Title" /></a>
-                            <div class="caption">
-                                <h5>@item.Title</h5>
-                                <p>
-                                    @item.FileName
-                                </p>
-
-                                <h4 style="text-align:center">
-                                    <a class="btn" href="@url">
-                                        <i class="icon-zoom-in"></i>
-                                    </a> <a class="btn" href="#"><localize>Add to</localize> <i class="icon-shopping-cart"></i></a>
-                                    <a class="btn btn-primary" href="#">@item.Author</a>
-                                </h4>
-                            </div>
-                        </div>
-                    </li>
-                }
-            </ul>*@
         <div class="row">
             @foreach (var item in Model.LatestProducts)
             {
@@ -81,30 +57,22 @@
                     <div class="productbox">
                         <div class="fadeshop">
                             <div class="captionshop text-center" style="display: none">
-                                <h3>@item.FileName</h3>
+                                <h3>@item.Title</h3>
                                 <h5 style="text-align: right; margin-right: 1rem">
                                     @item.Author
                                 </h5>
-                                <p>
-                                    @item.Title
-                                </p>
-                                <p style="height: 20%">
-                                    <a href="#" class="learn-more detailslearn">
-                                        Xem Bản dịch
-                                    </a>
-                                    <a href="#" class="learn-more detailslearn">
-                                        Yêu cầu dự án
-                                    </a>
+                                
+                                <p style="height: 20%; margin-top: 10px">
+                                    <button type="button" class="btn btn-warning text-white">@Html.ActionLink("Xem Sách", "Detail", new { id = item.Id })</button>
                                 </p>
                             </div>
                             <span class="maxproduct">
-                                <a href="@url"><img src="@(Configuration["BaseAddress"] + item.ThumbnailImage)" alt="@item.Title" /></a>
+                                <a href="@url"><img src="@(Configuration["BaseAddress"] + item.ThumbnailImage)" alt="@item.Title" width="322" height="480"/></a>
                             </span>
                         </div>
                         <div class="product-details">
 
-                            <h1>@Html.ActionLink(@item.FileName, "Detail", new { id = item.Id })</h1>
-                            @*<h1>@item.FileName</h1>*@
+                            <h1>@Html.ActionLink(@item.Title, "Detail", new { id = item.Id })</h1>
                         </div>
                     </div>
                 </div>

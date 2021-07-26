@@ -49,7 +49,8 @@ namespace bookStory.Application.Catalog.Books
             {
                 FileName = request.FileName,
                 Title = request.Title,
-                Author = request.Author
+                Author = request.Author,
+                Rating = 0
             };
             //Save image
             if (request.ThumbnailImage != null)
@@ -92,7 +93,7 @@ namespace bookStory.Application.Catalog.Books
             var query = from b in _context.Books
                         select b;
             if (!string.IsNullOrEmpty(request.Keyword))
-                query = query.Where(x => x.FileName.Contains(request.Keyword));
+                query = query.Where(x => x.Title.Contains(request.Keyword));
 
             int totalRow = await query.CountAsync();
             var data = await query.Skip((request.PageIndex - 1) * request.PageSize).Take(request.PageSize)
@@ -101,7 +102,8 @@ namespace bookStory.Application.Catalog.Books
                     Id = x.Id,
                     FileName = x.FileName,
                     Title = x.Title,
-                    Author = x.Author
+                    Author = x.Author,
+                    Rating = x.Rating
                 }).ToListAsync();
 
             var pagedResult = new PagedResult<BookViewModel>()
@@ -124,6 +126,7 @@ namespace bookStory.Application.Catalog.Books
                 FileName = book.FileName,
                 Title = book.Title,
                 Author = book.Author,
+                Rating = book.Rating,
                 ThumbnailImage = image != null ? image.ImagePath : "no-image.jpg"
             };
             return bookVM;
@@ -241,7 +244,7 @@ namespace bookStory.Application.Catalog.Books
             return await _context.SaveChangesAsync();
         }
 
-        public async Task<List<BookViewModel>> GetFeaturedProducts(int take)
+        public async Task<List<BookViewModel>> GetTops(int take)
         {
             var query = from b in _context.Books
                         join bi in _context.BookImages on b.Id equals bi.IdBook into bbi
@@ -249,7 +252,7 @@ namespace bookStory.Application.Catalog.Books
                         where (bi == null || bi.IsDefault == true)
                         select new { b, bi };
 
-            var data = await query.OrderByDescending(x => x.b.Title).Take(take)
+            var data = await query.OrderByDescending(x => x.b.Rating).Take(take)
                 .Select(x => new BookViewModel()
                 {
                     Id = x.b.Id,

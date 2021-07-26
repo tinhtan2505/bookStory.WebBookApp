@@ -12,13 +12,24 @@ namespace bookStory.WebBookApp.Models
 {
     public class ParagraphDetailViewModel
     {
+        public Guid UserIdLoged { set; get; }
         public Guid UserId { set; get; }
         public string UserName { get; set; }
         public int IdTranslation { set; get; }
+        public int IdComment { set; get; }
         public string Message { set; get; }
+        public string MessageCreate { set; get; }
         public ParagraphViewModel Paragraph { get; set; }
         public BookViewModel Book { get; set; }
+        public TranslationViewModel Translation { get; set; }
         public PagedResult<TranslationViewModel> ListTranslations { get; set; }
         public List<CommentViewModel> ListComments { get; set; }
+        public int IdParagraph { set; get; }
+        public string Text { set; get; }
+        public float Rating { set; get; }
+        public int Vote { get; set; }
+        public string Reason { set; get; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
     }
 }

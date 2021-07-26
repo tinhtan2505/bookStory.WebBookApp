@@ -12,5 +12,10 @@ namespace bookStory.WebBookApp.Models
     {
         public BookViewModel Book { get; set; }
         public PagedResult<ParagraphViewModel> ListParagraphs { get; set; }
+        public int IdBook { set; get; }
+        public string IdLanguage { set; get; }
+        public string Title { set; get; }
+        public string Description { set; get; }
+        public string UserName { get; set; }
     }
 }

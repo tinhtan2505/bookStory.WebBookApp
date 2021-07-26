@@ -19,9 +19,9 @@ namespace bookStory.ApiIntegration.Language
         {
         }
 
-        public async Task<ApiResult<List<LanguageVm>>> GetAll()
+        public async Task<List<LanguageVm>> GetAll()
         {
-            return await GetAsync<ApiResult<List<LanguageVm>>>("/api/languages");
+            return await GetAsync<List<LanguageVm>>("/api/languages");
         }
     }
 }

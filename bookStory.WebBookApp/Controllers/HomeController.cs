@@ -12,30 +12,34 @@ using System.Globalization;
 using bookStory.Utilities.Constants;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Http;
+using bookStory.ApiIntegration.User;
 
 namespace bookStory.WebBookApp.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ISharedCultureLocalizer _loc;
 
         private readonly IBookApiClient _bookApiClient;
+        private readonly IUserApiClient _userApiClient;
 
         public HomeController(ILogger<HomeController> logger,
-            IBookApiClient bookApiClient)
+            IBookApiClient bookApiClient,
+            IUserApiClient userApiClient)
         {
             _logger = logger;
             _bookApiClient = bookApiClient;
+            _userApiClient = userApiClient;
         }
 
         public async Task<IActionResult> Index()
         {
             var culture = CultureInfo.CurrentCulture.Name;
+            var data = await _userApiClient.GetAll();
             var viewModel = new HomeViewModel
             {
-                //Slides = await _slideApiClient.GetAll(),
-                FeaturedProducts = await _bookApiClient.GetFeaturedProducts(SystemConstants.ProductSettings.NumberOfFeaturedProducts),
+                TopUsers = await _userApiClient.GetAll(),
+                FeaturedProducts = await _bookApiClient.GetTops(SystemConstants.ProductSettings.NumberOfFeaturedProducts),
                 LatestProducts = await _bookApiClient.GetLatestProducts(SystemConstants.ProductSettings.NumberOfLatestProducts),
             };
             return View(viewModel);

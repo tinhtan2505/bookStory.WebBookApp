@@ -18,17 +18,11 @@ namespace bookStory.Data.Configurations
             builder.HasKey(x => x.Id); // khóa chính
             builder.Property(x => x.Id).UseIdentityColumn();
 
-            //builder.Property(x => x.IdUser).IsRequired(); //int
-            //builder.Property(x => x.IdProject).IsRequired(); //int
-            //builder.Property(x => x.IdParagraph).IsRequired(); //int
-            builder.Property(x => x.Text).IsRequired().HasMaxLength(200);
-            builder.Property(x => x.Rating).IsRequired().HasMaxLength(200);
-            //builder.Property(x => x.IdProject).IsRequired(); //int
+            builder.Property(x => x.Text).IsRequired().HasColumnType("nvarchar(MAX)");
 
             //khóa ngoại
             builder.HasOne(x => x.AppUser).WithMany(x => x.Translations).HasForeignKey(x => x.UserId);
             builder.HasOne(x => x.Paragraph).WithMany(x => x.Translations).HasForeignKey(x => x.IdParagraph);
-            builder.HasOne(x => x.Project).WithMany(x => x.Translations).HasForeignKey(x => x.IdProject);
         }
     }
 }

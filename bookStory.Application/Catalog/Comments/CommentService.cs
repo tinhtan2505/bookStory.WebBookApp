@@ -2,6 +2,7 @@
 using bookStory.Data.EF;
 using bookStory.Data.Entities;
 using bookStory.Utilities.Exceptions;
+using bookStory.ViewModels.Catalog.Chats;
 using bookStory.ViewModels.Catalog.Comments;
 using bookStory.ViewModels.Common;
 using Microsoft.AspNetCore.Identity;
@@ -32,7 +33,7 @@ namespace bookStory.Application.Catalog.Comments
             var query = from c in _context.Comments
                         join u in _userManager.Users on c.UserId equals u.Id
                         select new { c, u };
-            var data = await query.Select(x => new CommentViewModel()
+            var data = await query.OrderBy(x => x.c.DateComment).Select(x => new CommentViewModel()
             {
                 Id = x.c.Id,
                 UserId = x.c.UserId,
@@ -40,7 +41,8 @@ namespace bookStory.Application.Catalog.Comments
                 Message = x.c.Message,
                 DateComment = x.c.DateComment,
                 FirstName = x.u.FirstName,
-                LastName = x.u.LastName
+                LastName = x.u.LastName,
+                UserName = x.u.UserName
             }).ToListAsync();
             return data;
         }
@@ -125,7 +127,7 @@ namespace bookStory.Application.Catalog.Comments
             item.UserId = request.UserId;
             item.IdTranslation = request.IdTranslation;
             item.Message = request.Message;
-            item.DateComment = request.DateComment;
+            item.DateComment = DateTime.Now;
 
             return await _context.SaveChangesAsync();
         }

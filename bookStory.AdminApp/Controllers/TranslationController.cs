@@ -29,7 +29,7 @@ namespace bookStory.AdminApp.Controllers
             _paragraphApiClient = paragraphApiClient;
         }
 
-        public async Task<IActionResult> Index(string keyword, int? idparagraph, int pageIndex = 1, int pageSize = 10)
+        public async Task<IActionResult> Index(string keyword, int? idparagraph, int pageIndex = 1, int pageSize = 2)
         {
             var languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
 
@@ -97,7 +97,6 @@ namespace bookStory.AdminApp.Controllers
             {
                 Id = Translation.Id,
                 UserId = Translation.UserId,
-                IdProject = Translation.IdProject,
                 IdParagraph = Translation.IdParagraph,
                 Text = Translation.Text,
                 Rating = Translation.Rating,

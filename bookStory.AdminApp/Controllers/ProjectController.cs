@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using bookStory.ApiIntegration.Book;
+using bookStory.ApiIntegration.Language;
 using bookStory.ApiIntegration.Project;
+using bookStory.ApiIntegration.User;
 using bookStory.Utilities.Constants;
 using bookStory.ViewModels.Catalog.Projects;
 using Microsoft.AspNetCore.Http;
@@ -18,17 +20,23 @@ namespace bookStory.AdminApp.Controllers
         private readonly IProjectApiClient _ProjectApiClient;
         private readonly IConfiguration _configuration;
         private readonly IBookApiClient _bookApiClient;
+        private readonly ILanguageApiClient _languageApiClient;
+        private readonly IUserApiClient _userApiClient;
 
         public ProjectController(IProjectApiClient ProjectApiClient,
             IConfiguration configuration,
-            IBookApiClient bookApiClient)
+            IBookApiClient bookApiClient,
+            ILanguageApiClient languageApiClient,
+            IUserApiClient userApiClient)
         {
             _configuration = configuration;
             _ProjectApiClient = ProjectApiClient;
             _bookApiClient = bookApiClient;
+            _languageApiClient = languageApiClient;
+            _userApiClient = userApiClient;
         }
 
-        public async Task<IActionResult> Index(string keyword, int? idBook, int pageIndex = 1, int pageSize = 10)
+        public async Task<IActionResult> Index(string keyword, int? idBook, int pageIndex = 1, int pageSize = 5)
         {
             var languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
 
@@ -46,7 +54,7 @@ namespace bookStory.AdminApp.Controllers
             var books = await _bookApiClient.GetAll();
             ViewBag.Books = books.Select(x => new SelectListItem()
             {
-                Text = x.Title,
+                Text = x.FileName,
                 Value = x.Id.ToString(),
                 Selected = idBook.HasValue && idBook.Value == x.Id
             });
@@ -65,8 +73,30 @@ namespace bookStory.AdminApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create(int? idUser, int? idBook, int? idLanguage)
         {
+            var users = await _userApiClient.GetAll();
+            ViewBag.Users = users.Select(x => new SelectListItem()
+            {
+                Text = x.FirstName + " " + x.LastName,
+                Value = x.Id.ToString(),
+                Selected = idUser.HasValue && idUser.Value.Equals(x.Id.ToString())
+                //Selected = new Guid()
+            });
+            var books = await _bookApiClient.GetAll();
+            ViewBag.Books = books.Select(x => new SelectListItem()
+            {
+                Text = x.Title,
+                Value = x.Id.ToString(),
+                Selected = idBook.HasValue && idBook.Value == x.Id
+            });
+            var languages = await _languageApiClient.GetAll();
+            ViewBag.Languages = languages.Select(x => new SelectListItem()
+            {
+                Text = x.Name,
+                Value = x.Id.ToString(),
+                Selected = idLanguage.HasValue && idLanguage.Value.Equals(x.Id)
+            });
             return View();
         }
 

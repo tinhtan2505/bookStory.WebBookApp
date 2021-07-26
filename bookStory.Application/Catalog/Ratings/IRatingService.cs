@@ -18,6 +18,8 @@ namespace bookStory.Application.Catalog.Ratings
 
         Task<RatingViewModel> GetById(int IdBook);
 
+        Task<RatingViewModel> GetRating(Guid keywordUserId, int keywordIdTranslation);
+
         Task<PagedResult<RatingViewModel>> GetAllPaging(GetManageRatingPagingRequest request);
 
         Task<List<RatingViewModel>> GetAll();

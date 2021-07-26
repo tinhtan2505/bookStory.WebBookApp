@@ -24,5 +24,7 @@ namespace bookStory.ApiIntegration.User
         Task<ApiResult<bool>> Delete(Guid id);
 
         Task<ApiResult<bool>> RoleAssign(Guid id, RoleAssignRequest request);
+
+        Task<List<UserVm>> GetAll();
     }
 }

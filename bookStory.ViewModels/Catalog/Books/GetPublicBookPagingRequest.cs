@@ -1,5 +1,4 @@
-﻿
-using bookStory.ViewModels.Common;
+﻿using bookStory.ViewModels.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +10,5 @@ namespace bookStory.ViewModels.Catalog.Books
     public class GetPublicBookPagingRequest : PagingRequestBase
     {
         public int? IdProject { set; get; }
-        
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using bookStory.Application.Catalog.Comments;
+using bookStory.ViewModels.Catalog.Chats;
 using bookStory.ViewModels.Catalog.Comments;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

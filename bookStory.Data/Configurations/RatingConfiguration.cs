@@ -25,6 +25,7 @@ namespace bookStory.Data.Configurations
 
             //khóa ngoại
             builder.HasOne(x => x.AppUser).WithMany(x => x.Ratings).HasForeignKey(x => x.UserId);
+            builder.HasOne(x => x.Translation).WithMany(x => x.Ratings).HasForeignKey(x => x.IdTranslation);
         }
     }
 }

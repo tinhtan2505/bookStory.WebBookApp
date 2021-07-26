@@ -27,6 +27,7 @@ namespace bookStory.ViewModels.System.Users
         [Display(Name = "Ngày sinh")]
         public DateTime Dob { get; set; }
 
+        public float Rating { set; get; }
         public IList<string> Roles { get; set; }
     }
 }

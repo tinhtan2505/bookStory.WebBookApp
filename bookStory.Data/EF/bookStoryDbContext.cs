@@ -30,6 +30,7 @@ namespace bookStory.Data.EF
             modelBuilder.ApplyConfiguration(new RatingConfiguration());
             modelBuilder.ApplyConfiguration(new ReportConfiguration());
             modelBuilder.ApplyConfiguration(new TranslationConfiguration());
+            modelBuilder.ApplyConfiguration(new ChatConfiguration());
             //modelBuilder.ApplyConfiguration(new SlideConfiguration());
 
             modelBuilder.ApplyConfiguration(new AppUserConfiguration());
@@ -54,6 +55,7 @@ namespace bookStory.Data.EF
         public DbSet<Rating> Ratings { get; set; }
         public DbSet<Report> Reports { get; set; }
         public DbSet<Translation> Translations { get; set; }
+        public DbSet<Chat> Chats { get; set; }
         public DbSet<BookImage> BookImages { get; set; }
         //public DbSet<Slide> Slides { get; set; }
     }

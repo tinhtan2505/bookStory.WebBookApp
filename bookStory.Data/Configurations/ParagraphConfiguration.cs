@@ -19,7 +19,7 @@ namespace bookStory.Data.Configurations
             builder.Property(x => x.Id).UseIdentityColumn();
 
             //builder.Property(x => x.IdBook).IsRequired(); //int
-            builder.Property(x => x.Order).IsRequired().HasMaxLength(200);
+            builder.Property(x => x.Order).IsRequired().HasColumnType("nvarchar(MAX)");
             builder.Property(x => x.Type).IsRequired().HasMaxLength(200);
 
             //khóa ngoại

@@ -1,0 +1,169 @@
+﻿@model ProjectRequestViewModel
+@{
+    ViewData["Title"] = "Yêu cầu dự án";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var culture = CultureInfo.CurrentCulture.Name;
+}
+@section Scripts{
+    <script>
+        setTimeout(function () {
+            $('#msgAlert').fadeOut('slow');
+        }, 2000);
+    </script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/21.0.0/classic/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#txt_title'), {
+                // toolbar: [ 'heading', '|', 'bold', 'italic', 'link' ]
+            })
+            .then(editor => {
+                window.editor = editor;
+            })
+            .catch(err => {
+                console.error(err.stack);
+            });
+    </script>
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <div class="text-pageheader">
+                <div class="subtext-image"
+                     data-scrollreveal="enter bottom over 1.7s after 0.1s">
+                    WELCOME
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+      </div>
+    </header>
+
+<!-- CONTENT =============================-->
+<section class="item content">
+      <div class="container toparea">
+        <div class="underlined-title">
+            @if (ViewBag.SuccessMsg != null)
+            {
+               <div class="container">
+                  <div class="row">
+                        <div class="col-md-4"></div>
+                        <div id="msgAlert" class="col-md-4 alert alert-success" role="alert">
+                            @ViewBag.SuccessMsg
+                        </div>
+                        <div class="col-md-4"></div>
+                  </div>
+               </div>
+             }
+          
+          <div class="wow-hr type_short">
+            <span class="wow-hr-h">
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+            </span>
+          </div>
+        </div>
+        <div class="container">
+          <h6>
+            Đăng một dự án trên BOOK TRANSLATION rất nhanh chóng và dễ dàng. Một
+            bản mô tả dự án được viết tốt có thể giúp thu hút những người dịch
+            phù hợp. Bạn càng đưa nhiều thời gian và chi tiết vào bài dự án của
+            mình, thì kết quả càng tốt.
+          </h6>
+        </div>
+        <div class="container">
+          <div class="row border border-success rounded mt-5">
+            <div class="col-md-6 text-dark pl-0 pt-1 mt-2">
+              <div class="container">
+                <h6>Dự án của bạn là gì?</h6>
+                <p class="pt-1">
+                  Tiêu đề của một dự án là quan trọng hàng đầu, tiêu đề phải hấp
+                  dẫn và thú vị đồng thời. Tiêu đề phải truyền tải được ý nghĩa,
+                  lĩnh vực can thiệp và mục tiêu của dự án
+                </p>
+                <h6 class="pt-1">Cho chúng tôi biết thêm về dự án của bạn?</h6>
+                <p class="pt-1">
+                  Một mô tả dự án tốt giúp người dùng có thể hiểu được khái niệm
+                  và bối cảnh của dự án được đề xuất và cung cấp các khoản hỗ
+                  trợ tốt nhất mà họ có thể nhận được
+                </p>
+                <h6 class="pt-1">Cuốn sách của bạn được gọi là gì?</h6>
+                <p class="pt-1">
+                  Chọn tên sách bạn muốn từ danh sách thả xuống. Khi bạn nhập
+                  các từ khóa khác nhau, các gợi ý cho sách có liên quan sẽ có
+                  sẵn
+                </p>
+                <h6 class="pt-1">Chọn ngôn ngữ dịch của bạn?</h6>
+                <p class="pt-1">Chọn ngôn ngữ dịch mong muốn từ danh sách.</p>
+              </div>
+            </div>
+            <div class="col-md-6 text-dark mt-2 mb-2">
+              <div class="wrap-login100 p-l-55 p-r-55 p-t-5 p-b-5">
+                <form class="login100-form validate-form" asp-action="Request" enctype="multipart/form-data" method="post">
+                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                 <div class="form-group">
+                        <input type="hidden" asp-for="UserName" class="form-control" value=@User.Identity.Name />
+                        <span type="hidden" asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+                    
+                 @*//////////////////////////////////////////////////////////////////////////*@
+                  <div class="wrap-input100 validate-input m-b-23">
+                        <span asp-for="Title" class="label-input100">Tiêu đề</span>
+                            <input 
+                                    asp-for="Title"
+                                   class="input101"
+                                   type="text"
+                                   placeholder="Tiêu đề" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                    <div class="wrap-input100 validate-input m-b-23">
+                        <span asp-for="Description" class="label-input100">Mô tả dự án</span>
+                        <textarea id="txt_title" asp-for="Description" rows="35" class="form-control"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                  @*//////////////////////////////////////////////////////////////////////////*@
+                  <div
+                    class="m-b-23"
+                  >
+                    <span asp-for="IdBook" class="label-input100 mt-2">Tên sách</span>
+                    <select asp-for="IdBook" name="idBook" asp-items="@ViewBag.Books" class="form-control">
+                                    <option>--Chọn sách--</option>
+                    </select>
+                    <span asp-validation-for="IdBook" class="text-danger"></span>
+                  </div>
+                  @*//////////////////////////////////////////////////////////////////////////*@
+                  <div
+                    class="m-b-23"
+                  >
+                    <span asp-for="IdLanguage" class="label-input100">Ngôn ngữ cần dịch</span>
+                    <select asp-for="IdLanguage" name="idLanguage" asp-items="@ViewBag.Languages" class="form-control">
+                                    <option>--Chọn ngôn ngữ--</option>
+                    </select>
+                    <span asp-validation-for="IdLanguage" class="text-danger"></span>
+                  </div>
+                  @*//////////////////////////////////////////////////////////////////////////*@
+                  
+                  @if (User.Identity.IsAuthenticated)
+                  {
+                                    <div class="container-login100-form-btn mt-4">
+                                        <div class="wrap-login100-form-btn">
+                                          <div class="login100-form-bgbtn"></div>
+                                          <button type="submit" class="login100-form-btn">Yêu cầu dự án</button>
+                                        </div>
+                                      </div>
+                  }
+                  else
+                  {
+                        <div class="d-flex justify-content-center">
+                                <a class="text-danger" href="/@culture/Account/Login" >Nhấn để đăng nhập!</a>
+                        </div>
+                  }
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+

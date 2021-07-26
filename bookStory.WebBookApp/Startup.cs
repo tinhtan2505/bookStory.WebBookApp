@@ -4,12 +4,19 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using bookStory.ApiIntegration.Book;
+using bookStory.ApiIntegration.Chat;
 using bookStory.ApiIntegration.Comment;
+using bookStory.ApiIntegration.Language;
 using bookStory.ApiIntegration.Paragraph;
+using bookStory.ApiIntegration.Project;
+using bookStory.ApiIntegration.Rating;
+using bookStory.ApiIntegration.Report;
 using bookStory.ApiIntegration.Translation;
 using bookStory.ApiIntegration.User;
+using bookStory.Data.EF;
 using bookStory.Data.Entities;
 using bookStory.ViewModels.System.Users;
+using bookStory.WebBookApp.Hubs;
 using bookStory.WebBookApp.LocalizationResources;
 using FluentValidation.AspNetCore;
 using LazZiya.ExpressLocalization;
@@ -38,6 +45,8 @@ namespace bookStory.WebBookApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //services.AddDbContext<bookStoryDbContext>(options =>
+            //    options.UseSqlServer(Configuration.GetConnectionString("SystemConstants.MainConnectionString")));
             services.AddHttpClient();
             var cultures = new[]
            {
@@ -93,10 +102,17 @@ namespace bookStory.WebBookApp
             services.AddTransient<ITranslationApiClient, TranslationApiClient>();
             services.AddTransient<ICommentApiClient, CommentApiClient>();
             services.AddTransient<IUserApiClient, UserApiClient>();
-            //services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
-            //services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
-
+            services.AddTransient<IProjectApiClient, ProjectApiClient>();
+            services.AddTransient<ILanguageApiClient, LanguageApiClient>();
+            services.AddTransient<IRatingApiClient, RatingApiClient>();
+            services.AddTransient<IReportApiClient, ReportApiClient>();
+            services.AddTransient<IChatApiClient, ChatApiClient>();
             services.AddTransient<IUserApiClient, UserApiClient>();
+            services.AddSignalR();
+            services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.PropertyNamingPolicy = null;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -123,6 +139,7 @@ namespace bookStory.WebBookApp
             app.UseRequestLocalization();
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<ChatSignlR>("/chatsignlr");
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{culture=vi}/{controller=Home}/{action=Index}/{id?}");

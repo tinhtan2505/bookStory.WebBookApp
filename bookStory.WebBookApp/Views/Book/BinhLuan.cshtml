@@ -1,0 +1,341 @@
+﻿@model ParagraphDetailViewModel
+@{
+    ViewData["Title"] = "BinhLuan";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var culture = CultureInfo.CurrentCulture;
+}
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration;
+@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer _loc;
+@section Scripts{
+    <script src="~/js/comment.js"></script>
+    <script>
+      $(".ratingStar").hover(function () {
+        $(".ratingStar").addClass("fa-star-o").removeClass("fa-star");
+        $(this).addClass("fa-star").removeClass("fa-star-o");
+        $(this)
+          .prevAll(".ratingStar")
+          .addClass("fa-star")
+          .removeClass("fa-star-o");
+        debugger;
+        var starValue = $(this).attr("data-value");
+        $("#ratingValue").val(starValue);
+      });
+      $(".ratingStar").click(function () {
+        debugger;
+        var starValue = $(this).attr("data-value");
+        $("#ratingValue").val(starValue);
+      });
+    </script>
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <div class="text-pageheader">
+                <div class="subtext-image"
+                     data-scrollreveal="enter bottom over 1.7s after 0.1s">
+                    BẢN DỊCH
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
+    </header>
+
+<!-- CONTENT =============================-->
+<section class="item content">
+    <div class="container toparea">
+        <div class="underlined-title">
+            <div class="editContent">
+                <h1 class="text-center latestitems">Tên sách: @Html.DisplayFor(model => model.Book.Title)</h1>
+            </div>
+            <div class="wow-hr type_short">
+                <span class="wow-hr-h">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                </span>
+            </div>
+        </div>
+        @if (ViewBag.SuccessMsg != null)
+                {
+                            <div id="msgAlert" class="alert alert-success" role="alert">
+                                <h5>@ViewBag.SuccessMsg</h5>
+                            </div>
+                           
+                 }
+        <input type="hidden" value="@User.Identity.Name" class="form-control" id="username" name="username" />
+        <input type="hidden" value="@Model.Translation.Id" class="form-control" id="idtran" name="idtran" />
+        <div class="container">
+            <div class="underlined-title">
+                <div class="editContent">
+                    <h1 class=" latestitems">Đoạn văn</h1>
+                </div>
+            </div>
+        </div>
+        <div class="row border-top border-success rounded m-5">
+                <div class="
+                col-md-10
+                border-left border-bottom border-success
+                rounded-left
+                text-dark
+                pl-1
+              ">
+                    <div class="container mb-5">
+                        <span>@Html.DisplayFor(model => model.Paragraph.Order)</span>
+                    </div>
+                </div>
+                <div class="
+                col-md-2
+                border-right border-bottom border-success
+                rounded-right
+                text-dark
+              ">
+                </div>
+           
+            </div>
+        <div class="underlined-title">
+            <div class="editContent">
+                <h1 class=" latestitems">Bản dịch</h1>
+            </div>
+        </div>
+        <div class="row border-top border-primary rounded">
+                <div class="
+                col-md-10
+                border-left border-bottom border-primary
+                rounded-left
+                text-dark
+                pl-1
+              ">
+                    <div class="container-fluid justify-content-left p-0">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="card p-1">
+                                    <div class="d-flex align-items-center">
+                                        <div class="image">
+                                            <img src="/images/product1.jpg"
+                                                 class="rounded"
+                                                 width="80"
+                                                 height="80" />
+                                        </div>
+                                        <div class="ml-3 w-100">
+                                            <h5 class="mb-0 mt-0">@Model.Translation.FirstName @Model.Translation.LastName</h5>
+                                            <span></span>
+                                            <div class="
+                              button
+                              mt-2
+                              d-flex
+                              flex-row
+                              align-items-center
+                            ">
+                                                <button class="btn btn-sm btn-outline-primary w-25">
+                                                    Chat
+                                                </button>
+                                                <button class="btn btn-sm btn-primary w-25 ml-2">
+                                                    Follow
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <span class="mt-2">@Model.Translation.Text</span>
+                                <span class="text-danger timecomment ml-2">@Model.Translation.Date</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="
+                col-md-2
+                border-right border-bottom border-primary
+                rounded-right
+                text-dark
+              ">
+              @{
+                    var sb = "suabandich"+@Model.Translation.Id.ToString();
+                        @Model.Text = @Model.Translation.Text;
+                        var star1 = (int)Math.Round(@Model.Translation.Rating);
+              }
+                    @if(@Model.Translation.UserName == @User.Identity.Name)
+                    {
+                        <button type="submit" class="btn btn-danger float-right mt-2 ml-2" data-toggle="modal" data-target="#@sb"> Xóa</button>
+                        <button class="btn btn-outline-primary float-right mt-2" type="button" data-toggle="collapse" data-target="#@sb" aria-expanded="false" aria-controls=@sb>Sửa</button>
+                        
+                      
+                    }
+                    <div class="modal fade" id= @sb tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                          <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLongTitle">Thông báo</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                  <span aria-hidden="true">&times;</span>
+                                                </button>
+                                              </div>
+                                              <div class="modal-body">
+                                                Bạn có muốn xóa bản dịch?
+                                              </div>
+                                              
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                                <form asp-action="DeleteTranslation">
+                                                    <input type="hidden" asp-for="IdTranslation" value=@Model.Translation.Id />
+                                                    <input type="hidden" asp-for="IdParagraph" class="form-control" value=@Model.Paragraph.Id />
+                                                    <input type="submit" value="Yes" class="btn btn-danger" />
+                                                </form>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-md-2"></div>
+                        <div class="col-md-10 pt-3">
+                            <div class="row">
+                              <div class="col-md-6 mb-2">
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <div>
+                                        <form asp-action="CreateXepHang" enctype="multipart/form-data" method="post">
+                                            <div class="form-group">
+                                                <label>Xếp hạng: </label>
+                                                    <span class="text-warning">
+                                                        @for (int s1 = 1; s1 <= star1; s1++)
+                                                        {
+                                                            <i class="ratingStar fa fa-star" data-value=@s1></i>
+                                                        }
+                                                        @for (int s1 = star1+1; s1 <= 5; s1++)
+                                                        {
+                                                            <i class="ratingStar fa fa-star-o" data-value=@s1></i>
+                                                        }
+                                                      </span>
+                                                <input type="hidden" asp-for="Vote" id="ratingValue" class="form-control"  />
+                                                <input type="hidden" asp-for="UserName" value=@User.Identity.Name class="form-control" />
+                                                <input type="hidden" asp-for="IdTranslation" id="idTranslation" value=@Model.Translation.Id class="form-control" />
+                                                <input type="hidden" asp-for="IdParagraph" class="form-control" value=@Model.Paragraph.Id />
+                                                <button type="submit" class="btn btn-warning btn-xs ml-2 mb-1">
+                                                    Đánh giá
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                }
+                              </div>
+                              <div class="col-md-6">
+                                <div class="collapse multi-collapse" id=@sb>
+                                  <form asp-action="EditTranslation" enctype="multipart/form-data" method="post">
+                                        <input type="hidden" asp-for="IdTranslation" value=@Model.Translation.Id />
+                                        <input type="hidden" asp-for="UserName" value=@User.Identity.Name class="form-control" />
+                                        <input type="hidden" asp-for="IdParagraph" class="form-control" value=@Model.Paragraph.Id />
+                                        <input type="hidden" asp-for="Rating" value=0 class="form-control" />
+                                                <div class="form-group">
+                                                  <textarea
+                                                    asp-for="Text" 
+                                                    class="form-control"
+                                                    id="exampleFormControlTextarea1"
+                                                    rows="3"
+                                                  ></textarea>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary mb-1">
+                                                  Sửa
+                                                </button>
+                                    </form>
+                                </div>
+                              </div>
+                            </div>
+                            <div id="tableBody"></div>
+                            @foreach (var com in Model.ListComments)
+                            {
+                                if (Model.Translation.Id == com.IdTranslation)
+                                {
+                                    var mce = "suacomment"+@com.Id.ToString();
+                                    var dce = "editcomment"+@com.Id.ToString();
+                                    @Model.Message = @com.Message;
+                                    
+                                        <div class="modal fade" id= @mce tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                          <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLongTitle">Thông báo</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                  <span aria-hidden="true">&times;</span>
+                                                </button>
+                                              </div>
+                                              <div class="modal-body">
+                                                Bạn có muốn xóa bình luận?
+                                              </div>
+                                              
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                                <form asp-action="DeleteComment">
+                                                    <input type="hidden" asp-for="IdComment" value=@com.Id />
+                                                    <input type="hidden" asp-for="IdTranslation" class="form-control" value=@Model.Translation.Id />
+                                                    <input class="btn btn-primary" type="submit" value="Yes"/>
+                                                </form>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="modal fade" id= @dce tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                          <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLongTitle">Sửa bình luận của bạn</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                  <span aria-hidden="true">&times;</span>
+                                                </button>
+                                              </div>
+                                              
+                                                <form asp-action="EditComment" enctype="multipart/form-data" method="post" class="m-2">
+                                                            <input type="hidden" asp-for="IdComment" value=@com.Id />
+                                                            <input type="hidden" asp-for="UserName" value=@User.Identity.Name class="form-control" />
+                                                            <input type="hidden" asp-for="IdTranslation" class="form-control" value=@Model.Translation.Id />
+                                                            <div class="form-group">
+                                                              <textarea
+                                                                asp-for="Message" 
+                                                                class="form-control"
+                                                                id="exampleFormControlTextarea1"
+                                                                rows="3"
+                                                              ></textarea>
+                                                            </div>
+                                                            <button type="submit" class="btn btn-primary mb-1 float-right">
+                                                              Sửa
+                                                            </button>
+                                                          </form>
+                                            </div>
+                                          </div>
+                                        </div>
+                                }
+                                 
+                            }
+                            <div id="messagearea" class="row">
+                                <div class="col-md-12">
+                                        <ul id="messagesList"></ul>
+                                    </div>
+                                    </div>
+                            @if (User.Identity.IsAuthenticated){
+                            <form asp-action="CreateComment" enctype="multipart/form-data" method="post">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="UserName" value=@User.Identity.Name class="form-control" />
+                                <input type="hidden" asp-for="IdTranslation" value=@Model.Translation.Id class="form-control" />
+                               
+                                <div class="form-group">
+                                    <label class="text-primary"
+                                           for="exampleFormControlTextarea1">Thêm bình luận</label>
+                                    <textarea asp-for="MessageCreate" class="form-control"
+                                              id="message" autocomplete="off"
+                                              rows="3"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary mb-1  rounded-pill">Gửi</button>
+                            </form>
+                    
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</section>

@@ -1,0 +1,191 @@
+﻿@model BookDetailViewModel
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var culture = CultureInfo.CurrentCulture;
+}
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration;
+@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer _loc;
+@section Scripts{
+    <script>
+        setTimeout(function () {
+            $('#msgAlert').fadeOut('slow');
+        }, 2000);
+    </script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/21.0.0/classic/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#txt_title'), {
+                // toolbar: [ 'heading', '|', 'bold', 'italic', 'link' ]
+            })
+            .then(editor => {
+                window.editor = editor;
+            })
+            .catch(err => {
+                console.error(err.stack);
+            });
+    </script>
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <div class="text-pageheader">
+                <div class="subtext-image"
+                     data-scrollreveal="enter bottom over 1.7s after 0.1s">
+                    @Html.DisplayFor(model => model.Book.Title)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+      </div>
+    </header>
+
+<!-- CONTENT =============================-->
+<section class="">
+    <div class="container-fluid toparea">
+        <div class="underlined-title">
+            <div class="editContent">
+                <h1 class="text-center latestitems">Thông tin sách</h1>
+            </div>
+            <div class="wow-hr type_short">
+                <span class="wow-hr-h">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                </span>
+            </div>
+        </div>
+    
+    </div>
+    <div class="container-fluid ml-1 mr-1">
+        <div class="row">
+            <div class="col-md-8">
+                <iframe width="100%" height="1000px" frameborder="0" src="@Html.DisplayFor(model => model.Book.FileName)"></iframe>
+            </div>
+            <div class="col-md-4 pr-5">
+                @if (ViewBag.SuccessMsg != null)
+                {
+                            <div id="msgAlert" class="alert alert-success" role="alert">
+                                @ViewBag.SuccessMsg
+                            </div>
+                           
+                 }
+                <h1 class="latestitems mt-5 mb-4">Yêu cầu dịch văn bản</h1>
+                <form class="login100-form validate-form" asp-action="NoidungSach" enctype="multipart/form-data" method="post">
+                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                 <div class="form-group">
+                        <input type="hidden" asp-for="UserName" class="form-control" value=@User.Identity.Name />
+                        <span type="hidden" asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+                    
+                 @*//////////////////////////////////////////////////////////////////////////*@
+             
+                  <input type="hidden" asp-for="Title" value="Tôi cần dịch đoạn văn này" />
+                  @*//////////////////////////////////////////////////////////////////////////*@
+                  <div
+                    class="wrap-input100 validate-input m-b-23"
+                  >
+                  <span asp-for="Description" class="label-input100">Tôi cần dịch đoạn văn: </span>
+                 
+                    <textarea id="txt_title" asp-for="Description" class="form-control"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                  </div>
+                  @*//////////////////////////////////////////////////////////////////////////*@
+                
+                  <input type="hidden" asp-for="IdBook" value ="@Model.Book.Id" />
+                  @*//////////////////////////////////////////////////////////////////////////*@
+                  <div
+                    class="m-b-23"
+                  >
+                    <span asp-for="IdLanguage" class="label-input100">Ngôn ngữ cần dịch</span>
+                    <select asp-for="IdLanguage" name="idLanguage" asp-items="@ViewBag.Languages" class="form-control">
+                                    <option>--Chọn ngôn ngữ--</option>
+                    </select>
+                    <span asp-validation-for="IdLanguage" class="text-danger"></span>
+                  </div>
+                  <div class="row">
+                            <div class="col-md-4">
+                               
+                            </div>
+                            <div class="col-md-4">
+                                <div class="container-login100-form-btn">
+                                    <div class="wrap-login100-form-btn">
+                                        <div class="login100-form-bgbtn"></div>
+                                        <button type="submit" class="login100-form-btn">GỬI</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                          
+                            </div>
+                        </div>
+                </form>
+                <div>
+                    <h1 class="latestitems mt-5 mb-4">Danh sách bản dịch</h1>
+                    @for (int i = 0; i < Model.ListParagraphs.Items.Count; i++)
+                    {
+                        var item = Model.ListParagraphs.Items[i];
+                        <div class="row mb-2">
+                            <div class="col-md-12">
+                                <div class="row border border-success rounded mr-1">
+                                    <div class="col-md-8 text-dark pl-0 pt-1">
+                                        <div class="container">
+                                            <span>@item.Order</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 text-dark">
+                                        <button type="button"
+                                                class="
+                            btn btn-outline-primary
+                            float-right
+                            mt-2
+                            mb-2
+                            w-100
+                          ">
+
+                                            @Html.ActionLink("Tất cả bản dịch", "Translation", new { id = item.Id })
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            @if (@item.RatingMax != null)
+                            {
+                                <div class="col-md-12 mt-2">
+                                    <div class="border border-success rounded">
+                                        <div class="text-dark pl-0 pt-1">
+                                            <div class="container">
+                                               
+                                                    <span>@item.RatingMax</span>
+                                                
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr style="height:2px;border-width:0;color:gray;background-color:red; width:100%">
+                            }
+                            else
+                            {
+                                <div class="col-md-12 mt-2">
+                                    <div class="border border-success rounded">
+                                        <div class="text-dark pl-0 pt-1">
+                                            <div class="container">
+                                               
+                                                    <span>Chưa có bản dịch nào!!!</span>
+                                                
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr style="height:2px;border-width:0;color:gray;background-color:red; width:100%">
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+     </div>
+     
+</section>

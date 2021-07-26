@@ -12,9 +12,13 @@ namespace bookStory.ApiIntegration.Rating
     {
         Task<PagedResult<RatingViewModel>> GetPagings(GetManageRatingPagingRequest request);
 
+        Task<List<RatingViewModel>> GetAll();
+
         Task<bool> CreateRating(RatingCreateRequest request);
 
         Task<bool> UpdateRating(RatingUpdateRequest request);
+
+        Task<RatingViewModel> GetRating(Guid keywordUserId, int keywordIdTranslation);
 
         Task<RatingViewModel> GetById(int id);
 

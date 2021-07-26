@@ -9,5 +9,7 @@ namespace bookStory.ViewModels.Catalog.Projects
     public class ProjectDeleteRequest
     {
         public int Id { get; set; }
+        public string Title { set; get; }
+        public string Description { set; get; }
     }
 }

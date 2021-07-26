@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -63,6 +64,22 @@ namespace bookStory.Application.System.Users
             return new ApiSuccessResult<string>(new JwtSecurityTokenHandler().WriteToken(token));
         }
 
+        public async Task<List<UserVm>> GetAll()
+        {
+            var query = _userManager.Users;
+            var data = await query.OrderByDescending(x => x.Rating).Take(5).Select(x => new UserVm()
+            {
+                Email = x.Email,
+                PhoneNumber = x.PhoneNumber,
+                UserName = x.UserName,
+                FirstName = x.FirstName,
+                Id = x.Id,
+                LastName = x.LastName,
+                Rating = x.Rating
+            }).ToListAsync();
+            return data;
+        }
+
         public async Task<ApiResult<UserVm>> GetById(Guid id)
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
@@ -80,6 +97,7 @@ namespace bookStory.Application.System.Users
                 Id = user.Id,
                 LastName = user.LastName,
                 UserName = user.UserName,
+                Rating = user.Rating,
                 Roles = roles
             };
             return new ApiSuccessResult<UserVm>(userVm);
@@ -106,7 +124,8 @@ namespace bookStory.Application.System.Users
                     UserName = x.UserName,
                     FirstName = x.FirstName,
                     Id = x.Id,
-                    LastName = x.LastName
+                    LastName = x.LastName,
+                    Rating = x.Rating
                 }).ToListAsync();
 
             //4. Select and projection
@@ -137,6 +156,7 @@ namespace bookStory.Application.System.Users
                 Id = user.Id,
                 LastName = user.LastName,
                 UserName = user.UserName,
+                Rating = user.Rating,
                 Roles = roles
             };
             return new ApiSuccessResult<UserVm>(userVm);
@@ -161,7 +181,8 @@ namespace bookStory.Application.System.Users
                 FirstName = request.FirstName,
                 LastName = request.LastName,
                 UserName = request.UserName,
-                PhoneNumber = request.PhoneNumber
+                PhoneNumber = request.PhoneNumber,
+                Rating = 0
             };
             var result = await _userManager.CreateAsync(user, request.Password);
             if (result.Succeeded)
