@@ -41,8 +41,9 @@ namespace bookStory.AdminApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> CreateParagraph(int? idbook)
+        public async Task<IActionResult> CreateParagraph(int idTran, int? idbook)
         {
+            ViewBag.IdTran = idTran;
             var books = await _bookApiClient.GetAll();
             ViewBag.Books = books.Select(x => new SelectListItem()
             {
@@ -55,12 +56,13 @@ namespace bookStory.AdminApp.Controllers
 
         [HttpPost]
         [Consumes("multipart/form-data")]
-        public async Task<IActionResult> CreateParagraph([FromForm] ParagraphCreateRequest request)
+        public async Task<IActionResult> CreateParagraph(int idTran, [FromForm] ParagraphCreateRequest request)
         {
             if (!ModelState.IsValid)
                 return View(request);
 
             var result = await _ParagraphApiClient.CreateParagraph(request);
+            var result1 = await _ProjectApiClient.DeleteProject(idTran);
             if (result)
             {
                 TempData["result"] = "Thêm mới Dự án thành công";

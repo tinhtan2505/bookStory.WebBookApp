@@ -24,6 +24,7 @@
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
         <li class="breadcrumb-item active">Tạo mới Đoạn văn</li>
+        <li class="breadcrumb-item active">@ViewBag.IdTran</li>
     </ol>
     <div class="card mb-4">
         <div class="card-header">
@@ -34,6 +35,7 @@
             <div class="col-md-4">
                 <form asp-action="CreateParagraph" enctype="multipart/form-data" method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input name="idTran" value=@ViewBag.IdTran class="form-control" />
                     <div class="form-group">
                         <label asp-for="IdBook" class="control-label"></label>
                         <select asp-for="IdBook" name="idbook" asp-items="@ViewBag.Books" class="form-control">
