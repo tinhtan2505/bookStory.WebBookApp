@@ -67,10 +67,10 @@ namespace bookStory.AdminApp
             services.AddTransient<IReportApiClient, ReportApiClient>();
             services.AddTransient<ITranslationApiClient, TranslationApiClient>();
             services.AddSignalR();
-            services.AddControllers().AddJsonOptions(options =>
-            {
-                options.JsonSerializerOptions.PropertyNamingPolicy = null;
-            });
+            //services.AddControllers().AddJsonOptions(options =>
+            //{
+            //    options.JsonSerializerOptions.PropertyNamingPolicy = null;
+            //});
             IMvcBuilder builder = services.AddRazorPages();
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 

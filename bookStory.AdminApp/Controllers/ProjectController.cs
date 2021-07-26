@@ -36,7 +36,7 @@ namespace bookStory.AdminApp.Controllers
             _userApiClient = userApiClient;
         }
 
-        public async Task<IActionResult> Index(string keyword, int? idBook, int pageIndex = 1, int pageSize = 10)
+        public async Task<IActionResult> Index(string keyword, int? idBook, int pageIndex = 1, int pageSize = 5)
         {
             var languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
 

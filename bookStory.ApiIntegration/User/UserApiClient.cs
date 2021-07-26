@@ -160,7 +160,7 @@ namespace bookStory.ApiIntegration.User
             var json = JsonConvert.SerializeObject(request);
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var response = await client.PutAsync($"/api/users/{id}/roles", httpContent);
+            var response = await client.PutAsync($"/api/users/{id}/roless", httpContent);
             var result = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(result);

@@ -4,6 +4,7 @@ using bookStory.Data.Entities;
 using bookStory.Utilities.Exceptions;
 using bookStory.ViewModels.Catalog.Projects;
 using bookStory.ViewModels.Common;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -18,11 +19,13 @@ namespace bookStory.Application.Catalog.Projects
     {
         private readonly bookStoryDbContext _context;
         private readonly IStorageService _storageService;
+        private readonly UserManager<AppUser> _userManager;
 
-        public ProjectService(bookStoryDbContext context, IStorageService storageService)
+        public ProjectService(bookStoryDbContext context, IStorageService storageService, UserManager<AppUser> userManager)
         {
             _context = context;
             _storageService = storageService;
+            _userManager = userManager;
         }
 
         public async Task<List<ProjectViewModel>> GetAll()
@@ -73,7 +76,9 @@ namespace bookStory.Application.Catalog.Projects
         {
             var query = from b in _context.Projects
                         join bk in _context.Books on b.IdBook equals bk.Id
-                        select new { b, bk };
+                        join l in _context.Languages on b.IdLanguage equals l.Id
+                        join u in _userManager.Users on b.UserId equals u.Id
+                        select new { b, bk, l, u };
             if (!string.IsNullOrEmpty(request.Keyword))
                 query = query.Where(x => x.b.Title.Contains(request.Keyword));
 
@@ -93,7 +98,11 @@ namespace bookStory.Application.Catalog.Projects
                     Description = x.b.Description,
                     UserId = x.b.UserId,
                     Status = x.b.Status,
-                    DateProject = x.b.DateProject
+                    DateProject = x.b.DateProject,
+                    TitleBook = x.bk.Title,
+                    NameLanguage = x.l.Name,
+                    FirstName = x.u.FirstName,
+                    LastName = x.u.LastName
                 }).ToListAsync();
 
             var pagedResult = new PagedResult<ProjectViewModel>()
@@ -109,6 +118,9 @@ namespace bookStory.Application.Catalog.Projects
         public async Task<ProjectViewModel> GetById(int id)
         {
             var item = await _context.Projects.FindAsync(id);
+            var book = await _context.Books.FindAsync(item.IdBook);
+            var lang = await _context.Languages.FindAsync(item.IdLanguage);
+            var user = await _userManager.FindByIdAsync(item.UserId.ToString());
             var bookVM = new ProjectViewModel()
             {
                 Id = item.Id,
@@ -118,7 +130,11 @@ namespace bookStory.Application.Catalog.Projects
                 Description = item.Description,
                 UserId = item.UserId,
                 Status = item.Status,
-                DateProject = item.DateProject
+                DateProject = item.DateProject,
+                TitleBook = book.Title,
+                NameLanguage = lang.Name,
+                FirstName = user.FirstName,
+                LastName = user.LastName
             };
             return bookVM;
         }

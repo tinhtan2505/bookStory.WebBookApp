@@ -1,0 +1,68 @@
+﻿@using bookStory.ViewModels.Common;
+@model PagedResult<bookStory.ViewModels.Catalog.Reports.ReportViewModel>
+@{
+    ViewData["Title"] = "Trang chủ";
+}
+
+@section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="/assets/demo/chart-area-demo.js"></script>
+    <script src="/assets/demo/chart-bar-demo.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+    <script src="/assets/demo/datatables-demo.js"></script>
+
+}
+<div class="container-fluid">
+    <div class="d-flex align-items-center justify-content-center mb-5"><h1 class="mt-4">Quản trị Web Dịch sách</h1></div>
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3><i class="fas fa-table mr-1"></i>
+                Báo cáo mới</h3>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                UserId
+                            </th>
+                            <th>
+                                IdParagraph
+                            </th>
+                            <th>
+                                Reason
+                            </th>
+
+                            <th>Xử lý</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Items)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.UserId
+                               )
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.IdParagraph)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Reason)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Sửa", "Edit", new { id = item.Id }) |
+                                    @Html.ActionLink("Xem", "Details", new { id = item.Id }) |
+                                    @Html.ActionLink("Xóa", "Delete", new { id = item.Id }) |
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            @await Component.InvokeAsync("Pager", Model)
+            </div>
+        </div>
+</div>

@@ -68,6 +68,7 @@ namespace bookStory.BackendApi.Controllers
         }
 
         [HttpPut("{id}/roles")]
+        [Authorize]
         public async Task<IActionResult> RoleAssign(Guid id, [FromBody] RoleAssignRequest request)
         {
             if (!ModelState.IsValid)

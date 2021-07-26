@@ -1,0 +1,64 @@
+﻿@model bookStory.ViewModels.Catalog.Projects.ProjectViewModel
+
+@{
+    ViewData["Title"] = "Chi tiết";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="d-flex align-items-center justify-content-center mb-5"><h1 class="mt-4">Quản trị Web Dịch sách</h1></div>
+    <div class="card mb-4">
+        <div class="card-header">
+            <a class="btn btn-success" asp-action="Index" asp-controller="ProjectHandle">Về danh sách</a>
+        </div>
+
+        <div class="card-body">
+            <div class="col-md-12">
+                <dl class="row">
+                    <dt class="col-sm-2">
+                        Ngôn ngữ:
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.NameLanguage)
+                    </dd>
+                    <dt class="col-sm-2">
+                        Tên Sách:
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.TitleBook)
+                    </dd>
+                    <dt class="col-sm-2">
+                        Người yêu cầu:
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.FirstName) @Html.DisplayFor(model => model.LastName)
+                    </dd>
+                    <dt class="col-sm-2">
+                        Tiêu đề:
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Title)
+                    </dd>
+                    <dt class="col-sm-2">
+                        Mô tả:
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Description)
+                    </dd>
+                    <dt class="col-sm-2">
+                        Trạng thái:
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Status)
+                    </dd>
+                    <dt class="col-sm-2">
+                        Thời gian yêu cầu
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.DateProject)
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
