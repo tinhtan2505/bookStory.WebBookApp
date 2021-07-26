@@ -26,13 +26,13 @@
                     <thead>
                         <tr>
                             <th>
-                                UserId
+                                Người báo cáo
                             </th>
                             <th>
-                                IdParagraph
+                                Đoạn văn
                             </th>
                             <th>
-                                Reason
+                                Lý do
                             </th>
 
                             <th>Xử lý</th>
@@ -43,8 +43,7 @@
                         {
                             <tr>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.UserId
-                               )
+                                     @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.IdParagraph)
@@ -53,9 +52,10 @@
                                     @Html.DisplayFor(modelItem => item.Reason)
                                 </td>
                                 <td>
-                                    @Html.ActionLink("Sửa", "Edit", new { id = item.Id }) |
-                                    @Html.ActionLink("Xem", "Details", new { id = item.Id }) |
-                                    @Html.ActionLink("Xóa", "Delete", new { id = item.Id }) |
+                                    @Html.ActionLink("Xem Đoạn văn", "DetailsParagraph", new { id = item.IdParagraph }) |
+                                    @Html.ActionLink("Sửa Đoạn văn", "EditParagraph", new { id = item.IdParagraph }) |
+                                    @Html.ActionLink("Xóa Đoạn văn", "DeleteParagraph", new { id = item.IdParagraph }) |
+                                    @Html.ActionLink("Xóa Báo cáo", "DeleteReport", new { id = item.Id }) |
                                 </td>
                             </tr>
                         }

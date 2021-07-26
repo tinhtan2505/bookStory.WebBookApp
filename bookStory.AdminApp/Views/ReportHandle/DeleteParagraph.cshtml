@@ -1,0 +1,60 @@
+﻿@model bookStory.ViewModels.Catalog.Paragraps.ParagraphDeleteRequest
+
+@{
+    ViewData["Title"] = "Xóa Paragraph";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="d-flex align-items-center justify-content-center mb-5"><h1 class="mt-4">Quản trị Web Dịch sách</h1></div>
+    <div class="card mb-4">
+        <div class="card-header">
+            <a class="btn btn-success" asp-action="Index" asp-controller="Paragraph">Về danh sách</a>
+        </div>
+        <div class="card-body">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-sm-4">
+                       
+                    </div>
+                    <div class="col-sm-4">
+                       <dl class="row">
+                           <dt class="col-sm-2">
+                                Tên Sách:
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.TitleBook)
+                            </dd>
+                            <dt class="col-sm-2">
+                                Đoạn Văn:
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.Order)
+                            </dd>
+                         </dl>
+                       </div>
+                    <div class="col-sm-4">
+                       
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="row">
+                        <div class="col-sm-2 d-flex align-items-center justify-content-center">
+                            <form asp-action="DeleteParagraph">
+                                <input asp-for="Id" type="hidden" />
+                                <input type="submit" value="Xóa" class="btn btn-danger" />
+                            </form>
+                        </div>
+                        <div class="col-sm-10 d-flex align-items-center justify-content-start"><a class="btn btn-success" asp-action="Index" asp-controller="ProjectHandle">Về danh sách</a></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

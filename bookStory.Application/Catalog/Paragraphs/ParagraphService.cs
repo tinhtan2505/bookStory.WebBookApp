@@ -130,12 +130,14 @@ namespace bookStory.Application.Catalog.Paragraphs
         public async Task<ParagraphViewModel> GetById(int id)
         {
             var item = await _context.Paragraphs.FindAsync(id);
+            var book = await _context.Books.FindAsync(item.IdBook);
             var bookVM = new ParagraphViewModel()
             {
                 Id = item.Id,
                 IdBook = item.IdBook,
                 Order = item.Order,
-                Type = item.Type
+                Type = item.Type,
+                TitleBook = book.Title
             };
             return bookVM;
         }

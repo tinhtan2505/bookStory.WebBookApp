@@ -14,5 +14,6 @@ namespace bookStory.ViewModels.Catalog.Paragraps
         public string Order { set; get; }
         public string Type { set; get; }
         public string RatingMax { get; set; }
+        public string TitleBook { set; get; }
     }
 }

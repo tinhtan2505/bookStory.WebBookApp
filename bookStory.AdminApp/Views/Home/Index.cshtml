@@ -104,7 +104,7 @@
                     <thead>
                         <tr>
                             <th>
-                                UserId
+                                Người báo cáo
                             </th>
                             <th>
                                 IdParagraph
@@ -120,8 +120,7 @@
                         {
                             <tr>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.UserId
-                               )
+                                     @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.IdParagraph)

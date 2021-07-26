@@ -4,6 +4,7 @@ using bookStory.Data.Entities;
 using bookStory.Utilities.Exceptions;
 using bookStory.ViewModels.Catalog.Reports;
 using bookStory.ViewModels.Common;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -17,11 +18,14 @@ namespace bookStory.Application.Catalog.Reports
     {
         private readonly bookStoryDbContext _context;
         private readonly IStorageService _storageService;
+        private readonly UserManager<AppUser> _userManager;
 
-        public ReportService(bookStoryDbContext context, IStorageService storageService)
+        public ReportService(bookStoryDbContext context, IStorageService storageService,
+            UserManager<AppUser> userManager)
         {
             _context = context;
             _storageService = storageService;
+            _userManager = userManager;
         }
 
         public async Task<List<ReportViewModel>> GetAll()
@@ -63,18 +67,24 @@ namespace bookStory.Application.Catalog.Reports
         public async Task<PagedResult<ReportViewModel>> GetAllPaging(GetManageReportPagingRequest request)
         {
             var query = from b in _context.Reports
-                        select b;
+                        join p in _context.Paragraphs on b.IdParagraph equals p.Id
+                        join bk in _context.Books on p.IdBook equals bk.Id
+                        join u in _userManager.Users on b.UserId equals u.Id
+                        select new { b, p, bk, u };
             if (!string.IsNullOrEmpty(request.Keyword))
-                query = query.Where(x => x.Reason.Contains(request.Keyword));
+                query = query.Where(x => x.b.Reason.Contains(request.Keyword));
 
             int totalRow = await query.CountAsync();
             var data = await query.Skip((request.PageIndex - 1) * request.PageSize).Take(request.PageSize)
                 .Select(x => new ReportViewModel()
                 {
-                    Id = x.Id,
-                    UserId = x.UserId,
-                    IdParagraph = x.IdParagraph,
-                    Reason = x.Reason
+                    Id = x.b.Id,
+                    UserId = x.b.UserId,
+                    IdParagraph = x.b.IdParagraph,
+                    Reason = x.b.Reason,
+                    TitleBook = x.bk.Title,
+                    FirstName = x.u.FirstName,
+                    LastName = x.u.LastName
                 }).ToListAsync();
 
             var pagedResult = new PagedResult<ReportViewModel>()
@@ -90,12 +100,16 @@ namespace bookStory.Application.Catalog.Reports
         public async Task<ReportViewModel> GetById(int id)
         {
             var item = await _context.Reports.FindAsync(id);
+            var pra = await _context.Paragraphs.FindAsync(item.IdParagraph);
+            var book = await _context.Books.FindAsync(pra.IdBook);
             var bookVM = new ReportViewModel()
             {
                 Id = item.Id,
                 UserId = item.UserId,
                 IdParagraph = item.IdParagraph,
-                Reason = item.Reason
+                Reason = item.Reason,
+                TitleBook = book.Title,
+                Order = pra.Order
             };
             return bookVM;
         }
