@@ -13,25 +13,6 @@
                 Bạn có muốn xóa báo cáo này?</h3>
             
         </div>
-
-      @*  <div class="card-body">
-            <div class="col-md-12">
-                <dl class="row">
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.Id)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.Id)
-                    </dd>
-                </dl>
-
-                <form asp-action="DeleteReport">
-                    <input asp-for="Id" type="hidden" />
-                    <input type="submit" value="Xóa" class="btn btn-danger" />
-                </form>
-            </div>
-        </div>*@
-
         <div class="card-body">
             <div class="col-md-12">
                 <div class="row">
@@ -75,7 +56,7 @@
                                 <input type="submit" value="Xóa" class="btn btn-danger" />
                             </form>
                         </div>
-                        <div class="col-sm-10 d-flex align-items-center justify-content-start"><a class="btn btn-success" asp-action="Index" asp-controller="ProjectHandle">Về danh sách</a></div>
+                        <div class="col-sm-10 d-flex align-items-center justify-content-start"><a class="btn btn-success" asp-action="Index" asp-controller="ReportHandle">Về danh sách</a></div>
                         </div>
                     </div>
                     <div class="col-sm-4">
