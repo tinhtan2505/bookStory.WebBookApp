@@ -30,75 +30,124 @@
                 p-l-55 p-r-55 p-t-65 p-b-54
                 border border-primary
               ">
-                    <form class="login100-form validate-form">
+                    <form asp-action="Register" class="login100-form validate-form">
                         <span class="login100-form-title p-b-49"> ĐĂNG KÝ </span>
 
-                        <div class="wrap-input100 validate-input m-b-23"
+                        @*<div class="wrap-input100 validate-input m-b-23"
                              data-validate="">
-                            <span class="label-input100">Tên</span>
+                            <span class="label-input100" asp-for="FirstName">Tên</span>
                             <input class="input101"
                                    type="text"
                                    name="pass"
-                                   placeholder="Tên" />
+                                   placeholder="Tên"
+                                   asp-for="FirstName"/>
                         </div>
                         <div class="wrap-input100 validate-input m-b-23"
                              data-validate="">
-                            <span class="label-input100">Họ</span>
+                            <span class="label-input100" asp-for="LastName">Họ</span>
                             <input class="input101"
                                    type="text"
                                    name="pass"
-                                   placeholder="Họ" />
+                                   placeholder="Họ"
+                                   asp-for="LastName"/>
                         </div>
                         <div class="wrap-input100 validate-input m-b-23"
                              data-validate="">
-                            <span class="label-input100">Ngày sinh</span>
+                            <span class="label-input100" asp-for="Dob">Ngày sinh</span>
                             <input class="input101"
-                                   type="text"
+                                   type="date"
                                    name="pass"
-                                   placeholder="Ngày sinh" />
+                                   placeholder="Ngày sinh"
+                                   asp-for="Dob"/>
                         </div>
                         <div class="wrap-input100 validate-input m-b-23"
                              data-validate="">
-                            <span class="label-input100">Hòm thư</span>
+                            <span class="label-input100" asp-for="Email">Hòm thư</span>
                             <input class="input101"
                                    type="text"
                                    name="pass"
-                                   placeholder="Hòm thư" />
+                                   placeholder="Hòm thư"
+                                   asp-for="Email"/>
                         </div>
                         <div class="wrap-input100 validate-input m-b-23"
                              data-validate="">
-                            <span class="label-input100">Số điện thoại</span>
+                            <span class="label-input100" asp-for="PhoneNumber">Số điện thoại</span>
                             <input class="input101"
                                    type="text"
                                    name="pass"
-                                   placeholder="Số điện thoại" />
+                                   placeholder="Số điện thoại"
+                                   asp-for="PhoneNumber"/>
                         </div>
                         <div class="wrap-input100 validate-input m-b-23"
                              data-validate="">
-                            <span class="label-input100">Tên đăng nhập </span>
+                            <span class="label-input100" asp-for="UserName">Tên đăng nhập </span>
                             <input class="input101"
                                    type="text"
                                    name="pass"
-                                   placeholder="Tên đăng nhập" />
+                                   placeholder="Tên đăng nhập" 
+                                   asp-for="UserName"/>
                         </div>
 
                         <div class="wrap-input100 validate-input"
                              data-validate="Password is required">
-                            <span class="label-input100">Mật khẩu</span>
+                            <span class="label-input100" asp-for="Password">Mật khẩu</span>
                             <input class="input101"
                                    type="password"
                                    name="pass"
-                                   placeholder="Mật khẩu" />
+                                   placeholder="Mật khẩu"
+                                   asp-for="Password"/>
                         </div>
                         <div class="wrap-input100 validate-input mt-4"
                              data-validate="Password is required">
-                            <span class="label-input100">Xác nhận mật khẩu</span>
+                            <span class="label-input100" asp-for="ConfirmPassword">Xác nhận mật khẩu</span>
                             <input class="input101"
                                    type="password"
                                    name="pass"
-                                   placeholder="Xác nhận mật khẩu" />
-                        </div>
-
+                                   placeholder="Xác nhận mật khẩu" 
+                                   asp-for="ConfirmPassword"/>
+                        </div>*@
+                        @*?//////////////////////////////////////////////*@
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="wrap-input100 validate-input m-b-23">
+                        <label class="label-input100" asp-for="FirstName" class="control-label"></label>
+                        <input class="input101" asp-for="FirstName" class="form-control" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="wrap-input100 validate-input m-b-23">
+                        <label class="label-input100" asp-for="LastName" class="control-label"></label>
+                        <input class="input101" asp-for="LastName" class="form-control" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                    <div class="wrap-input100 validate-input m-b-23">
+                        <label class="label-input100" asp-for="Dob" class="control-label"></label>
+                        <input class="input101" asp-for="Dob" class="form-control" />
+                        <span asp-validation-for="Dob" class="text-danger"></span>
+                    </div>
+                    <div class="wrap-input100 validate-input m-b-23">
+                        <label class="label-input100" asp-for="Email" class="control-label"></label>
+                        <input class="input101" asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="wrap-input100 validate-input m-b-23">
+                        <label class="label-input100" asp-for="PhoneNumber" class="control-label"></label>
+                        <input class="input101" asp-for="PhoneNumber" class="form-control" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    </div>
+                    <div class="wrap-input100 validate-input m-b-23">
+                        <label class="label-input100" asp-for="UserName" class="control-label"></label>
+                        <input class="input101" asp-for="UserName" class="form-control" />
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+                    <div class="wrap-input100 validate-input">
+                        <label class="label-input100" asp-for="Password" class="control-label"></label>
+                        <input class="input101" asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="wrap-input100 validate-input mt-4">
+                        <label class="label-input100" asp-for="ConfirmPassword" class="control-label"></label>
+                        <input class="input101" asp-for="ConfirmPassword" class="form-control" />
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
                         <div class="container-login100-form-btn mt-5">
                             <div class="wrap-login100-form-btn">
                                 <div class="login100-form-bgbtn"></div>
