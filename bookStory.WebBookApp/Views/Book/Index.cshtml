@@ -1,5 +1,5 @@
-﻿@model HomeViewModel
-@using bookStory.ViewModels.Catalog.Books;
+﻿@using bookStory.ViewModels.Common;
+@model PagedResult<bookStory.ViewModels.Catalog.Books.BookViewModel>
 @inject LazZiya.ExpressLocalization.ISharedCultureLocalizer _loc;
 @inject Microsoft.Extensions.Configuration.IConfiguration Configuration;
 @{
@@ -49,7 +49,7 @@
             </div>
         </div>
         <div class="row">
-            @foreach (var item in Model.LatestProducts)
+            @foreach (var item in Model.Items)// @Html.DisplayFor(modelItem => item.Id)
             {
                 var url = $"/{culture}/{_loc["bookUrl"]}/{item.Id}";
 
@@ -76,7 +76,8 @@
                         </div>
                     </div>
                 </div>
-                @await Component.InvokeAsync("Pager", Model)
+               
             }
         </div>
+         @await Component.InvokeAsync("Pager", Model)
 </section>

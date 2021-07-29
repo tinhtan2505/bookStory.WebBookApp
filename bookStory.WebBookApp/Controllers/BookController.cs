@@ -78,16 +78,24 @@ namespace bookStory.WebBookApp.Controllers
             //_context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 6)
         {
             var culture = CultureInfo.CurrentCulture.Name;
+            var languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
 
-            var viewModel = new HomeViewModel
+            var request = new GetManageBookPagingRequest()
             {
-                FeaturedProducts = await _bookApiClient.GetTops(SystemConstants.ProductSettings.NumberOfFeaturedProducts),
-                LatestProducts = await _bookApiClient.GetLatestProducts(SystemConstants.ProductSettings.NumberOfLatestProducts),
+                Keyword = keyword,
+                PageIndex = pageIndex,
+                PageSize = pageSize
             };
-            return View(viewModel);
+            var data = await _bookApiClient.GetPagings(request);
+            ViewBag.Keyword = keyword;
+            if (TempData["result"] != null)
+            {
+                ViewBag.SuccessMsg = TempData["result"];
+            }
+            return View(data);
         }
 
         [HttpGet]

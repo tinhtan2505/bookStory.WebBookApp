@@ -1,4 +1,5 @@
 ﻿using bookStory.ViewModels.Catalog.Books;
+using bookStory.ViewModels.Common;
 using bookStory.ViewModels.System.Users;
 using bookStory.ViewModels.Utilities.Slides;
 using System;
@@ -15,5 +16,6 @@ namespace bookStory.WebBookApp.Models
         public List<BookViewModel> FeaturedProducts { get; set; }
 
         public List<BookViewModel> LatestProducts { get; set; }
+        public PagedResult<BookViewModel> GetAllPagings { get; set; }
     }
 }

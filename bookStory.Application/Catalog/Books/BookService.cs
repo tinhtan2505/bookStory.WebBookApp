@@ -91,19 +91,23 @@ namespace bookStory.Application.Catalog.Books
         public async Task<PagedResult<BookViewModel>> GetAllPaging(GetManageBookPagingRequest request)
         {
             var query = from b in _context.Books
-                        select b;
+                        join bi in _context.BookImages on b.Id equals bi.IdBook into bbi
+                        from bi in bbi.DefaultIfEmpty()
+                        where (bi == null || bi.IsDefault == true)
+                        select new { b, bi };
             if (!string.IsNullOrEmpty(request.Keyword))
-                query = query.Where(x => x.Title.Contains(request.Keyword));
+                query = query.Where(x => x.b.Title.Contains(request.Keyword));
 
             int totalRow = await query.CountAsync();
             var data = await query.Skip((request.PageIndex - 1) * request.PageSize).Take(request.PageSize)
                 .Select(x => new BookViewModel()
                 {
-                    Id = x.Id,
-                    FileName = x.FileName,
-                    Title = x.Title,
-                    Author = x.Author,
-                    Rating = x.Rating
+                    Id = x.b.Id,
+                    FileName = x.b.FileName,
+                    Title = x.b.Title,
+                    Author = x.b.Author,
+                    Rating = x.b.Rating,
+                    ThumbnailImage = x.bi.ImagePath
                 }).ToListAsync();
 
             var pagedResult = new PagedResult<BookViewModel>()
