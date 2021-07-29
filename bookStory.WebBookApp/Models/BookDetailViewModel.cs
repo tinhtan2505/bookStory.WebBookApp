@@ -17,5 +17,6 @@ namespace bookStory.WebBookApp.Models
         public string Title { set; get; }
         public string Description { set; get; }
         public string UserName { get; set; }
+        public float Rating { get; set; }
     }
 }

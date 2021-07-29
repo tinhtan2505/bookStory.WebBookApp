@@ -84,7 +84,7 @@
                                 <div class="product-name">
                                     <h2>@Html.DisplayFor(model => model.Book.Title)</h2>
                                 </div>
-                                <div class="reviews-counter">
+                                @*<div class="reviews-counter">
                                     <div class="rate">
                                         <input type="radio"
                                                id="star5"
@@ -110,8 +110,25 @@
                                         <label for="star1" title="text">1 star</label>
                                     </div>
                                     <span>3 Reviews</span>
-                                </div>
-                                
+                                </div>*@
+                                @{
+                                    var star = (int)Math.Round(@Model.Book.Rating);
+                                <li class="list-group-item align-items-center border-0">
+                                  Xếp hạng: 
+                                    
+                                        <span class="text-warning">
+                                            @for (int s = 0; s < star; s++)
+                                            {
+                                                <i class="fa fa-star"></i>
+                                            }
+                                            @for (int s = star; s < 5; s++)
+                                            {
+                                                <i class="fa fa-star-o"></i>
+                                            }
+                                          </span>
+                                    
+                                  </li>
+                                }
                                 <div class="product-price-discount">
                                     <h5><span>Tác giả: @Html.DisplayFor(model => model.Book.Author)</span></h5>
                                 </div>
